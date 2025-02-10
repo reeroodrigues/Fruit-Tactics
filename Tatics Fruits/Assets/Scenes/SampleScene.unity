@@ -286,7 +286,7 @@ MonoBehaviour:
   _cardManager: {fileID: 1473103881}
   _available: 0
   _completed: 0
-  _hasToHaveSameNumberOrColor: 1
+  _hasToHaveSameNumberOrColor: 0
   _maxAmount: 100
   _amountToComplete: 100
   _holderType: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: -300
     m_Right: 0
     m_Top: 0
     m_Bottom: 0

@@ -48,9 +48,6 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 if (_cardManager._selectedCard != null && transform.childCount > 0) 
                 {
-                    Debug.Log(_cardManager._selectedCard.GetComponent<Card>()._cardNumber);
-                    Debug.Log(transform.GetChild(transform.childCount - 1).GetComponent<Card>()._cardNumber);
-
                     if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == transform.GetChild(transform.childCount - 1).GetComponent<Card>()._cardNumber || 
                         _cardManager._selectedCard.GetComponent<Card>()._cardType._cardIcon == transform.GetChild(transform.childCount - 1).GetComponent<Card>()._cardType._cardIcon)
                     {
