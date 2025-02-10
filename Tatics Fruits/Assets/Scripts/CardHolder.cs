@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -27,9 +26,9 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         foreach (Transform child in transform.GetComponentInChildren<Transform>())
         {
-            if (_cardManager.Cards.Contains(child.gameObject))
+            if (_cardManager._cards.Contains(child.gameObject))
             {
-                _cardManager.Cards.Remove(child.gameObject);
+                _cardManager._cards.Remove(child.gameObject);
             }
 
             if (child.GetComponent<Card>())
@@ -46,16 +45,43 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (_hasToHaveSameNumberOrColor)
             {
-                if (_cardManager._selectedCard != null && transform.childCount > 0) 
+                if (_cardManager._selectedCard != null && transform.childCount > 0)
                 {
-                    if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == transform.GetChild(transform.childCount - 1).GetComponent<Card>()._cardNumber || 
-                        _cardManager._selectedCard.GetComponent<Card>()._cardType._cardIcon == transform.GetChild(transform.childCount - 1).GetComponent<Card>()._cardType._cardIcon)
+                    Transform lastChild = transform.GetChild(transform.childCount - 1); // Obtém o último filho
+
+                    if (lastChild != null) // Verifica se o filho existe
                     {
-                        _available = transform.childCount < _maxAmount;
+                        Card lastCard = lastChild.GetComponent<Card>(); // Obtém o componente Card
+
+                        if (lastCard != null && _cardManager._selectedCard.GetComponent<Card>() != null) //Verifica se ambos os componentes existem
+                        {
+                            if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == lastCard._cardNumber ||
+                                _cardManager._selectedCard.GetComponent<Card>()._cardType._cardIcon == lastCard._cardType._cardIcon)
+                            {
+                                _available = transform.childCount < _maxAmount;
+                            }
+                            else
+                            {
+                                _available = false;
+                            }
+                        }
+                        else
+                        {
+                            _available = true; // Ou false, dependendo da lógica desejada. É importante definir um valor aqui.
+                            if(lastCard == null)
+                            {
+                                Debug.LogError("Filho não possui o componente Card!");
+                            }
+                            if(_cardManager._selectedCard.GetComponent<Card>() == null)
+                            {
+                                Debug.LogError("Carta selecionada não possui o componente Card!");
+                            }
+                        }
                     }
                     else
                     {
-                        _available = false;
+                        _available = true; // Ou false, dependendo da lógica desejada. É importante definir um valor aqui.
+                        Debug.LogError("Não há filhos em transform!");
                     }
                 }
                 else
@@ -80,6 +106,10 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             _available = true;
             _completed = transform.childCount == _amountToComplete;
+        }
+        if (_holderType == HolderType.Discard)
+        {
+            _available = false;
         }
     }
 

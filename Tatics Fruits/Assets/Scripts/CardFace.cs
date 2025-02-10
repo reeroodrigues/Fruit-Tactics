@@ -1,5 +1,3 @@
-using System;
-using DefaultNamespace;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class CardFace : MonoBehaviour
 {
-    [Header("Refences")] 
+    [Header("References")] 
     public GameObject _target;
     public GameObject _visual;
     public Image _icon;
@@ -43,14 +41,17 @@ public class CardFace : MonoBehaviour
 
         if (_target.GetComponent<Card>()._cardState != Card.CardState.Played)
         {
-            Vector3 localPos = Camera.main.transform.InverseTransformPoint(transform.position) -
+            if (Camera.main != null)
+            {
+                var localPos = Camera.main.transform.InverseTransformPoint(transform.position) -
                                Camera.main.transform.InverseTransformPoint(_target.transform.position);
-            _movement = Vector3.Lerp(_movement, localPos, 10 * Time.deltaTime);
+                _movement = Vector3.Lerp(_movement, localPos, 10 * Time.deltaTime);
+            }
 
-            Vector3 movementRotation = _movement;
+            var movementRotation = _movement;
             _rotation = Vector3.Lerp(_rotation, movementRotation, _rotationSpeed * Time.deltaTime);
 
-            float clampedRotation = Mathf.Clamp(movementRotation.x, -_rotationAmount, _rotationAmount);
+            var clampedRotation = Mathf.Clamp(movementRotation.x, -_rotationAmount, _rotationAmount);
             Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, clampedRotation);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
         }
@@ -64,7 +65,7 @@ public class CardFace : MonoBehaviour
 
     public void UpdateCardInfo()
     {
-        CardType info = _target.GetComponent<Card>()._cardType;
+        var info = _target.GetComponent<Card>()._cardType;
 
         _icon.sprite = info._cardIcon;
         _iconShadow.sprite = info._cardIcon;

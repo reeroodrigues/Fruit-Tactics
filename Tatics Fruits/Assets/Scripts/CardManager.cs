@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
@@ -24,8 +23,8 @@ public class CardManager : MonoBehaviour
     [Range(0,12)] public int _startingAmount = 6;
 
     [Header("Lists")]
-    public List<CardType> CardTypes = new List<CardType>();
-    public List<GameObject> Cards = new List<GameObject>();
+    public List<CardType> _cardTypes = new List<CardType>();
+    public List<GameObject> _cards = new List<GameObject>();
 
     private void Start()
     {
@@ -45,22 +44,22 @@ public class CardManager : MonoBehaviour
         if (_selectedCard == null)
             return;
 
-        for (int i = 0; i < Cards.Count; i++)
+        for (int i = 0; i < _cards.Count; i++)
         {
-            if (_selectedCard.transform.position.x > Cards[i].transform.position.x)
+            if (_selectedCard.transform.position.x > _cards[i].transform.position.x)
             {
-                if (_selectedCard.transform.parent.GetSiblingIndex() < Cards[i].transform.parent.GetSiblingIndex())
+                if (_selectedCard.transform.parent.GetSiblingIndex() < _cards[i].transform.parent.GetSiblingIndex())
                 {
-                    SwapCards(_selectedCard, Cards[i]);
+                    SwapCards(_selectedCard, _cards[i]);
                     break;
                 }
             }
             
-            if (_selectedCard.transform.position.x < Cards[i].transform.position.x)
+            if (_selectedCard.transform.position.x < _cards[i].transform.position.x)
             {
-                if (_selectedCard.transform.parent.GetSiblingIndex() > Cards[i].transform.parent.GetSiblingIndex())
+                if (_selectedCard.transform.parent.GetSiblingIndex() > _cards[i].transform.parent.GetSiblingIndex())
                 {
-                    SwapCards(_selectedCard, Cards[i]);
+                    SwapCards(_selectedCard, _cards[i]);
                     break;
                 }
             }
@@ -74,7 +73,7 @@ public class CardManager : MonoBehaviour
 
         if (_defaultPlayArea._available)
         {
-            Transform target = _selectedCard.transform.parent;
+            var target = _selectedCard.transform.parent;
             _selectedCard.transform.position = _defaultPlayArea.transform.position;
             _selectedCard.transform.SetParent(_defaultPlayArea.transform);
             Destroy(target.gameObject);
@@ -85,8 +84,8 @@ public class CardManager : MonoBehaviour
     
     private void SwapCards(GameObject currentCard, GameObject targetCard)
     {
-        Transform currentCardParent = currentCard.transform.parent;
-        Transform targetedCardParent = targetCard.transform.parent;
+        var currentCardParent = currentCard.transform.parent;
+        var targetedCardParent = targetCard.transform.parent;
         
         currentCard.transform.SetParent(targetedCardParent);
         targetCard.transform.SetParent(currentCardParent);
@@ -107,11 +106,11 @@ public class CardManager : MonoBehaviour
         {
             if (_defaultCardsLayoutGroup.transform.childCount < _maxCards)
             {
-                GameObject card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
-                int randomCard = Random.Range(0, CardTypes.Count);
+                var card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
+                var randomCard = Random.Range(0, _cardTypes.Count);
 
-                card.GetComponentInChildren<Card>()._cardType = CardTypes[randomCard];
-                GameObject cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
+                card.GetComponentInChildren<Card>()._cardType = _cardTypes[randomCard];
+                var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
                 
                 cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
             }

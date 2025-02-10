@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-
+using System.Threading.Tasks;
 
 public class CardsSpriteChanger : MonoBehaviour
 {
@@ -14,9 +12,9 @@ public class CardsSpriteChanger : MonoBehaviour
     public bool _randomize;
     public int _imageInt;
 
-    private void Start()
+    private async void Start()
     {
-        StartCoroutine(SpriteChangeLoop());
+        await SpriteChangeLoop();
     }
 
     private void Update()
@@ -24,26 +22,20 @@ public class CardsSpriteChanger : MonoBehaviour
         _targetImage.sprite = _sprites[_imageInt];
     }
 
-    IEnumerator SpriteChangeLoop()
+    public async Task SpriteChangeLoop()
     {
-        yield return new WaitForSeconds(_timeBetweenSwitches);
-        if (_randomize)
+        while (true)
         {
-            int targetImage = Random.Range(0, _sprites.Count - 1);
-            _imageInt = targetImage;
-        }
-        else
-        {
-            if (_imageInt == _sprites.Count - 1)
+            await Task.Delay(System.TimeSpan.FromSeconds(_timeBetweenSwitches));
+
+            if (_randomize)
             {
-                _imageInt = 0;
+                _imageInt = Random.Range(0, _sprites.Count);
             }
             else
             {
-                _imageInt += 1;
+                _imageInt = (_imageInt + 1) % _sprites.Count;
             }
         }
-
-        StartCoroutine(SpriteChangeLoop());
     }
 }

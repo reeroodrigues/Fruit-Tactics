@@ -1,8 +1,6 @@
-using System;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -30,7 +28,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         _cardManager = GameObject.Find("CardsManager").GetComponent<CardManager>();
-        _cardManager.Cards.Add(gameObject);
+        _cardManager._cards.Add(gameObject);
         _canDrag = true;
 
         _cardNumber = _cardType._setAmount == 0 ? Random.Range(0, _cardType._maxCardNumber) : _cardType._setAmount;
@@ -54,8 +52,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (!_canDrag)
             return;
 
-        Vector2 position;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)_canvas.transform, Input.mousePosition, _canvas.worldCamera, out position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)_canvas.transform, Input.mousePosition, _canvas.worldCamera, out var position);
         transform.position = _canvas.transform.TransformPoint(position);
     }
 
@@ -66,12 +63,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _cardManager._selectedCard = null;
         if (_cardManager._hoveringMenu != null)
         {
-            if (_cardManager._hoveringMenu.GetComponent<CardHolder>()._holderType == CardHolder.HolderType.CardTrader)
+            var cardHolder = _cardManager._hoveringMenu.GetComponent<CardHolder>();
+
+            if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.CardTrader)
             {
                 _cardManager.AddCard(_cardNumber);
             }
 
-            Transform target = transform.parent;
+            var target = transform.parent;
             transform.position = _cardManager._hoveringMenu.transform.position;
             transform.SetParent(_cardManager._hoveringMenu.transform);
             Destroy(target.gameObject);
@@ -88,7 +87,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _hovering = true || _cardState == CardState.IsDragging;
+        _hovering = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
