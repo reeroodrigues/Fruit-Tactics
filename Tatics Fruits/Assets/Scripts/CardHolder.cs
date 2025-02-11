@@ -29,7 +29,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     private void Update()
     {
-        HandleCardHolderFunctinallity();
+        HandleCardHolderFunctionality();
         CheckForMatchingCards();
 
         foreach (Transform child in transform.GetComponentInChildren<Transform>())
@@ -110,8 +110,9 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
-    private void HandleCardHolderFunctinallity()
+    public void HandleCardHolderFunctionality()
     {
+        
         if (_holderType == HolderType.Play)
         {
             if (_hasToHaveSameNumberOrColor)
@@ -163,6 +164,11 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
             _completed = transform.childCount == _amountToComplete;
         }
+        
+        if (_holderType == HolderType.Discard)
+        {
+            _available = false;
+        }
 
         if (_holderType == HolderType.CardTrader)
         {
@@ -173,10 +179,6 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             _available = true;
             _completed = transform.childCount == _amountToComplete;
-        }
-        if (_holderType == HolderType.Discard)
-        {
-            _available = false;
         }
     }
 

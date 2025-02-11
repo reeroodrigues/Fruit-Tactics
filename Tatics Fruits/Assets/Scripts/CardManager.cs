@@ -32,8 +32,6 @@ public class CardManager : MonoBehaviour
             AddCard(_startingAmount);
     }
 
-    
-
     private void Update()
     {
         HandleCardMovements();
@@ -41,11 +39,11 @@ public class CardManager : MonoBehaviour
 
     private void HandleCardMovements()
     {
-        if (_selectedCard == null || _selectedCard.Equals(null)) return; // Garante que a carta ainda existe
+        if (_selectedCard == null || _selectedCard.Equals(null)) return;
 
         for (int i = 0; i < _cards.Count; i++)
         {
-            if (_cards[i] == null || _cards[i].Equals(null)) continue; // Verifica se a carta foi destruída
+            if (_cards[i] == null || _cards[i].Equals(null)) continue;
 
             if (_selectedCard.transform.position.x > _cards[i].transform.position.x)
             {

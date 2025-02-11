@@ -61,19 +61,26 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _cardState = CardState.Idle;
 
         _cardManager._selectedCard = null;
+
         if (_cardManager._hoveringMenu != null)
         {
             var cardHolder = _cardManager._hoveringMenu.GetComponent<CardHolder>();
 
-            if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.CardTrader)
+            // Verifica se o card foi solto em um Holder de Descarte
+            if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.Discard)
             {
-                _cardManager.AddCard(_cardNumber);
+                // Move o card para o Discard
+                Transform discardArea = cardHolder.transform;
+                transform.SetParent(discardArea);
+                transform.localPosition = Vector3.zero; // Reseta a posição do card
             }
-
-            var target = transform.parent;
-            transform.position = _cardManager._hoveringMenu.transform.position;
-            transform.SetParent(_cardManager._hoveringMenu.transform);
-            Destroy(target.gameObject);
+            else
+            {
+                var target = transform.parent;
+                transform.position = _cardManager._hoveringMenu.transform.position;
+                transform.SetParent(_cardManager._hoveringMenu.transform);
+                Destroy(target.gameObject);
+            }
         }
         else
         {
@@ -82,8 +89,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         _cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = true;
-        GetComponent<Image>().raycastTarget = true;
     }
+
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {
