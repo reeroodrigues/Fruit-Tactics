@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro; // Importar o namespace do TextMeshPro
 
 public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,7 +14,10 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public int _amountToComplete;
 
     public HolderType _holderType;
-    
+
+    public ScoreManager _scoreManager; // Referência ao ScoreManager para atualizar o score
+    public TextMeshProUGUI _scoreText; // Referência ao componente TextMeshProUGUI para exibir o score
+
     public enum HolderType
     {
         Play,
@@ -75,14 +80,31 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 }
 
                 Debug.Log($"Cartas combinadas! Novo valor: {sumValue}");
+
+                // Atualizando o score com o valor somado
+                if (_scoreManager != null)
+                {
+                    _scoreManager.AddScore(sumValue);
+                    Debug.Log($"Score Atualizado: {_scoreManager.GetScore()}");
+
+                    // Atualizando o texto na tela com o novo score
+                    UpdateScoreText();
+                }
             }
         }
 
-        
         foreach (GameObject card in cardsToRemove)
         {
             card.transform.SetParent(null);
             Destroy(card);
+        }
+    }
+
+    private void UpdateScoreText()
+    {
+        if (_scoreText != null)
+        {
+            _scoreText.text = "Score: " + _scoreManager.GetScore().ToString();
         }
     }
 
