@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,6 +24,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private void Update()
     {
         HandleCardHolderFunctinallity();
+        CheckForMatchingCards();
 
         foreach (Transform child in transform.GetComponentInChildren<Transform>())
         {
@@ -38,6 +40,51 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
     }
+    
+    private void CheckForMatchingCards()
+    {
+        if (_holderType != HolderType.Play) return;
+
+        Dictionary<string, List<Card>> matchingCards = new Dictionary<string, List<Card>>();
+
+        foreach (Transform child in transform)
+        {
+            Card card = child.GetComponent<Card>();
+            if (card == null) continue;
+
+            string key = $"{card._cardNumber}_{card._cardType._cardIcon}";
+
+            if (!matchingCards.ContainsKey(key))
+                matchingCards[key] = new List<Card>();
+
+            matchingCards[key].Add(card);
+        }
+
+        List<GameObject> cardsToRemove = new List<GameObject>();
+
+        foreach (var pair in matchingCards)
+        {
+            if (pair.Value.Count >= 2)
+            {
+                int sumValue = 0;
+
+                foreach (Card card in pair.Value)
+                {
+                    sumValue += card._cardNumber;
+                    cardsToRemove.Add(card.gameObject);
+                }
+
+                Debug.Log($"Cartas combinadas! Novo valor: {sumValue}");
+            }
+        }
+
+        
+        foreach (GameObject card in cardsToRemove)
+        {
+            card.transform.SetParent(null);
+            Destroy(card);
+        }
+    }
 
     private void HandleCardHolderFunctinallity()
     {
@@ -47,13 +94,12 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 if (_cardManager._selectedCard != null && transform.childCount > 0)
                 {
-                    Transform lastChild = transform.GetChild(transform.childCount - 1); // Obtém o último filho
-
-                    if (lastChild != null) // Verifica se o filho existe
+                    Transform lastChild = transform.GetChild(transform.childCount - 1);
+                    if (lastChild != null)
                     {
-                        Card lastCard = lastChild.GetComponent<Card>(); // Obtém o componente Card
+                        Card lastCard = lastChild.GetComponent<Card>();
 
-                        if (lastCard != null && _cardManager._selectedCard.GetComponent<Card>() != null) //Verifica se ambos os componentes existem
+                        if (lastCard != null && _cardManager._selectedCard.GetComponent<Card>() != null)
                         {
                             if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == lastCard._cardNumber ||
                                 _cardManager._selectedCard.GetComponent<Card>()._cardType._cardIcon == lastCard._cardType._cardIcon)
@@ -67,7 +113,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                         }
                         else
                         {
-                            _available = true; // Ou false, dependendo da lógica desejada. É importante definir um valor aqui.
+                            _available = true;
                             if(lastCard == null)
                             {
                                 Debug.LogError("Filho não possui o componente Card!");
@@ -80,7 +126,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                     }
                     else
                     {
-                        _available = true; // Ou false, dependendo da lógica desejada. É importante definir um valor aqui.
+                        _available = true;
                         Debug.LogError("Não há filhos em transform!");
                     }
                 }

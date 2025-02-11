@@ -41,23 +41,24 @@ public class CardManager : MonoBehaviour
 
     private void HandleCardMovements()
     {
-        if (_selectedCard == null)
-            return;
+        if (_selectedCard == null || _selectedCard.Equals(null)) return; // Garante que a carta ainda existe
 
         for (int i = 0; i < _cards.Count; i++)
         {
+            if (_cards[i] == null || _cards[i].Equals(null)) continue; // Verifica se a carta foi destruída
+
             if (_selectedCard.transform.position.x > _cards[i].transform.position.x)
             {
-                if (_selectedCard.transform.parent.GetSiblingIndex() < _cards[i].transform.parent.GetSiblingIndex())
+                if (_selectedCard.transform.parent != null && _selectedCard.transform.parent.GetSiblingIndex() < _cards[i].transform.parent.GetSiblingIndex())
                 {
                     SwapCards(_selectedCard, _cards[i]);
                     break;
                 }
             }
-            
+        
             if (_selectedCard.transform.position.x < _cards[i].transform.position.x)
             {
-                if (_selectedCard.transform.parent.GetSiblingIndex() > _cards[i].transform.parent.GetSiblingIndex())
+                if (_selectedCard.transform.parent != null && _selectedCard.transform.parent.GetSiblingIndex() > _cards[i].transform.parent.GetSiblingIndex())
                 {
                     SwapCards(_selectedCard, _cards[i]);
                     break;
@@ -65,7 +66,7 @@ public class CardManager : MonoBehaviour
             }
         }
     }
-
+    
     public void PlayCard()
     {
         if (_selectedCard == null)
@@ -76,10 +77,23 @@ public class CardManager : MonoBehaviour
             var target = _selectedCard.transform.parent;
             _selectedCard.transform.position = _defaultPlayArea.transform.position;
             _selectedCard.transform.SetParent(_defaultPlayArea.transform);
-            Destroy(target.gameObject);
+            
+            var canvas = _selectedCard.GetComponent<Canvas>();
+            if (canvas == null)
+                canvas = _selectedCard.AddComponent<Canvas>();
 
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = GetNextSortingOrder();
+
+            Destroy(target.gameObject);
             _selectedCard = null;
         }
+    }
+    
+    private int _sortingOrder = 1;
+    private int GetNextSortingOrder()
+    {
+        return _sortingOrder++;
     }
     
     private void SwapCards(GameObject currentCard, GameObject targetCard)
