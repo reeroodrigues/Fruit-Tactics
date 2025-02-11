@@ -112,7 +112,6 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void HandleCardHolderFunctionality()
     {
-        
         if (_holderType == HolderType.Play)
         {
             if (_hasToHaveSameNumberOrColor)
@@ -167,7 +166,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         
         if (_holderType == HolderType.Discard)
         {
-            _available = false;
+            _available = true;
         }
 
         if (_holderType == HolderType.CardTrader)

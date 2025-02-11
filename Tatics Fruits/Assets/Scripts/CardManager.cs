@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DefaultNamespace;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -19,8 +20,8 @@ public class CardManager : MonoBehaviour
     public Canvas _canvas;
     
     [Header("Settings")]
-    [Range(0,12)] public int _maxCards = 6;
-    [Range(0,12)] public int _startingAmount = 6;
+    [UnityEngine.Range(0,12)] public int _maxCards = 6;
+    [UnityEngine.Range(0,12)] public int _startingAmount = 6;
 
     [Header("Lists")]
     public List<CardType> _cardTypes = new List<CardType>();
@@ -75,7 +76,7 @@ public class CardManager : MonoBehaviour
             var target = _selectedCard.transform.parent;
             _selectedCard.transform.position = _defaultPlayArea.transform.position;
             _selectedCard.transform.SetParent(_defaultPlayArea.transform);
-            
+        
             var canvas = _selectedCard.GetComponent<Canvas>();
             if (canvas == null)
                 canvas = _selectedCard.AddComponent<Canvas>();
@@ -83,8 +84,27 @@ public class CardManager : MonoBehaviour
             canvas.overrideSorting = true;
             canvas.sortingOrder = GetNextSortingOrder();
 
+            // Remover a carta do CardVisuals
+            RemoveCardFace(_selectedCard.GetComponent<Card>());
+
             Destroy(target.gameObject);
             _selectedCard = null;
+        }
+    }
+    
+    private void RemoveCardFace(Card card)
+    {
+        GameObject cardVisualsParent = GameObject.Find("CardVisuals");
+        if (cardVisualsParent == null) return;
+
+        foreach (Transform child in cardVisualsParent.transform)
+        {
+            CardFace cardFace = child.GetComponent<CardFace>();
+            if (cardFace != null && cardFace._target == card.gameObject)
+            {
+                Destroy(child.gameObject);
+                break;
+            }
         }
     }
     
@@ -112,8 +132,10 @@ public class CardManager : MonoBehaviour
         GetComponent<AudioSource>().Play();
     }
     
+
     public void AddCard(int amount)
     {
+        Debug.Log("Tentativa de adicionar nova carta.");
         for (int i = 0; i < amount; i++)
         {
             if (_defaultCardsLayoutGroup.transform.childCount < _maxCards)
@@ -123,10 +145,11 @@ public class CardManager : MonoBehaviour
 
                 card.GetComponentInChildren<Card>()._cardType = _cardTypes[randomCard];
                 var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
-                
+             
                 cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
             }
         }
     }
+
     
 }
