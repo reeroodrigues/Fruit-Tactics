@@ -21,7 +21,11 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            Debug.Log("Time is over!");
         }
+    }
+    
+    public void AddTime(float timeToAdd)
+    {
+        _remainingTime += timeToAdd;
     }
 }

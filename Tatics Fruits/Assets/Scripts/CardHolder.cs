@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using TMPro; // Importar o namespace do TextMeshPro
+using TMPro;
 
 public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -15,8 +15,9 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public HolderType _holderType;
 
-    public ScoreManager _scoreManager; // Referência ao ScoreManager para atualizar o score
-    public TextMeshProUGUI _scoreText; // Referência ao componente TextMeshProUGUI para exibir o score
+    public ScoreManager _scoreManager;
+    public TextMeshProUGUI _scoreText;
+    public Timer _timer;
 
     public enum HolderType
     {
@@ -45,7 +46,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
     }
-    
+
     private void CheckForMatchingCards()
     {
         if (_holderType != HolderType.Play) return;
@@ -78,17 +79,18 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                     sumValue += card._cardNumber;
                     cardsToRemove.Add(card.gameObject);
                 }
-
-                Debug.Log($"Cartas combinadas! Novo valor: {sumValue}");
-
-                // Atualizando o score com o valor somado
+                
+                
                 if (_scoreManager != null)
                 {
                     _scoreManager.AddScore(sumValue);
-                    Debug.Log($"Score Atualizado: {_scoreManager.GetScore()}");
-
-                    // Atualizando o texto na tela com o novo score
+                    
                     UpdateScoreText();
+                }
+                
+                if (_timer != null)
+                {
+                    _timer.AddTime(5f);
                 }
             }
         }
@@ -104,7 +106,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (_scoreText != null)
         {
-            _scoreText.text = "Score: " + _scoreManager.GetScore().ToString();
+            _scoreText.text = "Score: " + _scoreManager.GetScore();
         }
     }
 
@@ -138,18 +140,15 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             _available = true;
                             if(lastCard == null)
                             {
-                                Debug.LogError("Filho não possui o componente Card!");
                             }
                             if(_cardManager._selectedCard.GetComponent<Card>() == null)
                             {
-                                Debug.LogError("Carta selecionada não possui o componente Card!");
                             }
                         }
                     }
                     else
                     {
                         _available = true;
-                        Debug.LogError("Não há filhos em transform!");
                     }
                 }
                 else

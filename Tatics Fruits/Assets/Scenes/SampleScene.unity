@@ -293,6 +293,7 @@ MonoBehaviour:
   _holderType: 0
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
+  _timer: {fileID: 707565919}
 --- !u!1 &242047027
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,6 +379,7 @@ MonoBehaviour:
   _holderType: 3
   _scoreManager: {fileID: 0}
   _scoreText: {fileID: 0}
+  _timer: {fileID: 0}
 --- !u!1 &264147627
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +580,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &456065597
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1212,7 +1214,7 @@ GameObject:
   - component: {fileID: 707565917}
   - component: {fileID: 707565919}
   m_Layer: 5
-  m_Name: TImer
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1902,7 +1904,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999999
+  m_text: 'Score:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
