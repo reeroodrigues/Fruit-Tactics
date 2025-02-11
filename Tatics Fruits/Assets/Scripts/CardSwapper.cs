@@ -1,30 +1,29 @@
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardSwapper : MonoBehaviour
 {
-    public Button _swapAllButton;  // O botão que dispara a troca de cartas
-    public Transform _cardVisualsParent;  // O GameObject que contém os prefabs `CardFace`
-    public List<CardType> _availableCardTypes; // Lista de tipos de cartas disponíveis
+    public Button swapAllButton;  // O botão que dispara a troca de cartas
+    public Transform cardVisualsParent;  // O GameObject que contém os prefabs `CardFace`
+    public List<CardType> availableCardTypes; // Lista de tipos de cartas disponíveis
 
     private void Start()
     {
-        if (_swapAllButton != null)
-            _swapAllButton.onClick.AddListener(SwapAllCards);
+        if (swapAllButton != null)
+            swapAllButton.onClick.AddListener(SwapAllCards);
     }
 
     private void SwapAllCards()
     {
-        if (_cardVisualsParent == null || _availableCardTypes == null || _availableCardTypes.Count == 0)
+        if (cardVisualsParent == null || availableCardTypes == null || availableCardTypes.Count == 0)
         {
             Debug.LogWarning("CardVisuals ou CardTypes não configurados corretamente!");
             return;
         }
 
-        foreach (Transform cardFaceTransform in _cardVisualsParent)
+        foreach (Transform cardFaceTransform in cardVisualsParent)
         {
             CardFace cardFace = cardFaceTransform.GetComponent<CardFace>();
             if (cardFace != null && cardFace._target != null)
@@ -33,7 +32,7 @@ public class CardSwapper : MonoBehaviour
                 if (card != null)
                 {
                     // Escolhe um novo tipo de carta aleatoriamente
-                    CardType newCardType = _availableCardTypes[Random.Range(0, _availableCardTypes.Count)];
+                    CardType newCardType = availableCardTypes[Random.Range(0, availableCardTypes.Count)];
                     card._cardType = newCardType;
 
                     // Atualiza a aparência da carta no CardFace

@@ -467,6 +467,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CardFace
       objectReference: {fileID: 0}
+    - target: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5081310413644949926, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -695,24 +699,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0d1a8e0a054f7ba1de65ddbd2ce2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swapAllButton: {fileID: 456065598}
-  _cardVisualsParent: {fileID: 959503449}
-  _availableCardTypes:
-  - {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
-  - {fileID: 11400000, guid: 05123841ee56f44fead512a82761ab6d, type: 2}
-  - {fileID: 11400000, guid: cd99ff58d8d854f1c9f75a4d7bc3282d, type: 2}
-  - {fileID: 11400000, guid: f5cbce7ae20474b28a8759a79c4c4835, type: 2}
-  - {fileID: 11400000, guid: 561a5da91df9a415a99a934dda96c350, type: 2}
-  - {fileID: 11400000, guid: bf37a87db18714bc6a33920865d80f0a, type: 2}
-  - {fileID: 11400000, guid: a9e153d9c168741cbb9853c804933426, type: 2}
-  - {fileID: 11400000, guid: 0745be210c4654b21a38065a96388a6a, type: 2}
-  - {fileID: 11400000, guid: 7c63fa1aed93d47d180ed3a2021cd3fd, type: 2}
-  - {fileID: 11400000, guid: 47125451494244be6b3a72a5937a06c7, type: 2}
-  - {fileID: 11400000, guid: ed40943462e4442458c13815c3cfdd4d, type: 2}
-  - {fileID: 11400000, guid: 1a995ec7f118240249a82c4c1bd45438, type: 2}
-  - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
-  - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
-  - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
+  swapAllButton: {fileID: 0}
+  cardVisualsParent: {fileID: 0}
+  availableCardTypes: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
