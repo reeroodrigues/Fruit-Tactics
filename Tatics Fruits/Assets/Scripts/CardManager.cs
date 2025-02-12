@@ -1,23 +1,23 @@
 using System.Collections.Generic;
 using DefaultNamespace;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
+    [HideInInspector] public CardType _cardType;
     [HideInInspector] public GameObject _selectedCard;
     [HideInInspector] public GameObject _hoveringMenu;
-    [HideInInspector] public CardType _cardType;
 
     [Header("Scripts/GameObjects")]
-    public GameObject _cardParent;
-    public HorizontalLayoutGroup _defaultCardsLayoutGroup;
-    public CardHolder _defaultPlayArea;
-    public GameObject _singleCardsParent;
-    public GameObject _cardFace;
     public Canvas _canvas;
+    public CardHolder _defaultPlayArea;
+    public GameObject _cardParent;
+    public GameObject _cardFacePowerup;
+    public GameObject _cardFace;
+    public GameObject _singleCardsParent;
+    public HorizontalLayoutGroup _defaultCardsLayoutGroup;
     
     [Header("Settings")]
     [UnityEngine.Range(0,12)] public int _maxCards = 6;
@@ -25,12 +25,17 @@ public class CardManager : MonoBehaviour
 
     [Header("Lists")]
     public List<CardType> _cardTypes = new List<CardType>();
+    public List<CardPowerupType> _powerupType = new List<CardPowerupType>();
     public List<GameObject> _cards = new List<GameObject>();
+    
+    private Dictionary<Card, CardPowerupType> _cardsWithPowerup = new Dictionary<Card, CardPowerupType>();
 
     private void Start()
     {
         if (_startingAmount > 0)
             AddCard(_startingAmount);
+        
+        AssignPowerupsToCards();
     }
 
     private void Update()
@@ -143,13 +148,70 @@ public class CardManager : MonoBehaviour
                 var card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
                 var randomCard = Random.Range(0, _cardTypes.Count);
 
-                card.GetComponentInChildren<Card>()._cardType = _cardTypes[randomCard];
-                var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
-             
+                var cardComponent = card.GetComponentInChildren<Card>();
+                cardComponent._cardType = _cardTypes[randomCard];
+                
+                bool isPowerup = Random.value > 0.5f;
+                GameObject cardFace;
+            
+                if (isPowerup)
+                {
+                    cardFace = Instantiate(_cardFacePowerup, GameObject.Find("CardVisuals").transform);
+                    var powerupManager = FindObjectOfType<CardManager>();
+                    if (powerupManager != null)
+                    {
+                        powerupManager.AssignPowerupToCard(cardComponent);
+                    }
+                }
+                else
+                {
+                    cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
+                }
+
                 cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
             }
         }
     }
 
+    
+    public void AssignPowerupsToCards()
+    {
+        foreach (var cardObject in FindObjectsOfType<Card>())
+        {
+            if (Random.value > 0.5)
+            {
+                AssignPowerupToCard(cardObject);
+            }
+        }
+    }
+
+    public void AssignPowerupToCard(Card card)
+    {
+        if (card == null || _powerupType.Count == 0)
+            return;
+
+        var randomPowerup = _powerupType[Random.Range(0, _powerupType.Count)];
+        _cardsWithPowerup[card] = randomPowerup;
+    }
+
+    public void UsePowerupOnCard(Card card)
+    {
+        if (card == null || !_cardsWithPowerup.ContainsKey(card))
+            return;
+
+        CardPowerupType powerup = _cardsWithPowerup[card];
+        powerup.ApplyEffect(card);
+
+        _cardsWithPowerup.Remove(card);
+    }
+
+    public void UseRandomPowerup()
+    {
+        if (_cardsWithPowerup.Count == 0)
+            return;
+
+        var randomCard = new List<Card>(_cardsWithPowerup.Keys)[Random.Range(0, _cardsWithPowerup.Count)];
+        UsePowerupOnCard(randomCard);
+    }
     
 }
