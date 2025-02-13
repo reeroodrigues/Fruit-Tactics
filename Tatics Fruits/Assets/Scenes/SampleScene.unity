@@ -290,7 +290,7 @@ MonoBehaviour:
   _hasToHaveSameNumberOrColor: 1
   _maxAmount: 100
   _amountToComplete: 100
-  _holderType: 3
+  _holderType: 0
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
   _timer: {fileID: 707565919}
@@ -2332,14 +2332,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eacb3ac6d5104442ab0ce608bffa2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cardTypeSo: {fileID: 0}
   _selectedCard: {fileID: 0}
   _hoveringMenu: {fileID: 0}
-  _canvas: {fileID: 2082077803}
-  _defaultPlayArea: {fileID: 83359194}
+  _cardType: {fileID: 0}
   _cardParent: {fileID: 4717338773919566542, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
-  _cardFace: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
   _defaultCardsLayoutGroup: {fileID: 242047029}
+  _defaultPlayArea: {fileID: 83359194}
+  _singleCardsParent: {fileID: 0}
+  _cardFace: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
+  _canvas: {fileID: 2082077803}
   _maxCards: 6
   _startingAmount: 6
   _cardTypes:

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Strawberry
   m_EditorClassIdentifier: 
   _cardIcon: {fileID: -1337796959, guid: a03c2610221b14940b818fb271b448fa, type: 3}
-  _maxCardNumber: 0
-  _setAmount: 0
+  _maxCardNumber: 14
+  _setAmount: 14
