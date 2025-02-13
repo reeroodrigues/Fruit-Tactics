@@ -290,7 +290,7 @@ MonoBehaviour:
   _hasToHaveSameNumberOrColor: 1
   _maxAmount: 100
   _amountToComplete: 100
-  _holderType: 0
+  _holderType: 3
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
   _timer: {fileID: 707565919}
@@ -2338,9 +2338,7 @@ MonoBehaviour:
   _canvas: {fileID: 2082077803}
   _defaultPlayArea: {fileID: 83359194}
   _cardParent: {fileID: 4717338773919566542, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
-  _cardFacePowerup: {fileID: 3242283365137852372, guid: c4cf8ba769d474e82adbe91161726225, type: 3}
   _cardFace: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
-  _singleCardsParent: {fileID: 0}
   _defaultCardsLayoutGroup: {fileID: 242047029}
   _maxCards: 6
   _startingAmount: 6
@@ -2360,14 +2358,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
-  _powerupType:
-  - {fileID: 11400000, guid: e7aa694e7fa7a43bea04299b059c9643, type: 2}
-  - {fileID: 11400000, guid: a7735ceeed8024308937f04125eb413b, type: 2}
-  - {fileID: 11400000, guid: edf2f55aea4964438b3689516ac2b142, type: 2}
-  - {fileID: 11400000, guid: 3c493834474334187bcbb11ddde7c222, type: 2}
-  - {fileID: 11400000, guid: ac46da2a381af4afd8f940c4579aa0b1, type: 2}
-  - {fileID: 11400000, guid: 71d034f7fb7364f6f84afdaa1c47cbb5, type: 2}
-  - {fileID: 11400000, guid: 387f88d36a90c4d2aa2457c2a50708f2, type: 2}
   _cards: []
 --- !u!82 &1473103882
 AudioSource:
