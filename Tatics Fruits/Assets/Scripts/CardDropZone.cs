@@ -31,8 +31,7 @@ namespace DefaultNamespace
                 }
             }
         }
-
-
+        
         private void RemoveCardFace(Card card)
         {
             GameObject cardVisualsParent = GameObject.Find("CardVisuals");
