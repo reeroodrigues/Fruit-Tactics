@@ -10,7 +10,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public CardState _cardState;
 
     public CardManager _cardManager;
-    public CardType _cardType;
+    public CardTypeSo _cardTypeSo;
     public int _cardNumber;
 
     public enum CardState
@@ -31,7 +31,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _cardManager._cards.Add(gameObject);
         _canDrag = true;
 
-        _cardNumber = _cardType._setAmount == 0 ? Random.Range(0, _cardType._maxCardNumber) : _cardType._setAmount;
+        _cardNumber = _cardTypeSo._setAmount == 0 ? Random.Range(0, _cardTypeSo._maxCardNumber) : _cardTypeSo._setAmount;
     }
     
 

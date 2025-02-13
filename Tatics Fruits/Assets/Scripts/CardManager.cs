@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
-    [HideInInspector] public CardType _cardType;
+    [FormerlySerializedAs("_cardType")] [HideInInspector] public CardTypeSo _cardTypeSo;
     [HideInInspector] public GameObject _selectedCard;
     [HideInInspector] public GameObject _hoveringMenu;
 
@@ -24,11 +25,11 @@ public class CardManager : MonoBehaviour
     [UnityEngine.Range(0,12)] public int _startingAmount = 6;
 
     [Header("Lists")]
-    public List<CardType> _cardTypes = new List<CardType>();
-    public List<CardPowerupType> _powerupType = new List<CardPowerupType>();
+    public List<CardTypeSo> _cardTypes = new List<CardTypeSo>();
+    public List<CardPowerupTypeSo> _powerupType = new List<CardPowerupTypeSo>();
     public List<GameObject> _cards = new List<GameObject>();
     
-    private Dictionary<Card, CardPowerupType> _cardsWithPowerup = new Dictionary<Card, CardPowerupType>();
+    private Dictionary<Card, CardPowerupTypeSo> _cardsWithPowerup = new Dictionary<Card, CardPowerupTypeSo>();
 
     private void Start()
     {
@@ -149,7 +150,7 @@ public class CardManager : MonoBehaviour
                 var randomCard = Random.Range(0, _cardTypes.Count);
 
                 var cardComponent = card.GetComponentInChildren<Card>();
-                cardComponent._cardType = _cardTypes[randomCard];
+                cardComponent._cardTypeSo = _cardTypes[randomCard];
                 
                 bool isPowerup = Random.value > 0.5f;
                 GameObject cardFace;
@@ -199,7 +200,7 @@ public class CardManager : MonoBehaviour
         if (card == null || !_cardsWithPowerup.ContainsKey(card))
             return;
 
-        CardPowerupType powerup = _cardsWithPowerup[card];
+        CardPowerupTypeSo powerup = _cardsWithPowerup[card];
         powerup.ApplyEffect(card);
 
         _cardsWithPowerup.Remove(card);

@@ -58,7 +58,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             Card card = child.GetComponent<Card>();
             if (card == null) continue;
 
-            string key = $"{card._cardNumber}_{card._cardType._cardIcon}";
+            string key = $"{card._cardNumber}_{card._cardTypeSo._cardIcon}";
 
             if (!matchingCards.ContainsKey(key))
                 matchingCards[key] = new List<Card>();
@@ -126,7 +126,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                         if (lastCard != null && _cardManager._selectedCard.GetComponent<Card>() != null)
                         {
                             if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == lastCard._cardNumber ||
-                                _cardManager._selectedCard.GetComponent<Card>()._cardType._cardIcon == lastCard._cardType._cardIcon)
+                                _cardManager._selectedCard.GetComponent<Card>()._cardTypeSo._cardIcon == lastCard._cardTypeSo._cardIcon)
                             {
                                 _available = transform.childCount < _maxAmount;
                             }

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 970478f170c74752bbfa1200a516bd06, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c8006a474e0b4e3b845c3a6214667de, type: 3}
   m_Name: Grape2
   m_EditorClassIdentifier: 
   _cardIcon: {fileID: 828239227, guid: a03c2610221b14940b818fb271b448fa, type: 3}
-  _maxCardNumber: 6
-  _setAmount: 6
+  _maxCardNumber: 0
+  _setAmount: 0

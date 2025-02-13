@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DefaultNamespace
 {
     [CreateAssetMenu(fileName = "CardPowerupTypeScriptableObject", menuName = "CardPowerupType/CardPowerupTypeScriptableObject")]
-    public class CardPowerupType : ScriptableObject
+    public class CardPowerupTypeSo : ScriptableObject
     {
         [Header("Info")] 
         public string _powerupName;

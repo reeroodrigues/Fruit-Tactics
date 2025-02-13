@@ -65,11 +65,34 @@ public class CardFace : MonoBehaviour
 
     public void UpdateCardInfo()
     {
-        var info = _target.GetComponent<Card>()._cardType;
+        if (_target == null)
+        {
+            Debug.LogError("CardFace: _target está nulo!", this);
+            return;
+        }
 
-        _icon.sprite = info._cardIcon;
-        _iconShadow.sprite = info._cardIcon;
-        _rightNumber.text = _target.GetComponent<Card>()._cardNumber.ToString();
-        _leftNumber.text = _target.GetComponent<Card>()._cardNumber.ToString();
+        var cardComponent = _target.GetComponent<Card>();
+        if (cardComponent == null)
+        {
+            Debug.LogError("CardFace: _target não tem um componente Card!", this);
+            return;
+        }
+
+        if (cardComponent._cardTypeSo == null)
+        {
+            Debug.LogError("CardFace: _cardTypeSo está nulo!", this);
+            return;
+        }
+
+        if (_icon == null || _iconShadow == null || _rightNumber == null || _leftNumber == null)
+        {
+            Debug.LogError("CardFace: Alguma referência está nula! Verifique no Inspector.", this);
+            return;
+        }
+
+        _icon.sprite = cardComponent._cardTypeSo._cardIcon;
+        _iconShadow.sprite = cardComponent._cardTypeSo._cardIcon;
+        _rightNumber.text = cardComponent._cardNumber.ToString();
+        _leftNumber.text = cardComponent._cardNumber.ToString();
     }
 }

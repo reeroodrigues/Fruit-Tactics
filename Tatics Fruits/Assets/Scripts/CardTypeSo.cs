@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DefaultNamespace
 {
     [CreateAssetMenu(fileName = "CardTypeScriptableObject", menuName = "CardType/CardTypeScriptableObject")]
-    public class CardType : ScriptableObject
+    public class CardTypeSo : ScriptableObject
     {
         [Header("Info")] 
         public Sprite _cardIcon;

@@ -8,7 +8,7 @@ public class CardSwapper : MonoBehaviour
     public Button _swapAllButton;  // Botão para trocar todas as cartas
     public Button _swapOneButton;  // Botão para trocar uma única carta
     public Transform _cardVisualsParent;  
-    public List<CardType> _availableCardTypes;
+    public List<CardTypeSo> _availableCardTypes;
     public Timer _timer; // Referência ao Timer
 
     private void Start()
@@ -78,12 +78,12 @@ public class CardSwapper : MonoBehaviour
             Card card = cardFace._target.GetComponent<Card>();
             if (card != null)
             {
-                CardType newCardType = _availableCardTypes[Random.Range(0, _availableCardTypes.Count)];
-                card._cardType = newCardType;
+                CardTypeSo newCardTypeSo = _availableCardTypes[Random.Range(0, _availableCardTypes.Count)];
+                card._cardTypeSo = newCardTypeSo;
 
                 // Atualiza os valores da carta
-                card._cardNumber = newCardType._setAmount == 0 ? Random.Range(0, newCardType._maxCardNumber) : newCardType._setAmount;
-                cardFace._icon.sprite = newCardType._cardIcon;
+                card._cardNumber = newCardTypeSo._setAmount == 0 ? Random.Range(0, newCardTypeSo._maxCardNumber) : newCardTypeSo._setAmount;
+                cardFace._icon.sprite = newCardTypeSo._cardIcon;
                 cardFace._rightNumber.text = card._cardNumber.ToString();
                 cardFace._leftNumber.text = card._cardNumber.ToString();
             }
