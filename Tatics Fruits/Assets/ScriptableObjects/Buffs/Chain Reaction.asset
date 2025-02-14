@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df782db2834496086933697c9594a05, type: 3}
   m_Name: Chain Reaction
   m_EditorClassIdentifier: 
-  _powerupName: Chain Reaction
+  _cardIcon: {fileID: 21300000, guid: 54a7ba31d2906432888f9b24f556eebb, type: 3}
+  _name: Chain Reaction
   _description: Se outra carta do mesmo tipo for jogada depois, ganha pontos extras.

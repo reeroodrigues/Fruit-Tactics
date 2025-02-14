@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb87939d20014eadbd0eeb45e41a08d7, type: 3}
   m_Name: Fruit Lock
   m_EditorClassIdentifier: 
-  _powerupName: Fruit Lock
+  _cardIcon: {fileID: 0}
+  _name: Fruit Lock
   _description: "O jogador s\xF3 pode jogar uma fruta espec\xEDfica na pr\xF3xima
     rodada."

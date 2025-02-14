@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb87939d20014eadbd0eeb45e41a08d7, type: 3}
   m_Name: Half Points
   m_EditorClassIdentifier: 
-  _powerupName: Half Points
+  _cardIcon: {fileID: 0}
+  _name: Half Points
   _description: Reduz os pontos da carta pela metade.
