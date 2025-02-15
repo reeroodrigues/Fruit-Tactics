@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0df782db2834496086933697c9594a05, type: 3}
+  m_Script: {fileID: 11500000, guid: 5df3c994ac61c4a8480cffc77257678d, type: 3}
   m_Name: Skip Penalty
   m_EditorClassIdentifier: 
-  _cardIcon: {fileID: 21300000, guid: 433f82f8db3a1ca4386a0308fc38f5f2, type: 3}
-  _name: Skip Penalty
-  _description: Remove penalidades ao jogar a carta.
+  _cardIcon: {fileID: 21300000, guid: 690eda6cc47c2104fa79648e622f35ad, type: 3}
+  _maxCardNumber: 6
+  _setAmount: 6

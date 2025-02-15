@@ -14,8 +14,8 @@ public class CardManager : MonoBehaviour
     public GameObject _cardParent;
     public HorizontalLayoutGroup _defaultCardsLayoutGroup;
     public CardHolder _defaultPlayArea;
-    public GameObject _singleCardsParent;
     public GameObject _cardFace;
+    public GameObject _cardFacePowerup;
     public Canvas _canvas;
 
     [Header("Settings")]
@@ -24,6 +24,7 @@ public class CardManager : MonoBehaviour
 
     [Header("Lists")]
     public List<CardTypeSo> _cardTypes = new List<CardTypeSo>();
+    public List<CardPowerUpTypeSo> _cardPowerUpTypes = new List<CardPowerUpTypeSo>();
     public List<GameObject> _cards = new List<GameObject>();
 
     private void Start()
@@ -119,12 +120,25 @@ public class CardManager : MonoBehaviour
             if (_defaultCardsLayoutGroup.transform.childCount < _maxCards)
             {
                 var card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
-                var randomCard = Random.Range(0, _cardTypes.Count);
+                
+                int cardTypeSelection = Random.Range(0, 2);
 
-                card.GetComponentInChildren<Card>()._cardTypeSo = _cardTypes[randomCard];
-                var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
-
-                cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
+                if (cardTypeSelection == 0 && _cardTypes.Count > 0)
+                {
+                    var randomCard = Random.Range(0, _cardTypes.Count);
+                    card.GetComponentInChildren<Card>()._cardTypeSo = _cardTypes[randomCard];
+                    
+                    var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
+                    cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
+                }
+                else if (cardTypeSelection == 1 && _cardPowerUpTypes.Count > 0)
+                {
+                    var randomPowerUp = Random.Range(0, _cardPowerUpTypes.Count);
+                    card.GetComponentInChildren<Card>()._cardPowerUpTypeSo = _cardPowerUpTypes[randomPowerUp];
+                    
+                    var cardPowerUpFace = Instantiate(_cardFacePowerup, GameObject.Find("CardVisuals").transform);
+                    cardPowerUpFace.GetComponent<CardFacePowerUp>()._target = card.GetComponentInChildren<Card>().gameObject;
+                }
             }
         }
     }

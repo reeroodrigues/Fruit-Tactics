@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb87939d20014eadbd0eeb45e41a08d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5df3c994ac61c4a8480cffc77257678d, type: 3}
   m_Name: Discard Block
   m_EditorClassIdentifier: 
-  _cardIcon: {fileID: 0}
-  _name: Discard Block
-  _description: "O jogador n\xE3o pode descartar cartas no pr\xF3ximo turno."
+  _cardIcon: {fileID: 21300000, guid: 52ef57f280acc8749bf13855c60a79f6, type: 3}
+  _maxCardNumber: 8
+  _setAmount: 8

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class CardFace : MonoBehaviour
+public class CardFacePowerUp : MonoBehaviour
 {
     [Header("References")] 
     public GameObject _target;
@@ -33,9 +33,9 @@ public class CardFace : MonoBehaviour
     {
         if (_target == null)
             return;
-        
+
         _hovering = _target.GetComponent<Card>()._hovering && _target.GetComponent<Card>()._cardState != Card.CardState.Played;
-        
+
         transform.position = Vector3.Lerp(transform.position, _target.transform.position, Time.deltaTime * _movementSpeed);
         _visual.transform.position = Vector3.Lerp(_visual.transform.position, (_hovering || _target.GetComponent<Card>()._cardManager._selectedCard == _target) ? _target.transform.position + _offset : _target.transform.position, Time.deltaTime * _movementSpeed);
 
@@ -76,19 +76,24 @@ public class CardFace : MonoBehaviour
             return;
         }
 
-        if (cardComponent._cardTypeSo == null)
+        // Verifica se o CardPowerUpTypeSo está definido
+        if (cardComponent._cardPowerUpTypeSo == null)
         {
             return;
         }
 
+        // Certifica-se de que as referências do ícone e números estão configuradas
         if (_icon == null || _iconShadow == null || _rightNumber == null || _leftNumber == null)
         {
             return;
         }
 
-        _icon.sprite = cardComponent._cardTypeSo._cardIcon;
-        _iconShadow.sprite = cardComponent._cardTypeSo._cardIcon;
-        _rightNumber.text = cardComponent._cardNumber.ToString();
-        _leftNumber.text = cardComponent._cardNumber.ToString();
+        // Atualiza o ícone do power-up e os números (se necessário)
+        _icon.sprite = cardComponent._cardPowerUpTypeSo._cardIcon;
+        _iconShadow.sprite = cardComponent._cardPowerUpTypeSo._cardIcon;
+
+        // Aqui você pode adicionar lógica para números se os power-ups tiverem números
+        // _rightNumber.text = cardComponent._cardPowerUpTypeSo._cardNumber.ToString();
+        // _leftNumber.text = cardComponent._cardPowerUpTypeSo._cardNumber.ToString();
     }
 }

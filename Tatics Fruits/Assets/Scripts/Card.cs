@@ -11,6 +11,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public CardManager _cardManager;
     public CardTypeSo _cardTypeSo;
+    public CardPowerUpTypeSo _cardPowerUpTypeSo;
     public int _cardNumber;
 
     public enum CardState
@@ -30,9 +31,17 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _cardManager = GameObject.Find("CardsManager").GetComponent<CardManager>();
         _cardManager._cards.Add(gameObject);
         _canDrag = true;
-
-        _cardNumber = _cardTypeSo._setAmount == 0 ? Random.Range(0, _cardTypeSo._maxCardNumber) : _cardTypeSo._setAmount;
+        
+        if (_cardPowerUpTypeSo != null && _cardTypeSo == null)
+        {
+        }
+        else if (_cardTypeSo != null && _cardPowerUpTypeSo == null)
+        {
+        }
+        
+        _cardNumber = _cardTypeSo != null && _cardTypeSo._setAmount == 0 ? Random.Range(0, _cardTypeSo._maxCardNumber) : _cardTypeSo?._setAmount ?? 0;
     }
+
     
 
     public void OnBeginDrag(PointerEventData eventData)
