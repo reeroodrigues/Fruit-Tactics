@@ -9,5 +9,8 @@ namespace DefaultNamespace
         public Sprite _cardIcon;
         public int _maxCardNumber;
         public int _setAmount;
+
+        [Header("Visual Settings")] 
+        public Color _borderColor;
     }
 }

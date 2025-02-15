@@ -19,7 +19,7 @@ public class CardSwapper : MonoBehaviour
         if (_swapOneButton != null)
             _swapOneButton.onClick.AddListener(SwapOneCard);
     }
-
+    
     private void SwapAllCards()
     {
         if (_cardVisualsParent == null || _availableCardTypes == null || _availableCardTypes.Count == 0)

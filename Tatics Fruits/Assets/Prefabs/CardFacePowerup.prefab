@@ -265,6 +265,7 @@ MonoBehaviour:
   _visual: {fileID: 4662394480272547509}
   _icon: {fileID: 2521563015431257914}
   _iconShadow: {fileID: 3651624320539580946}
+  _border: {fileID: 0}
   _rightNumber: {fileID: 2223729213776854922}
   _leftNumber: {fileID: 3339136185036346081}
   _rotationSpeed: 25
@@ -559,7 +560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8301887, g: 0.49896154, b: 0.09789959, a: 1}
+  m_Color: {r: 0.83137256, g: 0.49803922, b: 0.09803922, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

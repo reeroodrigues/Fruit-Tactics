@@ -10,6 +10,7 @@ public class CardFacePowerUp : MonoBehaviour
     public GameObject _visual;
     public Image _icon;
     public Image _iconShadow;
+    public Image _border;
     public TextMeshProUGUI _rightNumber;
     public TextMeshProUGUI _leftNumber;
 
@@ -76,24 +77,22 @@ public class CardFacePowerUp : MonoBehaviour
             return;
         }
 
-        // Verifica se o CardPowerUpTypeSo está definido
         if (cardComponent._cardPowerUpTypeSo == null)
         {
             return;
         }
 
-        // Certifica-se de que as referências do ícone e números estão configuradas
         if (_icon == null || _iconShadow == null || _rightNumber == null || _leftNumber == null)
         {
             return;
         }
 
-        // Atualiza o ícone do power-up e os números (se necessário)
         _icon.sprite = cardComponent._cardPowerUpTypeSo._cardIcon;
         _iconShadow.sprite = cardComponent._cardPowerUpTypeSo._cardIcon;
 
-        // Aqui você pode adicionar lógica para números se os power-ups tiverem números
-        // _rightNumber.text = cardComponent._cardPowerUpTypeSo._cardNumber.ToString();
-        // _leftNumber.text = cardComponent._cardPowerUpTypeSo._cardNumber.ToString();
+        if (_border != null)
+        {
+            _border.color = cardComponent._cardPowerUpTypeSo._borderColor;
+        }
     }
 }

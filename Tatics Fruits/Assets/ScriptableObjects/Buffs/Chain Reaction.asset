@@ -15,3 +15,4 @@ MonoBehaviour:
   _cardIcon: {fileID: 21300000, guid: 54a7ba31d2906432888f9b24f556eebb, type: 3}
   _maxCardNumber: 1
   _setAmount: 1
+  _borderColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 0}
