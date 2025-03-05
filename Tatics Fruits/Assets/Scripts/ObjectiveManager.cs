@@ -12,7 +12,10 @@ namespace DefaultNamespace
         public TextMeshProUGUI _progressText;
         public ScoreManager _scoreManager;
 
-        private readonly int[] _milestones = { 50, 100, 150, 200 };
+        public GameObject[] _stars;
+
+        private readonly int[] _milestones = { 25, 50, 100};
+        private readonly int[] _starThresholds = { 25, 50, 100 };
         private int _currentMilestoneIndex = 0;
 
         private void Start()
@@ -38,6 +41,8 @@ namespace DefaultNamespace
             _progressBar.DOValue(fillAmount, 0.5f);
             
             _progressText.text = $"{score} / {currentMilestone}";
+
+            ActivateStars(score);
             
             if (score >= currentMilestone && _currentMilestoneIndex < _milestones.Length - 1)
             {
@@ -45,5 +50,19 @@ namespace DefaultNamespace
             }
         }
 
+        private void ActivateStars(int score)
+        {
+            for (int i = 0; i < _stars.Length; i++)
+            {
+                if (i < _starThresholds.Length && score >= _starThresholds[i])
+                {
+                    _stars[i].SetActive(true);
+                }
+                else
+                {
+                    _stars[i].SetActive(false);
+                }
+            }
+        }
     }
 }

@@ -638,6 +638,16 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7752918358052106074, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
   m_PrefabInstance: {fileID: 416019315}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &416019317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2642554865290778137, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+  m_PrefabInstance: {fileID: 416019315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &416019318 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2732004940539968531, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+  m_PrefabInstance: {fileID: 416019315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &436655580
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2149,8 +2159,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progressBar: {fileID: 17168923}
-  _progressText: {fileID: 0}
+  _progressText: {fileID: 1381425713}
   _scoreManager: {fileID: 1708266481}
+  _stars:
+  - {fileID: 1530511624}
+  - {fileID: 416019317}
+  - {fileID: 416019318}
 --- !u!1 &1369335517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2537,6 +2551,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1530511624 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7752918358048974126, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+  m_PrefabInstance: {fileID: 416019315}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1665036185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,8 +2713,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -270.64807, y: 143}
-  m_SizeDelta: {x: -1794.395, y: -833.135}
+  m_AnchoredPosition: {x: -289, y: 128.46002}
+  m_SizeDelta: {x: -1728.593, y: -804.054}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1708266479
 MonoBehaviour:
