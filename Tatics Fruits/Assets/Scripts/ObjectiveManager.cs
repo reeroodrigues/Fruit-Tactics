@@ -9,7 +9,6 @@ namespace DefaultNamespace
     public class ObjectiveManager : MonoBehaviour
     {
         public Slider _progressBar;
-        public TextMeshProUGUI _progressText;
         public ScoreManager _scoreManager;
 
         public GameObject[] _stars;
@@ -30,7 +29,7 @@ namespace DefaultNamespace
 
         private void UpdateProgress()
         {
-            if (_scoreManager == null || _progressBar == null || _progressText == null)
+            if (_scoreManager == null || _progressBar == null)
                 return;
 
             var score = _scoreManager.GetScore();
@@ -39,8 +38,6 @@ namespace DefaultNamespace
             var fillAmount = Mathf.Clamp01((float)score / currentMilestone);
             
             _progressBar.DOValue(fillAmount, 0.5f);
-            
-            _progressText.text = $"{score} / {currentMilestone}";
 
             ActivateStars(score);
             
