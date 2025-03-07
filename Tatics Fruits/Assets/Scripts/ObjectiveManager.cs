@@ -1,6 +1,4 @@
-using System;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +8,9 @@ namespace DefaultNamespace
     {
         public Slider _progressBar;
         public ScoreManager _scoreManager;
-
         public GameObject[] _stars;
 
-        private readonly int[] _milestones = { 25, 50, 100};
         private readonly int[] _starThresholds = { 25, 50, 100 };
-        private int _currentMilestoneIndex = 0;
 
         private void Start()
         {
@@ -33,18 +28,19 @@ namespace DefaultNamespace
                 return;
 
             var score = _scoreManager.GetScore();
-            var currentMilestone = _milestones[_currentMilestoneIndex];
-            
-            var fillAmount = Mathf.Clamp01((float)score / currentMilestone);
-            
-            _progressBar.DOValue(fillAmount, 0.5f);
+            var fillAmount = 0f;
 
+            if (score < 25)
+                fillAmount = (float)score / 25f * 0.2f;
+            else if (score < 50)
+                fillAmount = 0.2f + ((score - 25f) / 25f * 0.3f);
+            else if (score < 100)
+                fillAmount = 0.5f + ((score - 50f) / 50f * 0.5f);
+            else
+                fillAmount = 1f;
+
+            _progressBar.DOValue(fillAmount, 0.5f);
             ActivateStars(score);
-            
-            if (score >= currentMilestone && _currentMilestoneIndex < _milestones.Length - 1)
-            {
-                _currentMilestoneIndex++;
-            }
         }
 
         private void ActivateStars(int score)
@@ -53,13 +49,32 @@ namespace DefaultNamespace
             {
                 if (i < _starThresholds.Length && score >= _starThresholds[i])
                 {
-                    _stars[i].SetActive(true);
+                    if (!_stars[i].activeSelf)
+                    {
+                        _stars[i].SetActive(true);
+                        AnimateStar(_stars[i]); // Chama a animação
+                    }
                 }
                 else
                 {
                     _stars[i].SetActive(false);
                 }
             }
+        }
+
+        private void AnimateStar(GameObject star)
+        {
+            var image = star.GetComponent<Image>();
+
+            if (image == null) return;
+
+            // Animação de rotação suave
+            star.transform.DORotate(new Vector3(0, 0, 15), 0.3f)
+                .SetLoops(2, LoopType.Yoyo)
+                .SetEase(Ease.InOutSine);
+
+            // Efeito de brilho (fade in/out)
+            image.DOFade(1f, 0.2f).From(0.5f).SetLoops(2, LoopType.Yoyo);
         }
     }
 }

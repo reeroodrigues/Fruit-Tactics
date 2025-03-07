@@ -106,7 +106,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (_scoreText != null)
         {
-            _scoreText.text = "Score: " + _scoreManager.GetScore();
+            _scoreText.text = _scoreManager.GetScore().ToString();
         }
     }
 

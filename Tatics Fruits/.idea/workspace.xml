@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6623f04e-0361-4ea4-b421-99854434a851" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/query/client-agp/cache-v2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/query/client-agp/cmakeFiles-v1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/query/client-agp/codemodel-v2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/cache-v2-e35e48a3a4cbd06dff4e.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/cmakeFiles-v1-1bf0d7ec06b485b8d79a.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/codemodel-v2-2d75a1e596c27ad30a32.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/directory-.-Debug-f5ebdc15457944623624.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/directory-FramePacing-Debug-87e3a8450f19c90fd65e.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/directory-GameActivity-Debug-f368e6d506ea21fe2607.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/index-2025-03-06T21-06-32-0441.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/target-game-Debug-85f2da634d62a73762c1.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.cmake/api/v1/reply/target-swappywrapper-Debug-c3fdfede4d28dba1376a.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.ninja_deps" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/.ninja_log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeCache.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeCCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeCXXCompiler.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeDetermineCompilerABI_C.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeDetermineCompilerABI_CXX.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CMakeSystem.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CompilerIdC/CMakeCCompilerId.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CompilerIdC/CMakeCCompilerId.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CompilerIdCXX/CMakeCXXCompilerId.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/3.22.1-g37088a8/CompilerIdCXX/CMakeCXXCompilerId.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/cmake.check_cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/CMakeFiles/rules.ninja" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/FramePacing/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/GameActivity/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/additional_project_files.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/android_gradle_build.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/android_gradle_build_mini.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/build.ninja" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/build_file_index.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/cmake_install.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/compile_commands.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/compile_commands.json.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/configure_fingerprint.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/metadata_generation_command.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/prefab_config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/arm64-v8a/symbol_folder_index.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/hash_key.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/game-activity/game-activityConfig.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing/games-frame-pacingConfig.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/Debug/na2420r2/prefab/arm64-v8a/prefab/lib/aarch64-linux-android/cmake/games-frame-pacing/games-frame-pacingConfigVersion.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.utmp/tools/debug/arm64-v8a/compile_commands.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/HighScore.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/HighScore.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Fonts/TMP/gomarice_rocks.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/TMP/gomarice_rocks.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunInfo.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/PerformanceTestRunSettings.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ObjectiveManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ObjectiveManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScoreManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScoreManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Examples &amp; Extras/Resources/Fonts &amp; Materials/Oswald Bold SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2txTnFohAR1t374BzvXBYbpnAmy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/Users/r.rodrigues/Documents/GitHub/Tatics-fruits/Tatics Fruits",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3413793",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6623f04e-0361-4ea4-b421-99854434a851" name="Changes" comment="" />
+      <created>1741292892143</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741292892143</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
