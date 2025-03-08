@@ -14,7 +14,6 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public int _amountToComplete;
 
     public HolderType _holderType;
-
     public ScoreManager _scoreManager;
     public TextMeshProUGUI _scoreText;
     public Timer _timer;
@@ -43,6 +42,17 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 child.GetComponent<Card>()._canDrag = false;
                 child.GetComponent<Card>()._cardState = Card.CardState.Played;
+            }
+        }
+
+        // Impede que as cartas sejam arrastadas após o tempo acabar
+        if (_timer != null && _timer.GetTimeRemaining() <= 0)
+        {
+            foreach (Transform child in transform)
+            {
+                Card card = child.GetComponent<Card>();
+                if (card != null)
+                    card._canDrag = false;
             }
         }
     }
@@ -79,15 +89,13 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                     sumValue += card._cardNumber;
                     cardsToRemove.Add(card.gameObject);
                 }
-                
-                
+
                 if (_scoreManager != null)
                 {
                     _scoreManager.AddScore(sumValue);
-                    
                     UpdateScoreText();
                 }
-                
+
                 if (_timer != null)
                 {
                     _timer.AddTime(5f);
@@ -114,36 +122,41 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (_holderType == HolderType.Play)
         {
-            if (_hasToHaveSameNumberOrColor)
+            if (_timer != null && _timer.GetTimeRemaining() <= 0)
             {
-                if (_cardManager._selectedCard != null && transform.childCount > 0)
+                _available = false; // Impede que joguem cartas na PlayArea
+            }
+            else
+            {
+                if (_hasToHaveSameNumberOrColor)
                 {
-                    Transform lastChild = transform.GetChild(transform.childCount - 1);
-                    if (lastChild != null)
+                    if (_cardManager._selectedCard != null && transform.childCount > 0)
                     {
-                        Card lastCard = lastChild.GetComponent<Card>();
-
-                        if (lastCard != null && _cardManager._selectedCard.GetComponent<Card>() != null)
+                        Transform lastChild = transform.GetChild(transform.childCount - 1);
+                        if (lastChild != null)
                         {
-                            if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == lastCard._cardNumber ||
-                                _cardManager._selectedCard.GetComponent<Card>()._cardTypeSo._cardIcon == lastCard._cardTypeSo._cardIcon)
+                            Card lastCard = lastChild.GetComponent<Card>();
+
+                            if (lastCard != null && _cardManager._selectedCard.GetComponent<Card>() != null)
                             {
-                                _available = transform.childCount < _maxAmount;
+                                if (_cardManager._selectedCard.GetComponent<Card>()._cardNumber == lastCard._cardNumber ||
+                                    _cardManager._selectedCard.GetComponent<Card>()._cardTypeSo._cardIcon == lastCard._cardTypeSo._cardIcon)
+                                {
+                                    _available = transform.childCount < _maxAmount;
+                                }
+                                else
+                                {
+                                    _available = false;
+                                }
                             }
                             else
                             {
-                                _available = false;
+                                _available = true;
                             }
                         }
                         else
                         {
                             _available = true;
-                            if(lastCard == null)
-                            {
-                            }
-                            if(_cardManager._selectedCard.GetComponent<Card>() == null)
-                            {
-                            }
                         }
                     }
                     else
@@ -153,17 +166,13 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 }
                 else
                 {
-                    _available = true;
+                    _available = transform.childCount < _maxAmount;
                 }
-            }
-            else
-            {
-                _available = transform.childCount < _maxAmount;
             }
 
             _completed = transform.childCount == _amountToComplete;
         }
-        
+
         if (_holderType == HolderType.Discard)
         {
             _available = true;

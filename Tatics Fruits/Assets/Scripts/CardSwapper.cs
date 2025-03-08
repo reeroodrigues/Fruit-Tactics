@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class CardSwapper : MonoBehaviour
 {
-    public Button _swapAllButton; 
+    public Button _swapAllButton;
     public Button _swapOneButton;
-    public Transform _cardVisualsParent;  
+    public Transform _cardVisualsParent;
     public List<CardTypeSo> _availableCardTypes;
     public Timer _timer;
 
@@ -29,7 +29,7 @@ public class CardSwapper : MonoBehaviour
         {
             SwapCard(cardFaceTransform);
         }
-        
+
         if (_timer != null)
         {
             _timer.AddTime(-10f);
@@ -44,10 +44,10 @@ public class CardSwapper : MonoBehaviour
         int totalCards = _cardVisualsParent.childCount;
         if (totalCards == 0)
             return;
-        
+
         int randomIndex = Random.Range(0, totalCards);
         SwapCard(_cardVisualsParent.GetChild(randomIndex));
-        
+
         if (_timer != null)
         {
             _timer.AddTime(-2f);
@@ -64,12 +64,23 @@ public class CardSwapper : MonoBehaviour
             {
                 CardTypeSo newCardTypeSo = _availableCardTypes[Random.Range(0, _availableCardTypes.Count)];
                 card._cardTypeSo = newCardTypeSo;
-                
-                card._cardNumber = newCardTypeSo._setAmount == 0 ? Random.Range(0, newCardTypeSo._maxCardNumber) : newCardTypeSo._setAmount;
+
+                card._cardNumber = newCardTypeSo._setAmount == 0
+                    ? Random.Range(0, newCardTypeSo._maxCardNumber)
+                    : newCardTypeSo._setAmount;
                 cardFace._icon.sprite = newCardTypeSo._cardIcon;
                 cardFace._rightNumber.text = card._cardNumber.ToString();
                 cardFace._leftNumber.text = card._cardNumber.ToString();
             }
         }
+    }
+
+    public void DisableSwapButtons()
+    {
+        if (_swapAllButton != null)
+            _swapAllButton.interactable = false;
+        
+        if (_swapOneButton != null)
+            _swapOneButton.interactable = false;
     }
 }

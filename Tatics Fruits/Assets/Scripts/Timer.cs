@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -9,8 +10,11 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI _timerText;
     public float _totalTime;
     public float _remainingTime;
+    public event Action OnRoundEnd;
 
     private bool _isPulsing = false;
+    private int _timeRemaining;
+    private bool _isRunning;
 
     private void Start()
     {
@@ -18,6 +22,7 @@ public class Timer : MonoBehaviour
         UpdateTimerText();
     }
 
+    [Obsolete("Obsolete")]
     private void Update()
     {
         if (_remainingTime > 0)
@@ -34,9 +39,22 @@ public class Timer : MonoBehaviour
         else if (_isPulsing)
         {
             StopPulsingEffect();
+            EndRound();
+        }
+        
+        if (_remainingTime <= 0 && _isRunning)
+        {
+            _remainingTime = 0;
+            _isRunning = false;
+            FindObjectOfType<CardSwapper>()?.DisableSwapButtons();
         }
     }
-    
+
+    private void EndRound()
+    {
+        OnRoundEnd?.Invoke();
+    }
+
     public void AddTime(float timeToAdd)
     {
         _remainingTime += timeToAdd;
@@ -79,5 +97,10 @@ public class Timer : MonoBehaviour
         _timerText.color = Color.white;
         _timerText.transform.localScale = Vector3.one;
         _timerText.transform.DOKill();
+    }
+
+    public float GetTimeRemaining()
+    {
+        return _remainingTime;
     }
 }

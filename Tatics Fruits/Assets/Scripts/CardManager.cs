@@ -17,6 +17,9 @@ public class CardManager : MonoBehaviour
     public GameObject _singleCardsParent;
     public GameObject _cardFace;
     public Canvas _canvas;
+    public Timer _timer;
+    
+    private bool _isRoundOver = false;
 
     [Header("Settings")]
     [Range(0,12)] public int _maxCards = 6;
@@ -28,13 +31,30 @@ public class CardManager : MonoBehaviour
 
     private void Start()
     {
+        if (_timer != null)
+        {
+            _timer.OnRoundEnd += HandleRoundEnd;
+        }
+
         if (_startingAmount > 0)
             AddCard(_startingAmount);
     }
     
     private void Update()
     {
+        if (_isRoundOver) return;
+
         HandleCardMovements();
+        
+        if (Input.GetMouseButtonUp(0))
+        {
+            PlayCard();
+        }
+    }
+
+    private void HandleRoundEnd()
+    {
+        _isRoundOver = true;
     }
 
     private void HandleCardMovements()
@@ -67,6 +87,8 @@ public class CardManager : MonoBehaviour
 
     public void PlayCard()
     {
+        if (_isRoundOver) return;
+
         if (_selectedCard == null)
             return;
 
@@ -114,6 +136,8 @@ public class CardManager : MonoBehaviour
 
     public void AddCard(int amount)
     {
+        if (_isRoundOver) return;
+
         for (int i = 0; i < amount; i++)
         {
             if (_defaultCardsLayoutGroup.transform.childCount < _maxCards)
@@ -128,5 +152,4 @@ public class CardManager : MonoBehaviour
             }
         }
     }
-
 }
