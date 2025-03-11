@@ -27,7 +27,17 @@ public class CardSwapper : MonoBehaviour
 
         foreach (Transform cardFaceTransform in _cardVisualsParent)
         {
-            SwapCard(cardFaceTransform);
+            CardFace cardFace = cardFaceTransform.GetComponent<CardFace>();
+            if (cardFace != null && cardFace._target != null)
+            {
+                Card card = cardFace._target.GetComponent<Card>();
+                
+                if (card != null && card.transform.parent != null && 
+                    !card.transform.parent.CompareTag("PlayArea")) 
+                {
+                    SwapCard(cardFaceTransform);
+                }
+            }
         }
 
         if (_timer != null)
@@ -36,17 +46,26 @@ public class CardSwapper : MonoBehaviour
         }
     }
 
+
     private void SwapOneCard()
     {
         if (_cardVisualsParent == null || _availableCardTypes == null || _availableCardTypes.Count == 0)
             return;
 
-        int totalCards = _cardVisualsParent.childCount;
-        if (totalCards == 0)
-            return;
-
-        int randomIndex = Random.Range(0, totalCards);
-        SwapCard(_cardVisualsParent.GetChild(randomIndex));
+        foreach (Transform cardFaceTransform in _cardVisualsParent)
+        {
+            CardFace cardFace = cardFaceTransform.GetComponent<CardFace>();
+            if (cardFace != null && cardFace._target != null)
+            {
+                Card card = cardFace._target.GetComponent<Card>();
+                
+                if (card != null && card.transform.parent != null && 
+                    !card.transform.parent.CompareTag("PlayArea")) 
+                {
+                    SwapCard(cardFaceTransform);
+                }
+            }
+        }
 
         if (_timer != null)
         {
