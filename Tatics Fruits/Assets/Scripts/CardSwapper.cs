@@ -51,6 +51,8 @@ public class CardSwapper : MonoBehaviour
     {
         if (_cardVisualsParent == null || _availableCardTypes == null || _availableCardTypes.Count == 0)
             return;
+        
+        List<Transform> swapableCards = new List<Transform>();
 
         foreach (Transform cardFaceTransform in _cardVisualsParent)
         {
@@ -62,9 +64,15 @@ public class CardSwapper : MonoBehaviour
                 if (card != null && card.transform.parent != null && 
                     !card.transform.parent.CompareTag("PlayArea")) 
                 {
-                    SwapCard(cardFaceTransform);
+                    swapableCards.Add(cardFaceTransform);
                 }
             }
+        }
+        
+        if (swapableCards.Count > 0)
+        {
+            Transform randomCard = swapableCards[Random.Range(0, swapableCards.Count)];
+            SwapCard(randomCard);
         }
 
         if (_timer != null)

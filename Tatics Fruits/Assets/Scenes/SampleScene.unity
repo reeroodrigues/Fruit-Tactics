@@ -1728,7 +1728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timerImage: {fileID: 707565917}
   _timerText: {fileID: 748170711}
-  _totalTime: 30
+  _totalTime: 60
   _remainingTime: 0
 --- !u!1 &748170709
 GameObject:

@@ -97,7 +97,7 @@ public class CardManager : MonoBehaviour
             var target = _selectedCard.transform.parent;
             _selectedCard.transform.position = _defaultPlayArea.transform.position;
             _selectedCard.transform.SetParent(_defaultPlayArea.transform);
-
+            
             var canvas = _selectedCard.GetComponent<Canvas>();
             if (canvas == null)
                 canvas = _selectedCard.AddComponent<Canvas>();
