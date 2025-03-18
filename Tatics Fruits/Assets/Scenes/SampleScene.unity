@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 83359193}
   - component: {fileID: 83359192}
   - component: {fileID: 83359194}
+  - component: {fileID: 83359195}
   m_Layer: 5
   m_Name: PlayArea
   m_TagString: PlayArea
@@ -305,6 +306,18 @@ MonoBehaviour:
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
   _timer: {fileID: 707565919}
+--- !u!210 &83359195
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83359190}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &123366805
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,6 +911,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7752918358360826135, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7752918358360826135, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2030,8 +2047,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 436655581}
   - {fileID: 1369335518}
+  - {fileID: 436655581}
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3499,15 +3516,15 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1042040174}
-  - {fileID: 1473103880}
-  - {fileID: 83359191}
-  - {fileID: 607720896}
-  - {fileID: 959503449}
   - {fileID: 707565916}
   - {fileID: 344111146}
   - {fileID: 1708266478}
   - {fileID: 976067016}
   - {fileID: 1267078231}
+  - {fileID: 83359191}
+  - {fileID: 1473103880}
+  - {fileID: 607720896}
+  - {fileID: 959503449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

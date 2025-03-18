@@ -101,7 +101,7 @@ public class CardManager : MonoBehaviour
             var canvas = _selectedCard.GetComponent<Canvas>();
             if (canvas == null)
                 canvas = _selectedCard.AddComponent<Canvas>();
-
+            
             canvas.overrideSorting = true;
             canvas.sortingOrder = GetNextSortingOrder();
 

@@ -95,4 +95,14 @@ public class CardFace : MonoBehaviour
         _rightNumber.text = cardComponent._cardNumber.ToString();
         _leftNumber.text = cardComponent._cardNumber.ToString();
     }
+
+    public void MoveToLastSibling()
+    {
+        transform.SetAsLastSibling();
+
+        if (transform.parent == null)
+        {
+            transform.parent.SetAsLastSibling();
+        }
+    }
 }

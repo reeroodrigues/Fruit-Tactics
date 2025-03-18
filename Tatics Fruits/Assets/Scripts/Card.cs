@@ -13,6 +13,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public CardTypeSo _cardTypeSo;
     public int _cardNumber;
 
+    private CardFace _cardFace;
+
     public enum CardState
     {
         Idle,
@@ -32,6 +34,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         _canDrag = true;
 
         _cardNumber = _cardTypeSo._setAmount == 0 ? Random.Range(0, _cardTypeSo._maxCardNumber) : _cardTypeSo._setAmount;
+
+        transform.SetAsLastSibling();
     }
     
 
@@ -84,6 +88,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             transform.transform.localPosition = Vector2.zero;
         }
+        
+        transform.SetAsLastSibling();
 
         _cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = true;
@@ -102,5 +108,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnPointerClick(PointerEventData eventData)
     {
         _cardManager._selectedCard = gameObject;
+
+        if (_cardFace != null)
+        {
+            _cardFace.MoveToLastSibling();
+        }
     }
 }
