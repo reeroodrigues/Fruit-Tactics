@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,23 +9,35 @@ public class Timer : MonoBehaviour
 {
     public Image _timerImage;
     public TextMeshProUGUI _timerText;
+    public GameObject _addedTimeTextPrefab;
+    public Transform _addedTimeTextParent;
     public float _totalTime;
     public float _remainingTime;
     public event Action OnRoundEnd;
+    public GameAlertPanel _gameAlertPanel;
 
     private bool _isPulsing = false;
-    private int _timeRemaining;
-    private bool _isRunning;
+    private bool _isRunning = false;
 
     private void Start()
     {
         _remainingTime = _totalTime;
         UpdateTimerText();
+        
+        _gameAlertPanel.ShowMessage("Game Start!", true);
+        _gameAlertPanel.OnGameAlertHidden += StartTimer;
+    }
+
+    private void StartTimer()
+    {
+        _isRunning = true;
     }
 
     [Obsolete("Obsolete")]
     private void Update()
     {
+        if (!_isRunning) return;
+
         if (_remainingTime > 0)
         {
             _remainingTime -= Time.deltaTime;
@@ -47,19 +60,35 @@ public class Timer : MonoBehaviour
             _remainingTime = 0;
             _isRunning = false;
             FindObjectOfType<CardSwapper>()?.DisableSwapButtons();
+            
+            EndRound();
         }
     }
-
-    private void EndRound()
-    {
-        OnRoundEnd?.Invoke();
-    }
-
+    
     public void AddTime(float timeToAdd)
     {
         _remainingTime += timeToAdd;
         _remainingTime = Mathf.Clamp(_remainingTime, 0, _totalTime);
         AnimateTimerText();
+        ShowAddedTimeEffect(timeToAdd);
+    }
+
+    private void ShowAddedTimeEffect(float timeToAdd)
+    {
+        if (_addedTimeTextPrefab == null || _addedTimeTextParent == null) return;
+    
+        var addedTimeText = Instantiate(_addedTimeTextPrefab, _addedTimeTextParent);
+        var textComponent = addedTimeText.GetComponent<TextMeshProUGUI>();
+
+        if (textComponent != null)
+        {
+            bool isReduction = timeToAdd < 0;
+            textComponent.text = isReduction ? $"{timeToAdd:F1}s" : $"+{timeToAdd:F1}s";
+            textComponent.color = isReduction ? Color.red : Color.green;
+        }
+    
+        addedTimeText.transform.DOLocalMoveY(50f, 1f).SetRelative().SetEase(Ease.OutQuad);
+        textComponent.DOFade(0, 1f).OnComplete(() => Destroy(addedTimeText));
     }
 
     private void UpdateTimerText()
@@ -73,11 +102,7 @@ public class Timer : MonoBehaviour
 
     private void AnimateTimerText()
     {
-        if (_timerText != null)
-        {
-            _timerText.transform.DOScale(1.3f, 0.2f).SetLoops(2, LoopType.Yoyo);
-            UpdateTimerText();
-        }
+        _timerText?.transform.DOScale(1.3f, 0.2f).SetLoops(2, LoopType.Yoyo);
     }
 
     private void StartPulsingEffect()
@@ -102,5 +127,14 @@ public class Timer : MonoBehaviour
     public float GetTimeRemaining()
     {
         return _remainingTime;
+    }
+    
+    private void EndRound()
+    {
+        _isRunning = false;
+        StopPulsingEffect();
+        OnRoundEnd?.Invoke();
+        
+        _gameAlertPanel.ShowMessage("Time's up!", false);
     }
 }

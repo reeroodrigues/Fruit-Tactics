@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,17 +10,22 @@ namespace DefaultNamespace
         public Slider _progressBar;
         public ScoreManager _scoreManager;
         public GameObject[] _stars;
-
+        public TextMeshProUGUI _levelText;
+        
         private readonly int[] _starThresholds = { 25, 50, 100 };
+        private int _currentLevel = 1;
+        private int _scoreToNextLevel = 100;
 
         private void Start()
         {
             UpdateProgress();
+            UpdateLevelUI();
         }
 
         private void Update()
         {
             UpdateProgress();
+            CheckLevelProgression();
         }
 
         private void UpdateProgress()
@@ -28,16 +34,7 @@ namespace DefaultNamespace
                 return;
 
             var score = _scoreManager.GetScore();
-            var fillAmount = 0f;
-
-            if (score < 25)
-                fillAmount = (float)score / 25f * 0.2f;
-            else if (score < 50)
-                fillAmount = 0.2f + ((score - 25f) / 25f * 0.3f);
-            else if (score < 100)
-                fillAmount = 0.5f + ((score - 50f) / 50f * 0.5f);
-            else
-                fillAmount = 1f;
+            var fillAmount = Mathf.Clamp((float) score / _scoreToNextLevel, 0f, 1f);
 
             _progressBar.DOValue(fillAmount, 0.5f);
             ActivateStars(score);
@@ -52,7 +49,7 @@ namespace DefaultNamespace
                     if (!_stars[i].activeSelf)
                     {
                         _stars[i].SetActive(true);
-                        AnimateStar(_stars[i]); // Chama a animação
+                        AnimateStar(_stars[i]);
                     }
                 }
                 else
@@ -62,18 +59,46 @@ namespace DefaultNamespace
             }
         }
 
+        private void CheckLevelProgression()
+        {
+            if (_scoreManager.GetScore() >= _scoreToNextLevel)
+            {
+                AdvanceToNextLevel();
+            }
+        }
+
+        private void AdvanceToNextLevel()
+        {
+            _currentLevel++;
+            _scoreManager.ResetScore();
+            _scoreToNextLevel += Mathf.RoundToInt(_scoreToNextLevel * 0.5f);
+            _progressBar.value = 0f;
+
+            UpdateLevelUI();
+            AnimateLevelUp();
+        }
+
+        private void AnimateLevelUp()
+        {
+            _levelText.transform.DOScale(1.5f, 0.3f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutBounce);
+        }
+
+        private void UpdateLevelUI()
+        {
+            if (_levelText != null)
+                _levelText.text = "Level" + _currentLevel;
+        }
+
         private void AnimateStar(GameObject star)
         {
             var image = star.GetComponent<Image>();
 
             if (image == null) return;
-
-            // Animação de rotação suave
+            
             star.transform.DORotate(new Vector3(0, 0, 15), 0.3f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
-
-            // Efeito de brilho (fade in/out)
+            
             image.DOFade(1f, 0.2f).From(0.5f).SetLoops(2, LoopType.Yoyo);
         }
     }

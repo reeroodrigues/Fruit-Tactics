@@ -44,8 +44,6 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 child.GetComponent<Card>()._cardState = Card.CardState.Played;
             }
         }
-
-        // Impede que as cartas sejam arrastadas após o tempo acabar
         if (_timer != null && _timer.GetTimeRemaining() <= 0)
         {
             foreach (Transform child in transform)
@@ -124,7 +122,7 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             if (_timer != null && _timer.GetTimeRemaining() <= 0)
             {
-                _available = false; // Impede que joguem cartas na PlayArea
+                _available = false;
             }
             else
             {
