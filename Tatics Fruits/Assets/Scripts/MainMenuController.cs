@@ -47,7 +47,7 @@ public class MainMenuController : MonoBehaviour
         trigger.triggers.Add(pointerExit);
     }
 
-    private void StartGame() => SceneManager.LoadScene("Gameplay");
+    private void StartGame() => SceneManager.LoadScene("Gameplay Scene");
     private void OpenShop() => Debug.Log("Abrindo Loja...");
     private void OpenOptions() => Debug.Log("Abrindo Opções...");
     private void OpenProfile() => _playerProfileController.OpenProfile();
