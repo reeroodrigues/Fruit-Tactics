@@ -33,7 +33,6 @@ public class Timer : MonoBehaviour
         _isRunning = true;
     }
 
-    [Obsolete("Obsolete")]
     private void Update()
     {
         if (!_isRunning) return;
@@ -49,22 +48,19 @@ public class Timer : MonoBehaviour
                 StartPulsingEffect();
             }
         }
-        else if (_isPulsing)
+        else
         {
-            StopPulsingEffect();
-            EndRound();
-        }
-        
-        if (_remainingTime <= 0 && _isRunning)
-        {
-            _remainingTime = 0;
-            _isRunning = false;
-            FindObjectOfType<CardSwapper>()?.DisableSwapButtons();
-            
+            StopTimer();
             EndRound();
         }
     }
-    
+
+    public void StopTimer()
+    {
+        _isRunning = false;
+        StopPulsingEffect();
+    }
+
     public void AddTime(float timeToAdd)
     {
         _remainingTime += timeToAdd;
@@ -131,10 +127,8 @@ public class Timer : MonoBehaviour
     
     private void EndRound()
     {
-        _isRunning = false;
-        StopPulsingEffect();
+        StopTimer();
         OnRoundEnd?.Invoke();
-        
         _gameAlertPanel.ShowMessage("Time's up!", false);
     }
 }

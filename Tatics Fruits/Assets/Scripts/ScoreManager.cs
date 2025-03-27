@@ -26,6 +26,11 @@ namespace DefaultNamespace
         [SerializeField] private float _scaleDuration = 0.2f;
         [SerializeField] private float _scaleAmount = 1.2f;
 
+        [Header("Level Completed!")] 
+        [SerializeField] private GameObject _levelCompletedPrefab;
+        [SerializeField] private Transform _uiCanvas;
+        [SerializeField] private Timer _timer;
+
         public event Action OnLevelCompleted;
 
         private void Start()
@@ -115,6 +120,19 @@ namespace DefaultNamespace
             if (_score >= _scoreToNextLevel)
             {
                 Debug.Log($"🎉 Parabéns! Você atingiu {_scoreToNextLevel} pontos e completou o nível {_currentLevel}!");
+
+                // Parar o Timer
+                if (_timer != null)
+                {
+                    _timer.StopTimer();
+                }
+
+                // Instanciar o painel de nível completo
+                if (_levelCompletedPrefab != null && _uiCanvas != null)
+                {
+                    Instantiate(_levelCompletedPrefab, _uiCanvas);
+                }
+
                 OnLevelCompleted?.Invoke();
                 AdvanceToNextLevel();
             }

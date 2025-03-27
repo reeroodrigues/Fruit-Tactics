@@ -2547,6 +2547,9 @@ MonoBehaviour:
   _levelText: {fileID: 0}
   _scaleDuration: 0.2
   _scaleAmount: 1.2
+  _levelCompletedPrefab: {fileID: 0}
+  _uiCanvas: {fileID: 0}
+  _timer: {fileID: 0}
 --- !u!114 &976067018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2602,7 +2605,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1042040174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3718,6 +3721,9 @@ MonoBehaviour:
   _levelText: {fileID: 416019317}
   _scaleDuration: 0.2
   _scaleAmount: 1.2
+  _levelCompletedPrefab: {fileID: 1059221449573548163, guid: c1b5547c8c16c374799866935b19b344, type: 3}
+  _uiCanvas: {fileID: 2082077804}
+  _timer: {fileID: 707565919}
 --- !u!1 &1756448192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 497974157786526642, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
