@@ -25,12 +25,16 @@ public class Timer : MonoBehaviour
         UpdateTimerText();
         
         _gameAlertPanel.ShowMessage("Game Start!", true);
-        _gameAlertPanel.OnGameAlertHidden += StartTimer;
+        _gameAlertPanel.OnGameAlertHidden += () =>
+        {
+            Debug.Log("Aguardando clique do botão Start...");
+        };
     }
 
-    private void StartTimer()
+    public void StartTimer()
     {
         _isRunning = true;
+        Debug.Log("Timer iniciado!");
     }
 
     private void Update()

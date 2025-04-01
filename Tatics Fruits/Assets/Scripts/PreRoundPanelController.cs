@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +10,7 @@ public class PreRoundPanelController : MonoBehaviour
     [SerializeField] private Image _starsImage;
     [SerializeField] private Button _backToMenuButton;
     [SerializeField] private Button _startPhaseButton;
-    [SerializeField] private Button _skipPhaseButton;
+    [SerializeField] private Timer _timer;
 
     public void SetupPreRound(int phaseNumber, string objectiveDescription, Sprite starsSprite)
     {
@@ -24,7 +23,6 @@ public class PreRoundPanelController : MonoBehaviour
     {
         _backToMenuButton.onClick.AddListener(BackToMenu);
         _startPhaseButton.onClick.AddListener(StartPhase);
-        _skipPhaseButton.onClick.AddListener(SkipPhase);
     }
 
     private void BackToMenu()
@@ -35,10 +33,20 @@ public class PreRoundPanelController : MonoBehaviour
     private void StartPhase()
     {
         gameObject.SetActive(false);
-    }
+    
+        if (_timer == null)
+        {
+            _timer = FindObjectOfType<Timer>();
+        }
 
-    private void SkipPhase()
-    {
-        Debug.Log("Fase Pulada!");
+        if (_timer != null)
+        {
+            Debug.Log("Iniciando Timer...");
+            _timer.StartTimer();
+        }
+        else
+        {
+            Debug.LogError("Timer não encontrado na cena!");
+        }
     }
 }
