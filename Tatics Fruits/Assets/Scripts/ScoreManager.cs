@@ -21,6 +21,7 @@ namespace DefaultNamespace
         private readonly int[] _starThresholds = { 25, 50, 100 };
         private int _currentLevel = 1;
         private int _scoreToNextLevel = 100;
+        private int _targetScore;
 
         [Header("Animation Settings")]
         [SerializeField] private float _scaleDuration = 0.2f;
@@ -36,6 +37,13 @@ namespace DefaultNamespace
         private void Start()
         {
             _highScore = FindObjectOfType<HighScore>();
+
+            if (_targetScore == 0) // Evita que seja 0
+            {
+                _targetScore = 100;
+                Debug.LogWarning("Target Score não definido, atribuindo 100 por padrão.");
+            }
+
             UpdateScoreUI();
             UpdateProgress();
             UpdateLevelUI();
@@ -89,9 +97,10 @@ namespace DefaultNamespace
 
         private void UpdateProgress()
         {
-            if (_progressBar == null) return;
+            if (_progressBar == null || _targetScore == 0) return;
 
-            float fillAmount = Mathf.Clamp((float)_score / _scoreToNextLevel, 0f, 1f);
+            float fillAmount = Mathf.Clamp((float)_score / _targetScore, 0f, 1f);
+            Debug.Log($"Atualizando barra de progresso: {_score}/{_targetScore} ({fillAmount * 100}%)");
             _progressBar.DOValue(fillAmount, 0.5f);
             ActivateStars(_score);
         }
@@ -114,27 +123,22 @@ namespace DefaultNamespace
                 }
             }
         }
+        
+        public void SetTargetScore(int targetScore)
+        {
+            _targetScore = targetScore;
+            _scoreToNextLevel = _targetScore;
+            Debug.Log($"Target Score definido: {_targetScore}");
+            UpdateProgress();
+        }
 
         private void CheckLevelProgression()
         {
-            if (_score >= _scoreToNextLevel)
+            Debug.Log($"Pontuação atual: {_score}, Objetivo: {_targetScore}");
+            if (_score >= _targetScore)
             {
-                Debug.Log($"🎉 Parabéns! Você atingiu {_scoreToNextLevel} pontos e completou o nível {_currentLevel}!");
-
-                // Parar o Timer
-                if (_timer != null)
-                {
-                    _timer.StopTimer();
-                }
-
-                // Instanciar o painel de nível completo
-                if (_levelCompletedPrefab != null && _uiCanvas != null)
-                {
-                    Instantiate(_levelCompletedPrefab, _uiCanvas);
-                }
-
+                Debug.Log("Objetivo alcançado!");
                 OnLevelCompleted?.Invoke();
-                AdvanceToNextLevel();
             }
         }
 

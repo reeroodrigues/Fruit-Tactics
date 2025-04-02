@@ -18,19 +18,15 @@ public class PlayerProfileController : MonoBehaviour
 
     private void Start()
     {
-        // Carregar nome salvo
-        string savedName = PlayerPrefs.GetString("PlayerName", "Jogador");
+        var savedName = PlayerPrefs.GetString("PlayerName", "Jogador");
         _playerNameText.text = savedName;
         _playerNameInput.text = savedName;
-
-        // Carregar avatar salvo
+        
         _currentAvatarIndex = PlayerPrefs.GetInt("AvatarIndex", 0);
         _avatarImage.sprite = _avatars[_currentAvatarIndex];
-
-        // Adicionar listener para validar nome ao finalizar edição
+        
         _playerNameInput.onEndEdit.AddListener(ValidatePlayerName);
-
-        // Configurar botão de fechar painel de avatar
+        
         _closeAvatarPanelButton.onClick.AddListener(CloseAvatarSelection);
     }
 
@@ -73,7 +69,6 @@ public class PlayerProfileController : MonoBehaviour
 
     private void ValidatePlayerName(string name)
     {
-        // Permitir apenas letras e espaços
         if (!Regex.IsMatch(name, @"^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$"))
         {
             _playerNameErrorText.text = "Nome inválido! Apenas letras são permitidas.";

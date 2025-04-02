@@ -1,5 +1,4 @@
 using System;
-using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -14,18 +13,16 @@ public class Timer : MonoBehaviour
     public float _totalTime;
     public float _remainingTime;
     public event Action OnRoundEnd;
-    public GameAlertPanel _gameAlertPanel;
 
     private bool _isPulsing = false;
     private bool _isRunning = false;
 
-    private void Start()
+    public void SetTotalTime(float totalTime)
     {
+        _totalTime = totalTime;
         _remainingTime = _totalTime;
         UpdateTimerText();
         
-        _gameAlertPanel.ShowMessage("Game Start!", true);
-        _gameAlertPanel.OnGameAlertHidden += () =>
         {
             Debug.Log("Aguardando clique do botão Start...");
         };
@@ -133,6 +130,5 @@ public class Timer : MonoBehaviour
     {
         StopTimer();
         OnRoundEnd?.Invoke();
-        _gameAlertPanel.ShowMessage("Time's up!", false);
     }
 }
