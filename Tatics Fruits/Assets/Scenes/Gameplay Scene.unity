@@ -241,10 +241,10 @@ RectTransform:
   - {fileID: 1101297405}
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 77.27}
-  m_SizeDelta: {x: 213.015, y: 284.019}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 77.26999}
+  m_SizeDelta: {x: -1168.985, y: -339.981}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &83359192
 MonoBehaviour:
@@ -305,7 +305,7 @@ MonoBehaviour:
   _holderType: 0
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
-  _timer: {fileID: 0}
+  _timer: {fileID: 243488017}
 --- !u!210 &83359195
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -782,6 +782,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2735010824040463214, guid: e7b352cb4c7e742608b1e958831136c9, type: 3}
   m_PrefabInstance: {fileID: 243488015}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &243488017 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 647961936200903465, guid: e7b352cb4c7e742608b1e958831136c9, type: 3}
+  m_PrefabInstance: {fileID: 243488015}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0140ea40d85442169c85906ad00ba61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &264147627
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,7 +933,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
-  _timer: {fileID: 0}
+  _timer: {fileID: 243488017}
 --- !u!1001 &416019315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2693,7 +2704,7 @@ MonoBehaviour:
   _singleCardsParent: {fileID: 0}
   _cardFace: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
   _canvas: {fileID: 2082077803}
-  _timer: {fileID: 0}
+  _timer: {fileID: 243488017}
   _maxCards: 6
   _startingAmount: 6
   _cardTypes:

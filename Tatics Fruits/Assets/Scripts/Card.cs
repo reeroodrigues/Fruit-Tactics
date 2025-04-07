@@ -28,12 +28,18 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void Start()
     {
-        _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        _cardManager = GameObject.Find("CardsManager").GetComponent<CardManager>();
+        if (_canvas == null)
+            _canvas = FindObjectOfType<Canvas>();
+
+        if (_cardManager == null)
+            _cardManager = FindObjectOfType<CardManager>();
+
         _cardManager._cards.Add(gameObject);
         _canDrag = true;
 
-        _cardNumber = _cardTypeSo._setAmount == 0 ? Random.Range(0, _cardTypeSo._maxCardNumber) : _cardTypeSo._setAmount;
+        _cardNumber = _cardTypeSo._setAmount == 0 
+            ? Random.Range(0, _cardTypeSo._maxCardNumber) 
+            : _cardTypeSo._setAmount;
 
         transform.SetAsLastSibling();
     }
@@ -72,7 +78,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             
             if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.Discard)
             {
-                Transform discardArea = cardHolder.transform;
+                var discardArea = cardHolder.transform;
                 transform.SetParent(discardArea);
                 transform.localPosition = Vector3.zero;
             }

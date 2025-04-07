@@ -79,7 +79,7 @@ public class Timer : MonoBehaviour
 
         if (textComponent != null)
         {
-            bool isReduction = timeToAdd < 0;
+            var isReduction = timeToAdd < 0;
             textComponent.text = isReduction ? $"{timeToAdd:F1}s" : $"+{timeToAdd:F1}s";
             textComponent.color = isReduction ? Color.red : Color.green;
         }

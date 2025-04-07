@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private Button _playButton;
-    [SerializeField] private Button _shopButton;
+    [SerializeField] private Button _howToPlayButton;
     [SerializeField] private Button _optionsButton;
     [SerializeField] private Button _profileButton;
     [SerializeField] private Transform _titleTransform;
@@ -22,12 +22,12 @@ public class MainMenuController : MonoBehaviour
         _titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce);
 
         SetupButtonAnimation(_playButton);
-        SetupButtonAnimation(_shopButton);
+        SetupButtonAnimation(_howToPlayButton);
         SetupButtonAnimation(_optionsButton);
         SetupButtonAnimation(_profileButton);
 
         _playButton.onClick.AddListener(StartGame);
-        _shopButton.onClick.AddListener(OpenShop);
+        _howToPlayButton.onClick.AddListener(OpenShop);
         _optionsButton.onClick.AddListener(OpenOptions);
         _profileButton.onClick.AddListener(OpenProfile);
     }
