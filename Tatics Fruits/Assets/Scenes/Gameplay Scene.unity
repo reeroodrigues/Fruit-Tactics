@@ -671,11 +671,11 @@ MonoBehaviour:
   _completed: 0
   _hasToHaveSameNumberOrColor: 1
   _maxAmount: 6
-  _amountToComplete: 0
+  _amountToComplete: 2147483647
   _holderType: 0
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
-  _timer: {fileID: 0}
+  _timer: {fileID: 243488017}
 --- !u!1001 &243488015
 PrefabInstance:
   m_ObjectHideFlags: 0
