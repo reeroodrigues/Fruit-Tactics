@@ -2658,7 +2658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cdae3e11fea49e39324a3d3bce00ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _preRoundPrefab: {fileID: 7516327673827664139, guid: f1d0c854a5aa54b56be24b0e7abc51ae, type: 3}
+  _preRoundPrefab: {fileID: 373463654744968627, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}
   _uiContainer: {fileID: 2082077804}
   _starsSprite: {fileID: 21300000, guid: 89e06e32800014fdfbcfe2a2796d47ed, type: 3}
 --- !u!1 &1473103879
