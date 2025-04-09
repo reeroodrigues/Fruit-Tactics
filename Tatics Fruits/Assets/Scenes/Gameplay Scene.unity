@@ -300,8 +300,8 @@ MonoBehaviour:
   _available: 0
   _completed: 0
   _hasToHaveSameNumberOrColor: 1
-  _maxAmount: 100
-  _amountToComplete: 100
+  _maxAmount: 2147483647
+  _amountToComplete: 2147483647
   _holderType: 0
   _scoreManager: {fileID: 1708266481}
   _scoreText: {fileID: 1381425713}
@@ -942,6 +942,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1708266478}
     m_Modifications:
+    - target: {fileID: 2007845173534131521, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007845173534131521, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 318
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007845173534131521, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7752918358052106074, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1004,11 +1016,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7752918358052106074, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 207.90173
+      value: 208
       objectReference: {fileID: 0}
     - target: {fileID: 7752918358052106074, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -241.77533
+      value: -267
       objectReference: {fileID: 0}
     - target: {fileID: 7752918358052106074, guid: f3713b3806456bc43b1ff95bbcd18db3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2004,14 +2016,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 1993472419}
-  _progressBar: {fileID: 0}
-  _stars: []
-  _levelText: {fileID: 0}
-  _scaleDuration: 0.2
+  _progressBar: {fileID: 17168923}
+  _stars:
+  - {fileID: 1530511624}
+  - {fileID: 1993371858}
+  - {fileID: 416019318}
+  _levelText: {fileID: 416019317}
+  _victoryPanelPrefab: {fileID: 0}
+  _defeatPanelPrefab: {fileID: 0}
+  _uiCanvas: {fileID: 2082077804}
+  _timer: {fileID: 243488017}
   _scaleAmount: 1.2
-  _levelCompletedPrefab: {fileID: 0}
-  _uiCanvas: {fileID: 0}
-  _timer: {fileID: 0}
+  _scaleDuration: 0.2
 --- !u!114 &976067018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3045,11 +3061,12 @@ MonoBehaviour:
   - {fileID: 1993371858}
   - {fileID: 416019318}
   _levelText: {fileID: 416019317}
-  _scaleDuration: 0.2
-  _scaleAmount: 1.2
-  _levelCompletedPrefab: {fileID: 1059221449573548163, guid: c1b5547c8c16c374799866935b19b344, type: 3}
+  _victoryPanelPrefab: {fileID: 373463654744968627, guid: bde8a11508c4dd541b4f33479aaebcc5, type: 3}
+  _defeatPanelPrefab: {fileID: 373463654744968627, guid: 543fd4c884b68fe4190838515cc8d299, type: 3}
   _uiCanvas: {fileID: 2082077804}
-  _timer: {fileID: 0}
+  _timer: {fileID: 243488017}
+  _scaleAmount: 1.2
+  _scaleDuration: 0.2
 --- !u!1 &1756448192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 497974157786526642, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}

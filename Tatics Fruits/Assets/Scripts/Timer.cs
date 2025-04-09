@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -128,7 +129,15 @@ public class Timer : MonoBehaviour
     
     private void EndRound()
     {
-        StopTimer();
+        Debug.Log("Round Ended!");
         OnRoundEnd?.Invoke();
+        
+        // StopTimer();
+        // OnRoundEnd?.Invoke();
+        // var scoreManager = FindObjectOfType<ScoreManager>();
+        // if (scoreManager != null)
+        // {
+        //     scoreManager.HandleEndOfRound();
+        // }
     }
 }

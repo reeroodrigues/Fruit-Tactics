@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
         var objectiveDescription = $"Obtenha {points} pontos em {time} segundos.";
 
         var preRound = Instantiate(_preRoundPrefab, _uiContainer);
-        preRound.GetComponent<PreRoundPanelController>().SetupPreRound(1, objectiveDescription, _starsSprite, points, time); // Passando também o tempo
+        preRound.GetComponent<PreRoundPanelController>().SetupPreRound(1, objectiveDescription, _starsSprite, points, time);
     }
 
     private (int points, int time) GetRandomObjective()
