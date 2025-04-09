@@ -65,6 +65,9 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetInt("VibrationEnabled", (int)vibrationToggle.value);
         PlayerPrefs.Save();
 
-        gameObject.SetActive(false);
+        transform.DOScale(0f, 0.4f).SetEase(Ease.InBack).OnComplete(() =>
+        {
+            gameObject.SetActive(false);
+        });
     }
 }

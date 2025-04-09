@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,26 +11,22 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _howToPlayButton;
     [SerializeField] private Button _optionsButton;
-    [SerializeField] private Button _profileButton;
     [SerializeField] private Transform _titleTransform;
-    [SerializeField] private SettingsMenuController _settingsMenu;
-    [SerializeField] private PlayerProfileController _playerProfileController;
+    [SerializeField] private SettingsMenu _settingsMenu;
+    [SerializeField] private GameObject _tutorialPanel;
 
     private void Start()
     {
-        _optionsButton.onClick.AddListener(_settingsMenu.OpenSettings);
         _titleTransform.localScale = Vector3.zero;
         _titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce);
 
         SetupButtonAnimation(_playButton);
         SetupButtonAnimation(_howToPlayButton);
         SetupButtonAnimation(_optionsButton);
-        SetupButtonAnimation(_profileButton);
 
         _playButton.onClick.AddListener(StartGame);
-        _howToPlayButton.onClick.AddListener(OpenShop);
+        _howToPlayButton.onClick.AddListener(() => _tutorialPanel.SetActive(true));
         _optionsButton.onClick.AddListener(OpenOptions);
-        _profileButton.onClick.AddListener(OpenProfile);
     }
 
     private void SetupButtonAnimation(Button button)
@@ -49,6 +46,12 @@ public class MainMenuController : MonoBehaviour
 
     private void StartGame() => SceneManager.LoadScene("Gameplay Scene");
     private void OpenShop() => Debug.Log("Abrindo Loja...");
-    private void OpenOptions() => Debug.Log("Abrindo Opções...");
-    private void OpenProfile() => _playerProfileController.OpenProfile();
+    private void OpenOptions()
+    {
+            _settingsMenu.gameObject.SetActive(true);
+
+            _settingsMenu.transform.localScale = Vector3.zero;
+            _settingsMenu.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
+    }
+
 }
