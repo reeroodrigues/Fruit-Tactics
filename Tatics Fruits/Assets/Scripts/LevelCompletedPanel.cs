@@ -20,6 +20,8 @@ namespace DefaultNamespace
         [SerializeField] private Button _nextPhaseButton;
         [SerializeField] private Button _retryButton;
         [SerializeField] private Button _mainMenuButton; // 👈 Novo botão!
+        
+        private GameController _gameController;
 
         public void Setup(bool isSuccess, int starCount = 0)
         {
@@ -39,7 +41,6 @@ namespace DefaultNamespace
                 _iconImage.sprite = _winSprite;
                 _starsPanel.SetActive(true);
                 _nextPhaseButton.gameObject.SetActive(true);
-                _retryButton.gameObject.SetActive(true);
                 ShowStars(starCount);
 
                 _nextPhaseButton.onClick.RemoveAllListeners();
@@ -51,12 +52,16 @@ namespace DefaultNamespace
                 _messageText.text = "Não foi dessa vez...";
                 _iconImage.sprite = _loseSprite;
                 _starsPanel.SetActive(false);
-                _nextPhaseButton.gameObject.SetActive(true);
                 _retryButton.gameObject.SetActive(true);
 
                 _retryButton.onClick.RemoveAllListeners();
                 _retryButton.onClick.AddListener(RetryPhase);
             }
+        }
+
+        public void SetGameController(GameController gameController)
+        {
+            _gameController = gameController;
         }
 
         private void ShowStars(int starCount)
@@ -77,16 +82,11 @@ namespace DefaultNamespace
 
         private void NextPhase()
         {
-            var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            var nextSceneIndex = currentSceneIndex + 1;
+            gameObject.SetActive(false);
 
-            if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+            if (_gameController != null)
             {
-                SceneManager.LoadScene(nextSceneIndex);
-            }
-            else
-            {
-                SceneManager.LoadScene("MainMenu");
+                _gameController.StartNewPhase();
             }
         }
 

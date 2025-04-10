@@ -27,12 +27,14 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject _defeatPanelPrefab;
     [SerializeField] private Transform _uiCanvas;
     [SerializeField] private Timer _timer;
+    [SerializeField] private GameController _gameController;
 
     [Header("Score Animation")]
     [SerializeField] private float _scaleAmount = 1.3f;
     [SerializeField] private float _scaleDuration = 0.2f;
 
     private GameObject _currentPanel;
+    
     private bool _hasEnded = false;
 
     public event Action OnLevelCompleted;
@@ -193,6 +195,8 @@ public class ScoreManager : MonoBehaviour
         {
             var starsEarned = CalculateEarnedStars();
             panelController.Setup(success, success ? starsEarned : 0);
+            
+            panelController.SetGameController(_gameController);
         }
     }
 

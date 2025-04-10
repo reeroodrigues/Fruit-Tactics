@@ -1,0 +1,12 @@
+# ninja log v5
+75	1539	7659371663283402	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	c5ce64aa78b749c2
+1542	4237	7659371685707354	C:/Users/Renan/OneDrive/Documentos/Tatics-fruits/Tatics Fruits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/631sa3z3/obj/arm64-v8a/libswappywrapper.so	cceb28a1bdda1fb1
+27	5198	7659371699459988	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	401895bb49053556
+46	5330	7659371700720561	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	2527375ca0d3a103
+19	5516	7659371702392352	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	3bf3c893008494f3
+12	5633	7659371704284598	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	43f24ecdb9d85ab3
+54	5669	7659371704284598	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	bb5e98dd02b03e70
+64	6045	7659371708206158	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	e9f57975897e1b00
+37	6153	7659371709328284	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	17e4dbb92b5abe3a
+2	6382	7659371711669982	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	67d05c005eb95d13
+6383	6501	7659371713085627	C:/Users/Renan/OneDrive/Documentos/Tatics-fruits/Tatics Fruits/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/631sa3z3/obj/arm64-v8a/libgame.so	97b6e869e8df7302
