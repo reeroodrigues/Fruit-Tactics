@@ -19,6 +19,7 @@ public class ScoreManager : MonoBehaviour
     [Header("Level Settings")]
     private readonly int[] _starThresholds = { 25, 50, 100 };
     private int _currentLevel = 1;
+    public int CurrentLevel => _currentLevel;
     private int _scoreToNextLevel = 100;
     private int _targetScore;
 
@@ -34,7 +35,6 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private float _scaleDuration = 0.2f;
 
     private GameObject _currentPanel;
-    
     private bool _hasEnded = false;
 
     public event Action OnLevelCompleted;
@@ -42,6 +42,8 @@ public class ScoreManager : MonoBehaviour
     private void Start()
     {
         _highScore = FindObjectOfType<HighScore>();
+        
+        _currentLevel = GameSession._currentLevel > 0 ? GameSession._currentLevel : 1;
 
         if (_targetScore == 0)
         {
@@ -82,14 +84,15 @@ public class ScoreManager : MonoBehaviour
 
     public void ResetScore()
     {
-        SaveHighScore();
         _score = 0;
+        SaveHighScore();
         UpdateScoreUI();
         UpdateProgress();
 
         _scoreText.transform.DOScale(1.3f, 0.2f)
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
+        
     }
 
     private void UpdateScoreUI()
@@ -164,19 +167,12 @@ public class ScoreManager : MonoBehaviour
 
         var victory = _score >= _targetScore;
         ShowLevelCompletedPanel(victory);
-
-        if (victory)
-        {
-            AdvanceToNextLevel();
-        }
+        
     }
 
     private void ShowLevelCompletedPanel(bool success)
     {
-        if (_uiCanvas == null)
-        {
-            return;
-        }
+        if (_uiCanvas == null) return;
 
         if (_currentPanel != null)
         {
@@ -185,10 +181,7 @@ public class ScoreManager : MonoBehaviour
 
         var panelPrefab = success ? _victoryPanelPrefab : _defeatPanelPrefab;
 
-        if (panelPrefab == null)
-        {
-            return;
-        }
+        if (panelPrefab == null) return;
 
         _currentPanel = Instantiate(panelPrefab, _uiCanvas);
         _currentPanel.SetActive(true);
@@ -198,7 +191,7 @@ public class ScoreManager : MonoBehaviour
         {
             var starsEarned = CalculateEarnedStars();
             panelController.Setup(success, success ? starsEarned : 0);
-            
+
             panelController.SetGameController(_gameController);
             panelController.SetScoreManager(this);
         }
@@ -217,9 +210,12 @@ public class ScoreManager : MonoBehaviour
     private void AdvanceToNextLevel()
     {
         _currentLevel++;
-        ResetScore();
+        GameSession._currentLevel = _currentLevel;
+        
         _scoreToNextLevel += Mathf.RoundToInt(_scoreToNextLevel * 0.5f);
-        _progressBar.value = 0f;
+
+        if (_progressBar != null)
+            _progressBar.value = 0f;
 
         UpdateLevelUI();
         AnimateLevelUp();

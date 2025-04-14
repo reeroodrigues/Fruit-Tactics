@@ -8,5 +8,6 @@ namespace DefaultNamespace
         public static int _targetScore;
         public static int _totalTime;
         public static string _objectiveDescription;
+        public static int _currentLevel = 1;
     }
 }

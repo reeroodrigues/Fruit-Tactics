@@ -44,7 +44,8 @@ public class GameController : MonoBehaviour
 
     public void StartNewPhase()
     {
-        ShowPreRoundPanel(2);
+        GameSession._phaseNumber++;
+        ShowPreRoundPanel(GameSession._phaseNumber);
         var (points, time) = GetRandomObjective();
         GameSession._phaseNumber = 2;
         GameSession._targetScore = points;
