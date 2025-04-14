@@ -18,14 +18,14 @@ public class GameController : MonoBehaviour
         var time = GameSession._totalTime > 0 ? GameSession._totalTime : 60;
         var objectiveDescription = !string.IsNullOrEmpty(GameSession._objectiveDescription)
             ? GameSession._objectiveDescription
-            : $"Obtenha {points} pontos em {time} segundos.";
+            : $"Score {points} points in {time} seconds.";
 
         GameSession._phaseNumber = phase;
         GameSession._targetScore = points;
         GameSession._totalTime = time;
         GameSession._objectiveDescription = objectiveDescription;
 
-        ShowPreRoundPanel(phase); // Usa os valores salvos!
+        ShowPreRoundPanel(phase);
     }
 
 
@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
         GameSession._phaseNumber = 2;
         GameSession._targetScore = points;
         GameSession._totalTime = time;
-        GameSession._objectiveDescription = $"Obtenha {points} pontos em {time} segundos.";
+        GameSession._objectiveDescription = $"Score {points} points in {time} seconds.";
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
         var time = GameSession._totalTime > 0 ? GameSession._totalTime : 60;
         var objectiveDescription = !string.IsNullOrEmpty(GameSession._objectiveDescription)
             ? GameSession._objectiveDescription
-            : $"Obtenha {points} pontos em {time} segundos.";
+            : $"Score {points} points in {time} seconds.";
 
         if (_preRoundInstance == null)
         {

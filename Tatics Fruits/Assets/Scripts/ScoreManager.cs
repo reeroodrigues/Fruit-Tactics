@@ -162,15 +162,19 @@ public class ScoreManager : MonoBehaviour
             _timer.StopTimer();
         }
 
-        bool victory = _score >= _targetScore;
+        var victory = _score >= _targetScore;
         ShowLevelCompletedPanel(victory);
+
+        if (victory)
+        {
+            AdvanceToNextLevel();
+        }
     }
 
     private void ShowLevelCompletedPanel(bool success)
     {
         if (_uiCanvas == null)
         {
-            Debug.LogError("Canvas UI não atribuído!");
             return;
         }
 
@@ -179,11 +183,10 @@ public class ScoreManager : MonoBehaviour
             Destroy(_currentPanel);
         }
 
-        GameObject panelPrefab = success ? _victoryPanelPrefab : _defeatPanelPrefab;
+        var panelPrefab = success ? _victoryPanelPrefab : _defeatPanelPrefab;
 
         if (panelPrefab == null)
         {
-            Debug.LogError("Prefab de vitória ou derrota não atribuído!");
             return;
         }
 
@@ -197,6 +200,7 @@ public class ScoreManager : MonoBehaviour
             panelController.Setup(success, success ? starsEarned : 0);
             
             panelController.SetGameController(_gameController);
+            panelController.SetScoreManager(this);
         }
     }
 
@@ -246,5 +250,11 @@ public class ScoreManager : MonoBehaviour
         image.DOFade(1f, 0.2f)
             .From(0.5f)
             .SetLoops(2, LoopType.Yoyo);
+    }
+
+    public void AdvancedToNextLevelExternally()
+    {
+        _hasEnded = false;
+        AdvanceToNextLevel();
     }
 }

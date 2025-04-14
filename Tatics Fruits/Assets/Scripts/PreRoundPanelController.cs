@@ -85,7 +85,7 @@ public class PreRoundPanelController : MonoBehaviour
         _currentTargetScore = newObjective._points;
         _currentTotalTime = newObjective._time;
 
-        _objectiveText.text = $"Obtenha {_currentTargetScore} pontos em {_currentTotalTime} segundos.";
+        _objectiveText.text = $"Score {_currentTargetScore} points in {_currentTotalTime} seconds.";
 
         if (_timer == null)
             _timer = FindObjectOfType<Timer>();

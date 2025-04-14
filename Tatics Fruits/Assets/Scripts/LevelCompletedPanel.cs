@@ -19,9 +19,11 @@ namespace DefaultNamespace
         [SerializeField] private GameObject[] _stars;
         [SerializeField] private Button _nextPhaseButton;
         [SerializeField] private Button _retryButton;
-        [SerializeField] private Button _mainMenuButton; // 👈 Novo botão!
+        [SerializeField] private Button _mainMenuButton;
         
         private GameController _gameController;
+        
+        private ScoreManager _scoreManager;
 
         public void Setup(bool isSuccess, int starCount = 0)
         {
@@ -30,14 +32,14 @@ namespace DefaultNamespace
             _successUI.SetActive(isSuccess);
             _failUI.SetActive(!isSuccess);
 
-            _mainMenuButton.gameObject.SetActive(true); // Mostra o botão sempre
+            _mainMenuButton.gameObject.SetActive(true);
             _mainMenuButton.onClick.RemoveAllListeners();
-            _mainMenuButton.onClick.AddListener(ReturnToMainMenu); // 👈 Função para voltar
+            _mainMenuButton.onClick.AddListener(ReturnToMainMenu);
 
             if (isSuccess)
             {
-                _titleText.text = "Parabéns!";
-                _messageText.text = "Você completou a fase!";
+                _titleText.text = "Congratulations!";
+                _messageText.text = "You have completed the stage!";
                 _iconImage.sprite = _winSprite;
                 _starsPanel.SetActive(true);
                 _nextPhaseButton.gameObject.SetActive(true);
@@ -48,8 +50,8 @@ namespace DefaultNamespace
             }
             else
             {
-                _titleText.text = "Tempo Esgotado!";
-                _messageText.text = "Não foi dessa vez...";
+                _titleText.text = "Time's up!";
+                _messageText.text = "Not this time...";
                 _iconImage.sprite = _loseSprite;
                 _starsPanel.SetActive(false);
                 _retryButton.gameObject.SetActive(true);
@@ -57,6 +59,11 @@ namespace DefaultNamespace
                 _retryButton.onClick.RemoveAllListeners();
                 _retryButton.onClick.AddListener(RetryPhase);
             }
+        }
+
+        public void SetScoreManager(ScoreManager scoreManager)
+        {
+            _scoreManager = scoreManager;
         }
 
         public void SetGameController(GameController gameController)
@@ -84,6 +91,11 @@ namespace DefaultNamespace
         {
             gameObject.SetActive(false);
 
+            if (_scoreManager != null)
+            {
+                _scoreManager.AdvancedToNextLevelExternally();
+            }
+
             if (_gameController != null)
             {
                 _gameController.StartNewPhase();
@@ -97,7 +109,7 @@ namespace DefaultNamespace
 
         private void ReturnToMainMenu()
         {
-            SceneManager.LoadScene("MainMenu"); // 👈 Nome da cena do menu
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }

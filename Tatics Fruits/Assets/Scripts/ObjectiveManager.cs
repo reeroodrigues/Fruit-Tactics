@@ -67,7 +67,7 @@ namespace DefaultNamespace
             }
         }
 
-        private void AdvanceToNextLevel()
+        public void AdvanceToNextLevel()
         {
             _currentLevel++;
             _scoreManager.ResetScore();
