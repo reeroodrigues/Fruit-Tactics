@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -5,67 +6,58 @@ using DG.Tweening;
 public class SettingsMenu : MonoBehaviour
 {
     [Header("Música")]
-    [SerializeField] private Slider musicToggle;
-    [SerializeField] private Image musicHandle;
+    [SerializeField] private Button musicButton;
+    [SerializeField] private Image musicIcon;
     [SerializeField] private Sprite musicOnSprite;
     [SerializeField] private Sprite musicOffSprite;
 
-    [Header("Efeitos Sonoros")]
-    [SerializeField] private Slider sfxToggle;
-    [SerializeField] private Image sfxHandle;
-    [SerializeField] private Sprite sfxOnSprite;
-    [SerializeField] private Sprite sfxOffSprite;
+    [Header("Outros Botões")]
+    [SerializeField] private Button creditsButton;
+    [SerializeField] private Button leaderboardButton;
 
-    [Header("Vibração")]
-    [SerializeField] private Slider vibrationToggle;
-    [SerializeField] private Image vibrationHandle;
-    [SerializeField] private Sprite vibrationOnSprite;
-    [SerializeField] private Sprite vibrationOffSprite;
+    // [Header("Painéis")]
+    // [SerializeField] private GameObject creditsPanel;
+    // [SerializeField] private GameObject leaderboardPanel;
+
+    private bool isMusicOn;
 
     private void Start()
     {
-        musicToggle.value = PlayerPrefs.GetInt("MusicEnabled", 1);
-        sfxToggle.value = PlayerPrefs.GetInt("SFXEnabled", 1);
-        vibrationToggle.value = PlayerPrefs.GetInt("VibrationEnabled", 1);
+        isMusicOn = PlayerPrefs.GetInt("MusicEnabled", 1) == 1;
+        UpdateMusicIcon();
 
-        UpdateAllSprites();
-
-        musicToggle.onValueChanged.AddListener((v) => AnimateToggle(musicToggle, musicHandle, musicOnSprite, musicOffSprite));
-        sfxToggle.onValueChanged.AddListener((v) => AnimateToggle(sfxToggle, sfxHandle, sfxOnSprite, sfxOffSprite));
-        vibrationToggle.onValueChanged.AddListener((v) => AnimateToggle(vibrationToggle, vibrationHandle, vibrationOnSprite, vibrationOffSprite));
+        musicButton.onClick.AddListener(ToggleMusic);
+        // creditsButton.onClick.AddListener(OpenCredits);
+        // leaderboardButton.onClick.AddListener(OpenLeaderboard);
     }
 
-    private void UpdateAllSprites()
+    private void ToggleMusic()
     {
-        AnimateToggle(musicToggle, musicHandle, musicOnSprite, musicOffSprite, false);
-        AnimateToggle(sfxToggle, sfxHandle, sfxOnSprite, sfxOffSprite, false);
-        AnimateToggle(vibrationToggle, vibrationHandle, vibrationOnSprite, vibrationOffSprite, false);
+        isMusicOn = !isMusicOn;
+        PlayerPrefs.SetInt("MusicEnabled", isMusicOn ? 1 : 0);
+        UpdateMusicIcon();
+        
     }
 
-    private void AnimateToggle(Slider slider, Image handle, Sprite onSprite, Sprite offSprite, bool animate = true)
+    private void UpdateMusicIcon()
     {
-        float targetValue = slider.value;
-
-        if (animate)
-        {
-            slider.DOValue(targetValue, 0.2f).SetEase(Ease.InOutSine);
-        }
-        else
-        {
-            slider.value = targetValue;
-        }
-
-        handle.sprite = targetValue == 1 ? onSprite : offSprite;
+        musicIcon.sprite = isMusicOn ? musicOnSprite : musicOffSprite;
     }
 
-    public void SaveSettingsAndClose()
+    // private void OpenCredits()
+    // {
+    //     creditsPanel.SetActive(true);
+    // }
+    
+    // private void OpenLeaderboard()
+    // {
+    //     leaderboardPanel.SetActive(true);
+    // }
+
+    public void ClosePopup()
     {
-        PlayerPrefs.SetInt("MusicEnabled", (int)musicToggle.value);
-        PlayerPrefs.SetInt("SFXEnabled", (int)sfxToggle.value);
-        PlayerPrefs.SetInt("VibrationEnabled", (int)vibrationToggle.value);
         PlayerPrefs.Save();
-
-        transform.DOScale(0f, 0.4f).SetEase(Ease.InBack).OnComplete(() =>
+        transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
             gameObject.SetActive(false);
         });
