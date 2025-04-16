@@ -2570,7 +2570,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _preRoundPrefab: {fileID: 373463654744968627, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}
   _uiContainer: {fileID: 2082077804}
-  _starsSprite: {fileID: 21300000, guid: 89e06e32800014fdfbcfe2a2796d47ed, type: 3}
+  _starsSprite: {fileID: -768593662, guid: a9cce450baf222a4886fd9ce1f437213, type: 3}
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0

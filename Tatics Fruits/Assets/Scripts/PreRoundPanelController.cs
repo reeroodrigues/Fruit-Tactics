@@ -64,12 +64,7 @@ public class PreRoundPanelController : MonoBehaviour
 
         if (_timer != null)
         {
-            Debug.Log("Iniciando Timer...");
             _timer.StartTimer();
-        }
-        else
-        {
-            Debug.LogError("Timer não encontrado na cena!");
         }
     }
     
@@ -77,7 +72,6 @@ public class PreRoundPanelController : MonoBehaviour
     {
         if (_objectiveProvider == null)
         {
-            Debug.Log("ObjectiveProvider não atribuído!");
             return;
         }
 
