@@ -2,7 +2,8 @@
 
 Um jogo de cartas rápido e desafiador onde você precisa formar pares antes que o tempo acabe! ⏱️
 
-[▶️ Disponível na Google Play]([https://play.google.com/store/apps/details?id=seu.pacote.aqui](https://play.google.com/store/apps/details?id=com.Suricatus.TacticsFruits&hl=pt_BR))
+[▶️ Disponível na Google Play]
+https://play.google.com/store/apps/details?id=com.Suricatus.TacticsFruits&hl=pt_BR
 
 ## 🎮 Sobre o jogo
 
