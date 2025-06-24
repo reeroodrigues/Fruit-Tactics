@@ -4,6 +4,7 @@ public enum PowerEffectType
 {
     None,
     DoublePoints,
+    ExplodeAdjacent
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]

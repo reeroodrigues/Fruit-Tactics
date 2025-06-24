@@ -2650,6 +2650,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
+  - {fileID: 11400000, guid: 0b470fc8d1fcb4c43adb0cb94a86301b, type: 2}
+  - {fileID: 11400000, guid: 516a09e3ed4158d4a87ae82f9d2baf93, type: 2}
   _cards: []
 --- !u!82 &1473103882
 AudioSource:

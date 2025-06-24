@@ -73,7 +73,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         cardState = CardState.Idle;
         cardManager._selectedCard = null;
-        
+
         if (cardTypeSo.isPowerCard)
         {
             RectTransform powerRect = GetComponent<RectTransform>();
@@ -86,45 +86,90 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
                 var targetRectTransform = possibleTarget.GetComponent<RectTransform>();
                 if (targetRectTransform == null) continue;
-                
+
                 Rect powerWorldRect = RectTransformToScreenRect(powerRect, rootCanvas);
                 Rect targetWorldRect = RectTransformToScreenRect(targetRectTransform, rootCanvas);
 
                 if (powerWorldRect.Overlaps(targetWorldRect))
                 {
-                    if (cardTypeSo.powerEffect == PowerEffectType.DoublePoints)
+                    switch (cardTypeSo.powerEffect)
                     {
-                        possibleTarget.cardNumber *= 2;
+                        case PowerEffectType.DoublePoints:
+                            possibleTarget.cardNumber *= 2;
+                            var doubleFace = possibleTarget.GetComponent<CardFace>();
+                            if (doubleFace != null)
+                                doubleFace.UpdateCardInfo();
+                            break;
 
-                        var face = possibleTarget.GetComponent<CardFace>();
-                        if (face != null)
-                            face.UpdateCardInfo();
+                        case PowerEffectType.ExplodeAdjacent:
+                            Transform parent = possibleTarget.transform.parent;
+                            if (parent != null)
+                            {
+                                List<Card> siblings = new List<Card>();
+                                foreach (Transform child in parent.parent)
+                                {
+                                    Card card = child.GetComponentInChildren<Card>();
+                                    if (card != null && !card.cardTypeSo.isPowerCard)
+                                        siblings.Add(card);
+                                }
+
+                                int index = siblings.IndexOf(possibleTarget);
+
+                                for (int i = index - 1; i <= index + 1; i++)
+                                {
+                                    if (i >= 0 && i < siblings.Count)
+                                    {
+                                        Card toRemove = siblings[i];
+                                        
+                                        foreach (var face in FindObjectsOfType<CardFace>())
+                                        {
+                                            if (face._target == toRemove.gameObject)
+                                            {
+                                                Destroy(face.gameObject);
+                                                break;
+                                            }
+                                        }
+
+                                        cardManager._cards.Remove(toRemove.gameObject);
+                                        Destroy(toRemove.transform.parent.gameObject);
+                                    }
+                                }
+                                
+                                foreach (var face in FindObjectsOfType<CardFace>())
+                                {
+                                    if (face._target == gameObject)
+                                    {
+                                        Destroy(face.gameObject);
+                                        break;
+                                    }
+                                }
+
+                                cardManager._cards.Remove(gameObject);
+                                Destroy(transform.parent.gameObject);
+                            }
+                            break;
                     }
-                    
+
                     var parentHolder = possibleTarget.transform.parent?.GetComponent<CardHolder>();
                     if (parentHolder != null)
                     {
                         parentHolder.CheckForMatchingCards();
                     }
                     
-                    foreach (var face in FindObjectsOfType<CardFace>())
+                    var layoutGroup = cardManager.GetComponentInChildren<HorizontalLayoutGroup>();
+                    if (layoutGroup != null)
                     {
-                        if (face._target == gameObject)
-                        {
-                            Destroy(face.gameObject);
-                            break;
-                        }
+                        LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
                     }
-                    Destroy(transform.parent.gameObject);
+
                     return;
                 }
             }
-            
+
             transform.localPosition = Vector2.zero;
             GetComponent<Image>().raycastTarget = true;
             transform.SetAsLastSibling();
             cardManager.GetComponent<AudioSource>().Play();
-
             return;
         }
         
@@ -148,13 +193,15 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
         else
         {
-            transform.transform.localPosition = Vector2.zero;
+            transform.localPosition = Vector2.zero;
         }
 
         transform.SetAsLastSibling();
         cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = true;
     }
+
+
     
     public void OnPointerEnter(PointerEventData eventData)
     {
