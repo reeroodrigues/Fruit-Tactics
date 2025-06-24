@@ -34,20 +34,20 @@ public class CardFace : MonoBehaviour
         if (_target == null)
             return;
         
-        _hovering = _target.GetComponent<Card>()._hovering && _target.GetComponent<Card>()._cardState != Card.CardState.Played;
+        _hovering = _target.GetComponent<Card>().hovering && _target.GetComponent<Card>().cardState != Card.CardState.Played;
         
         transform.position = Vector3.Lerp(transform.position, _target.transform.position, Time.deltaTime * _movementSpeed);
-        _visual.transform.position = Vector3.Lerp(_visual.transform.position, (_hovering || _target.GetComponent<Card>()._cardManager._selectedCard == _target) 
+        _visual.transform.position = Vector3.Lerp(_visual.transform.position, (_hovering || _target.GetComponent<Card>().cardManager._selectedCard == _target) 
             ? _target.transform.position + _offset 
             : _target.transform.position, 
             Time.deltaTime * _movementSpeed);
 
-        if (_target.GetComponent<Card>()._cardManager._selectedCard == _target)
+        if (_target.GetComponent<Card>().cardManager._selectedCard == _target)
         {
             transform.SetAsLastSibling();
         }
 
-        if (_target.GetComponent<Card>()._cardState != Card.CardState.Played)
+        if (_target.GetComponent<Card>().cardState != Card.CardState.Played)
         {
             if (Camera.main != null)
             {
@@ -86,7 +86,7 @@ public class CardFace : MonoBehaviour
             return;
         }
 
-        if (cardComponent._cardTypeSo == null)
+        if (cardComponent.cardTypeSo == null)
         {
             Debug.LogError("CardFace: _cardTypeSo está nulo!", this);
             return;
@@ -98,10 +98,10 @@ public class CardFace : MonoBehaviour
             return;
         }
 
-        _icon.sprite = cardComponent._cardTypeSo._cardIcon;
-        _iconShadow.sprite = cardComponent._cardTypeSo._cardIcon;
-        _rightNumber.text = cardComponent._cardNumber.ToString();
-        _leftNumber.text = cardComponent._cardNumber.ToString();
+        _icon.sprite = cardComponent.cardTypeSo.cardIcon;
+        _iconShadow.sprite = cardComponent.cardTypeSo.cardIcon;
+        _rightNumber.text = cardComponent.cardNumber.ToString();
+        _leftNumber.text = cardComponent.cardNumber.ToString();
     }
 
     public void MoveToLastSibling()

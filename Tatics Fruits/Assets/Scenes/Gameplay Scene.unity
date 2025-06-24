@@ -929,6 +929,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
+  - {fileID: 11400000, guid: 516a09e3ed4158d4a87ae82f9d2baf93, type: 2}
   _timer: {fileID: 243488017}
 --- !u!1001 &416019315
 PrefabInstance:
@@ -1984,7 +1985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 936.8, y: 288.23}
+  m_AnchoredPosition: {x: 936.7999, y: 288.23}
   m_SizeDelta: {x: 173.44, y: 155.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &976067017
@@ -3012,7 +3013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 936.8, y: 445.64}
+  m_AnchoredPosition: {x: 936.7999, y: 445.64}
   m_SizeDelta: {x: 173.446, y: 172.122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1708266479
@@ -4261,9 +4262,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
     - target: {fileID: 8139224574963971309, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
+      propertyPath: cardTypeSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
+    - target: {fileID: 8139224574963971309, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
       propertyPath: _cardTypeSo
       value: 
       objectReference: {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
+    - target: {fileID: 8139224574963971309, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
+      propertyPath: cardManager
+      value: 
+      objectReference: {fileID: 1473103881}
     - target: {fileID: 8139224574963971309, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
       propertyPath: _cardManager
       value: 

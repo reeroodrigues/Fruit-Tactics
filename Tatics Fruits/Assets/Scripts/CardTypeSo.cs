@@ -1,13 +1,18 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+public enum PowerEffectType
 {
-    [CreateAssetMenu(fileName = "CardTypeScriptableObject", menuName = "CardType/CardTypeScriptableObject")]
-    public class CardTypeSo : ScriptableObject
-    {
-        [Header("Info")] 
-        public Sprite _cardIcon;
-        public int _maxCardNumber;
-        public int _setAmount;
-    }
+    None,
+    DoublePoints,
+}
+
+[CreateAssetMenu(menuName = "Card/CardType")]
+public class CardTypeSo : ScriptableObject
+{
+    public Sprite cardIcon;
+    public int maxCardNumber;
+    public int setAmount;
+
+    public bool isPowerCard;
+    public PowerEffectType powerEffect;
 }

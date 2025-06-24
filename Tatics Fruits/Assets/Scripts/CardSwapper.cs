@@ -90,14 +90,14 @@ public class CardSwapper : MonoBehaviour
             if (card != null)
             {
                 CardTypeSo newCardTypeSo = _availableCardTypes[Random.Range(0, _availableCardTypes.Count)];
-                card._cardTypeSo = newCardTypeSo;
+                card.cardTypeSo = newCardTypeSo;
 
-                card._cardNumber = newCardTypeSo._setAmount == 0
-                    ? Random.Range(0, newCardTypeSo._maxCardNumber)
-                    : newCardTypeSo._setAmount;
-                cardFace._icon.sprite = newCardTypeSo._cardIcon;
-                cardFace._rightNumber.text = card._cardNumber.ToString();
-                cardFace._leftNumber.text = card._cardNumber.ToString();
+                card.cardNumber = newCardTypeSo.setAmount == 0
+                    ? Random.Range(0, newCardTypeSo.maxCardNumber)
+                    : newCardTypeSo.setAmount;
+                cardFace._icon.sprite = newCardTypeSo.cardIcon;
+                cardFace._rightNumber.text = card.cardNumber.ToString();
+                cardFace._leftNumber.text = card.cardNumber.ToString();
             }
         }
     }

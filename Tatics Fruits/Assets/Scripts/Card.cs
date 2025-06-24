@@ -1,4 +1,5 @@
-using DefaultNamespace;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,11 +8,11 @@ using Random = UnityEngine.Random;
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [Header("Settings")] 
-    public CardState _cardState;
+    public CardState cardState;
 
-    public CardManager _cardManager;
-    public CardTypeSo _cardTypeSo;
-    public int _cardNumber;
+    public CardManager cardManager;
+    public CardTypeSo cardTypeSo;
+    public int cardNumber;
 
     private CardFace _cardFace;
 
@@ -22,24 +23,25 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         Played
     }
 
-    [HideInInspector] public bool _canDrag;
-    [HideInInspector] public bool _hovering;
-    [HideInInspector] public Canvas _canvas;
+    [HideInInspector] public bool canDrag;
+    [HideInInspector] public bool hovering;
+    [HideInInspector] public Canvas canvas;
 
+    [Obsolete("Obsolete")]
     private void Start()
     {
-        if (_canvas == null)
-            _canvas = FindObjectOfType<Canvas>();
+        if (canvas == null)
+            canvas = FindObjectOfType<Canvas>();
 
-        if (_cardManager == null)
-            _cardManager = FindObjectOfType<CardManager>();
+        if (cardManager == null)
+            cardManager = FindObjectOfType<CardManager>();
 
-        _cardManager._cards.Add(gameObject);
-        _canDrag = true;
+        cardManager._cards.Add(gameObject);
+        canDrag = true;
 
-        _cardNumber = _cardTypeSo._setAmount == 0 
-            ? Random.Range(0, _cardTypeSo._maxCardNumber) 
-            : _cardTypeSo._setAmount;
+        cardNumber = cardTypeSo.setAmount == 0 
+            ? Random.Range(0, cardTypeSo.maxCardNumber) 
+            : cardTypeSo.setAmount;
 
         transform.SetAsLastSibling();
     }
@@ -47,35 +49,89 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!_canDrag)
+        if (!canDrag)
             return;
 
-        _cardState = CardState.IsDragging;
+        cardState = CardState.IsDragging;
 
-        _cardManager._selectedCard = gameObject;
-        _cardManager.GetComponent<AudioSource>().Play();
+        cardManager._selectedCard = gameObject;
+        cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!_canDrag)
+        if (!canDrag)
             return;
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)_canvas.transform, Input.mousePosition, _canvas.worldCamera, out var position);
-        transform.position = _canvas.transform.TransformPoint(position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)canvas.transform, Input.mousePosition, canvas.worldCamera, out var position);
+        transform.position = canvas.transform.TransformPoint(position);
     }
 
+    [Obsolete("Obsolete")]
     public void OnEndDrag(PointerEventData eventData)
     {
-        _cardState = CardState.Idle;
-
-        _cardManager._selectedCard = null;
-
-        if (_cardManager._hoveringMenu != null)
+        cardState = CardState.Idle;
+        cardManager._selectedCard = null;
+        
+        if (cardTypeSo.isPowerCard)
         {
-            var cardHolder = _cardManager._hoveringMenu.GetComponent<CardHolder>();
+            RectTransform powerRect = GetComponent<RectTransform>();
+            Canvas rootCanvas = canvas.rootCanvas;
+
+            foreach (var possibleTarget in FindObjectsOfType<Card>())
+            {
+                if (possibleTarget == this) continue;
+                if (possibleTarget.cardTypeSo.isPowerCard) continue;
+
+                var targetRectTransform = possibleTarget.GetComponent<RectTransform>();
+                if (targetRectTransform == null) continue;
+                
+                Rect powerWorldRect = RectTransformToScreenRect(powerRect, rootCanvas);
+                Rect targetWorldRect = RectTransformToScreenRect(targetRectTransform, rootCanvas);
+
+                if (powerWorldRect.Overlaps(targetWorldRect))
+                {
+                    if (cardTypeSo.powerEffect == PowerEffectType.DoublePoints)
+                    {
+                        possibleTarget.cardNumber *= 2;
+
+                        var face = possibleTarget.GetComponent<CardFace>();
+                        if (face != null)
+                            face.UpdateCardInfo();
+                    }
+                    
+                    var parentHolder = possibleTarget.transform.parent?.GetComponent<CardHolder>();
+                    if (parentHolder != null)
+                    {
+                        parentHolder.CheckForMatchingCards();
+                    }
+                    
+                    foreach (var face in FindObjectsOfType<CardFace>())
+                    {
+                        if (face._target == gameObject)
+                        {
+                            Destroy(face.gameObject);
+                            break;
+                        }
+                    }
+                    Destroy(transform.parent.gameObject);
+                    return;
+                }
+            }
             
+            transform.localPosition = Vector2.zero;
+            GetComponent<Image>().raycastTarget = true;
+            transform.SetAsLastSibling();
+            cardManager.GetComponent<AudioSource>().Play();
+
+            return;
+        }
+        
+        if (cardManager._hoveringMenu != null)
+        {
+            var cardHolder = cardManager._hoveringMenu.GetComponent<CardHolder>();
+
             if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.Discard)
             {
                 var discardArea = cardHolder.transform;
@@ -85,8 +141,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             else
             {
                 var target = transform.parent;
-                transform.position = _cardManager._hoveringMenu.transform.position;
-                transform.SetParent(_cardManager._hoveringMenu.transform);
+                transform.position = cardManager._hoveringMenu.transform.position;
+                transform.SetParent(cardManager._hoveringMenu.transform);
                 Destroy(target.gameObject);
             }
         }
@@ -94,30 +150,41 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             transform.transform.localPosition = Vector2.zero;
         }
-        
-        transform.SetAsLastSibling();
 
-        _cardManager.GetComponent<AudioSource>().Play();
+        transform.SetAsLastSibling();
+        cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = true;
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _hovering = true;
+        hovering = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _hovering = false;
+        hovering = false;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        _cardManager._selectedCard = gameObject;
+        cardManager._selectedCard = gameObject;
 
         if (_cardFace != null)
         {
             _cardFace.MoveToLastSibling();
         }
     }
+    
+    private Rect RectTransformToScreenRect(RectTransform rectTransform, Canvas canvas)
+    {
+        Vector3[] worldCorners = new Vector3[4];
+        rectTransform.GetWorldCorners(worldCorners);
+
+        Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[0]);
+        Vector2 topRight = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[2]);
+
+        return new Rect(bottomLeft, topRight - bottomLeft);
+    }
+
 }

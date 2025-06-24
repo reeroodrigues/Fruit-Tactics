@@ -124,7 +124,7 @@ public class CardManager : MonoBehaviour
         currentCard.transform.SetParent(targetedCardParent);
         targetCard.transform.SetParent(currentCardParent);
 
-        if (currentCard.transform.GetComponent<Card>()._cardState != Card.CardState.IsDragging)
+        if (currentCard.transform.GetComponent<Card>().cardState != Card.CardState.IsDragging)
         {
             currentCard.transform.localPosition = Vector2.zero;
         }
@@ -145,7 +145,7 @@ public class CardManager : MonoBehaviour
                 var card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
                 var randomCard = Random.Range(0, _cardTypes.Count);
 
-                card.GetComponentInChildren<Card>()._cardTypeSo = _cardTypes[randomCard];
+                card.GetComponentInChildren<Card>().cardTypeSo = _cardTypes[randomCard];
                 var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
 
                 cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
