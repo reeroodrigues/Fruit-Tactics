@@ -10,7 +10,8 @@ public enum PowerEffectType
     Joker,
     ClearRow,
     IncreaseNumber,
-    BonusPoints
+    BonusPoints,
+    Cleanse
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]

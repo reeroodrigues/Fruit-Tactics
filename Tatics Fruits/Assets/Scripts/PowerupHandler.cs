@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -49,6 +50,11 @@ public class PowerupHandler
             
             case PowerEffectType.BonusPoints:
                 ApplyBonusPoints(targetCard);
+                Cleanup(sourceCard, cardManager);
+                break;
+            
+            case PowerEffectType.Cleanse:
+                ApplyCleanse(cardManager);
                 Cleanup(sourceCard, cardManager);
                 break;
             
@@ -134,6 +140,36 @@ public class PowerupHandler
         if (face != null)
         {
             face.ShowBonusIcon();
+        }
+    }
+    
+    [Obsolete("Obsolete")]
+    private static void ApplyCleanse(CardManager manager)
+    {
+        var cardsToRemove = new List<GameObject>();
+
+        foreach (var cardObj in manager._cards)
+        {
+            var card = cardObj.GetComponent<Card>();
+            if (card != null && card.cardTypeSo.isPowerCard)
+            {
+                foreach (var face in Object.FindObjectsOfType<CardFace>())
+                {
+                    if (face._target == card.gameObject)
+                    {
+                        Object.Destroy(face.gameObject);
+                        break;
+                    }
+                }
+
+                cardsToRemove.Add(cardObj);
+                Object.Destroy(card.transform.parent.gameObject);
+            }
+        }
+
+        foreach (var cardObj in cardsToRemove)
+        {
+            manager._cards.Remove(cardObj);
         }
     }
     
