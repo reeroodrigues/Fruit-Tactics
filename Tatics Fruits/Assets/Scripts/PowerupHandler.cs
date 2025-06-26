@@ -8,6 +8,7 @@ public class PowerupHandler
     [Obsolete("Obsolete")]
     public static void ApplyPower(Card sourceCard, Card targetCard, CardManager cardManager)
     {
+        if (targetCard.isProtected) return;
         switch (sourceCard.cardTypeSo.powerEffect)
         {
             case PowerEffectType.DoublePoints:
@@ -24,6 +25,12 @@ public class PowerupHandler
                 ApplyFreeze(targetCard);
                 Cleanup(sourceCard, cardManager);
                 break;
+            
+            case PowerEffectType.Protection:
+                ApplyProtection(targetCard, sourceCard.cardTypeSo.protectionDuration);
+                Cleanup(sourceCard, cardManager);
+                break;
+            
             case PowerEffectType.None:
                 break;
             default:
@@ -69,6 +76,31 @@ public class PowerupHandler
     private static void ApplyFreeze(Card target)
     {
         target.isFrozen = true;
+
+        var face = target.GetComponent<CardFace>();
+        if (face != null)
+        {
+            face.UpdateCardInfo();
+        }
+    }
+    
+    private static void ApplyProtection(Card target, float duration)
+    {
+        target.isProtected = true;
+
+        var face = target.GetComponent<CardFace>();
+        if (face != null)
+        {
+            face.UpdateCardInfo();
+        }
+
+        target.StartCoroutine(RemoveProtectionAfterDelay(target, duration));
+    }
+
+    private static System.Collections.IEnumerator RemoveProtectionAfterDelay(Card target, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        target.isProtected = false;
 
         var face = target.GetComponent<CardFace>();
         if (face != null)

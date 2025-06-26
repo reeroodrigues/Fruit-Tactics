@@ -5,7 +5,8 @@ public enum PowerEffectType
     None,
     DoublePoints,
     ExplodeAdjacent,
-    Freeze
+    Freeze,
+    Protection
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]
@@ -17,4 +18,7 @@ public class CardTypeSo : ScriptableObject
 
     public bool isPowerCard;
     public PowerEffectType powerEffect;
+
+    [Header("Power Effect Settings")] 
+    public float protectionDuration = 5f;
 }

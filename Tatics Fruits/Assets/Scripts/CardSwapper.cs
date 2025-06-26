@@ -33,8 +33,7 @@ public class CardSwapper : MonoBehaviour
             {
                 var card = cardFace._target.GetComponent<Card>();
                 
-                if (card != null && card.transform.parent != null && 
-                    !card.transform.parent.CompareTag("PlayArea") && !card.isFrozen) 
+                if (!card.transform.parent.CompareTag("PlayArea") && !card.isFrozen && !card.isProtected)
                 {
                     SwapCard(cardFaceTransform);
                 }
@@ -62,8 +61,7 @@ public class CardSwapper : MonoBehaviour
             {
                 var card = cardFace._target.GetComponent<Card>();
                 
-                if (card != null && card.transform.parent != null && 
-                    !card.transform.parent.CompareTag("PlayArea") && !card.isFrozen) 
+                if (!card.transform.parent.CompareTag("PlayArea") && !card.isFrozen && !card.isProtected)
                 {
                     swapableCards.Add(cardFaceTransform);
                 }
