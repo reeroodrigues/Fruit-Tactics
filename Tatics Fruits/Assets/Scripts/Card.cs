@@ -26,6 +26,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [HideInInspector] public bool canDrag;
     [HideInInspector] public bool hovering;
     [HideInInspector] public Canvas canvas;
+    [HideInInspector] public bool isFrozen = false;
 
     [Obsolete("Obsolete")]
     private void Start()
@@ -148,6 +149,28 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                                 Destroy(transform.parent.gameObject);
                             }
                             break;
+                        
+                            case PowerEffectType.Freeze:
+                            possibleTarget.isFrozen = true;
+
+                            var frozenFace = possibleTarget.GetComponent<CardFace>();
+                            if (frozenFace != null)
+                            {
+                                frozenFace.UpdateCardInfo();
+                            }
+                            
+                            foreach (var face in FindObjectsOfType<CardFace>())
+                            {
+                                if (face._target == gameObject)
+                                {
+                                    Destroy(face.gameObject);
+                                    break;
+                                }
+                            }
+
+                            cardManager._cards.Remove(gameObject);
+                            Destroy(transform.parent.gameObject);
+                            break;
                     }
 
                     var parentHolder = possibleTarget.transform.parent?.GetComponent<CardHolder>();
@@ -225,11 +248,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     
     private Rect RectTransformToScreenRect(RectTransform rectTransform, Canvas canvas)
     {
-        Vector3[] worldCorners = new Vector3[4];
+        var worldCorners = new Vector3[4];
         rectTransform.GetWorldCorners(worldCorners);
 
-        Vector2 bottomLeft = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[0]);
-        Vector2 topRight = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[2]);
+        var bottomLeft = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[0]);
+        var topRight = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[2]);
 
         return new Rect(bottomLeft, topRight - bottomLeft);
     }

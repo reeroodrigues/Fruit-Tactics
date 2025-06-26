@@ -1,68 +1,69 @@
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CardSwapper : MonoBehaviour
 {
-    public Button _swapAllButton;
-    public Button _swapOneButton;
-    public Transform _cardVisualsParent;
-    public List<CardTypeSo> _availableCardTypes;
-    public Timer _timer;
+    public Button swapAllButton;
+    public Button swapOneButton;
+    public Transform cardVisualsParent;
+    public List<CardTypeSo> availableCardTypes;
+    public Timer timer;
 
     private void Start()
     {
-        if (_swapAllButton != null)
-            _swapAllButton.onClick.AddListener(SwapAllCards);
+        if (swapAllButton != null)
+            swapAllButton.onClick.AddListener(SwapAllCards);
 
-        if (_swapOneButton != null)
-            _swapOneButton.onClick.AddListener(SwapOneCard);
+        if (swapOneButton != null)
+            swapOneButton.onClick.AddListener(SwapOneCard);
     }
 
     private void SwapAllCards()
     {
-        if (_cardVisualsParent == null || _availableCardTypes == null || _availableCardTypes.Count == 0)
+        if (cardVisualsParent == null || availableCardTypes == null || availableCardTypes.Count == 0)
             return;
 
-        foreach (Transform cardFaceTransform in _cardVisualsParent)
+        foreach (Transform cardFaceTransform in cardVisualsParent)
         {
-            CardFace cardFace = cardFaceTransform.GetComponent<CardFace>();
+            var cardFace = cardFaceTransform.GetComponent<CardFace>();
             if (cardFace != null && cardFace._target != null)
             {
-                Card card = cardFace._target.GetComponent<Card>();
+                var card = cardFace._target.GetComponent<Card>();
                 
                 if (card != null && card.transform.parent != null && 
-                    !card.transform.parent.CompareTag("PlayArea")) 
+                    !card.transform.parent.CompareTag("PlayArea") && !card.isFrozen) 
                 {
                     SwapCard(cardFaceTransform);
                 }
             }
         }
 
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.AddTime(-10f);
+            timer.AddTime(-10f);
         }
     }
 
 
     private void SwapOneCard()
     {
-        if (_cardVisualsParent == null || _availableCardTypes == null || _availableCardTypes.Count == 0)
+        if (cardVisualsParent == null || availableCardTypes == null || availableCardTypes.Count == 0)
             return;
         
-        List<Transform> swapableCards = new List<Transform>();
+        var swapableCards = new List<Transform>();
 
-        foreach (Transform cardFaceTransform in _cardVisualsParent)
+        foreach (Transform cardFaceTransform in cardVisualsParent)
         {
-            CardFace cardFace = cardFaceTransform.GetComponent<CardFace>();
+            var cardFace = cardFaceTransform.GetComponent<CardFace>();
             if (cardFace != null && cardFace._target != null)
             {
-                Card card = cardFace._target.GetComponent<Card>();
+                var card = cardFace._target.GetComponent<Card>();
                 
                 if (card != null && card.transform.parent != null && 
-                    !card.transform.parent.CompareTag("PlayArea")) 
+                    !card.transform.parent.CompareTag("PlayArea") && !card.isFrozen) 
                 {
                     swapableCards.Add(cardFaceTransform);
                 }
@@ -71,25 +72,25 @@ public class CardSwapper : MonoBehaviour
         
         if (swapableCards.Count > 0)
         {
-            Transform randomCard = swapableCards[Random.Range(0, swapableCards.Count)];
+            var randomCard = swapableCards[Random.Range(0, swapableCards.Count)];
             SwapCard(randomCard);
         }
 
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.AddTime(-2f);
+            timer.AddTime(-2f);
         }
     }
 
     private void SwapCard(Transform cardFaceTransform)
     {
-        CardFace cardFace = cardFaceTransform.GetComponent<CardFace>();
+        var cardFace = cardFaceTransform.GetComponent<CardFace>();
         if (cardFace != null && cardFace._target != null)
         {
-            Card card = cardFace._target.GetComponent<Card>();
+            var card = cardFace._target.GetComponent<Card>();
             if (card != null)
             {
-                CardTypeSo newCardTypeSo = _availableCardTypes[Random.Range(0, _availableCardTypes.Count)];
+                var newCardTypeSo = availableCardTypes[Random.Range(0, availableCardTypes.Count)];
                 card.cardTypeSo = newCardTypeSo;
 
                 card.cardNumber = newCardTypeSo.setAmount == 0
@@ -100,14 +101,5 @@ public class CardSwapper : MonoBehaviour
                 cardFace._leftNumber.text = card.cardNumber.ToString();
             }
         }
-    }
-
-    public void DisableSwapButtons()
-    {
-        if (_swapAllButton != null)
-            _swapAllButton.interactable = false;
-        
-        if (_swapOneButton != null)
-            _swapOneButton.interactable = false;
     }
 }

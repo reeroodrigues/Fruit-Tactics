@@ -910,10 +910,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0d1a8e0a054f7ba1de65ddbd2ce2c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _swapAllButton: {fileID: 456065598}
-  _swapOneButton: {fileID: 1201055234}
-  _cardVisualsParent: {fileID: 959503449}
-  _availableCardTypes:
+  swapAllButton: {fileID: 456065598}
+  swapOneButton: {fileID: 1201055234}
+  cardVisualsParent: {fileID: 959503449}
+  availableCardTypes:
   - {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
   - {fileID: 11400000, guid: 05123841ee56f44fead512a82761ab6d, type: 2}
   - {fileID: 11400000, guid: cd99ff58d8d854f1c9f75a4d7bc3282d, type: 2}
@@ -924,13 +924,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0745be210c4654b21a38065a96388a6a, type: 2}
   - {fileID: 11400000, guid: 7c63fa1aed93d47d180ed3a2021cd3fd, type: 2}
   - {fileID: 11400000, guid: 47125451494244be6b3a72a5937a06c7, type: 2}
-  - {fileID: 11400000, guid: 1a995ec7f118240249a82c4c1bd45438, type: 2}
   - {fileID: 11400000, guid: ed40943462e4442458c13815c3cfdd4d, type: 2}
+  - {fileID: 11400000, guid: 1a995ec7f118240249a82c4c1bd45438, type: 2}
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
+  - {fileID: 11400000, guid: 0b470fc8d1fcb4c43adb0cb94a86301b, type: 2}
+  - {fileID: 11400000, guid: b465db8bc0d56414a942fe55f6a00d32, type: 2}
   - {fileID: 11400000, guid: 516a09e3ed4158d4a87ae82f9d2baf93, type: 2}
-  _timer: {fileID: 243488017}
+  timer: {fileID: 243488017}
 --- !u!1001 &416019315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2652,6 +2654,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
   - {fileID: 11400000, guid: 0b470fc8d1fcb4c43adb0cb94a86301b, type: 2}
   - {fileID: 11400000, guid: 516a09e3ed4158d4a87ae82f9d2baf93, type: 2}
+  - {fileID: 11400000, guid: b465db8bc0d56414a942fe55f6a00d32, type: 2}
   _cards: []
 --- !u!82 &1473103882
 AudioSource:
