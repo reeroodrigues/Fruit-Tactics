@@ -77,8 +77,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         if (cardTypeSo.isPowerCard)
         {
-            RectTransform powerRect = GetComponent<RectTransform>();
-            Canvas rootCanvas = canvas.rootCanvas;
+            var powerRect = GetComponent<RectTransform>();
+            var rootCanvas = canvas.rootCanvas;
 
             foreach (var possibleTarget in FindObjectsOfType<Card>())
             {
@@ -88,8 +88,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 var targetRectTransform = possibleTarget.GetComponent<RectTransform>();
                 if (targetRectTransform == null) continue;
 
-                Rect powerWorldRect = RectTransformToScreenRect(powerRect, rootCanvas);
-                Rect targetWorldRect = RectTransformToScreenRect(targetRectTransform, rootCanvas);
+                var powerWorldRect = RectTransformToScreenRect(powerRect, rootCanvas);
+                var targetWorldRect = RectTransformToScreenRect(targetRectTransform, rootCanvas);
 
                 if (powerWorldRect.Overlaps(targetWorldRect))
                 {
@@ -97,57 +97,48 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                     {
                         case PowerEffectType.DoublePoints:
                             possibleTarget.cardNumber *= 2;
+    
                             var doubleFace = possibleTarget.GetComponent<CardFace>();
                             if (doubleFace != null)
                                 doubleFace.UpdateCardInfo();
+                            
+                            foreach (var face in FindObjectsOfType<CardFace>())
+                            {
+                                if (face._target == gameObject)
+                                {
+                                    Destroy(face.gameObject);
+                                    break;
+                                }
+                            }
+                            
+                            cardManager._cards.Remove(gameObject);
+                            Destroy(transform.parent.gameObject);
                             break;
 
                         case PowerEffectType.ExplodeAdjacent:
-                            Transform parent = possibleTarget.transform.parent;
-                            if (parent != null)
+                            foreach (var face in FindObjectsOfType<CardFace>())
                             {
-                                List<Card> siblings = new List<Card>();
-                                foreach (Transform child in parent.parent)
+                                if (face._target == possibleTarget.gameObject)
                                 {
-                                    Card card = child.GetComponentInChildren<Card>();
-                                    if (card != null && !card.cardTypeSo.isPowerCard)
-                                        siblings.Add(card);
+                                    Destroy(face.gameObject);
+                                    break;
                                 }
-
-                                int index = siblings.IndexOf(possibleTarget);
-
-                                for (int i = index - 1; i <= index + 1; i++)
-                                {
-                                    if (i >= 0 && i < siblings.Count)
-                                    {
-                                        Card toRemove = siblings[i];
-                                        
-                                        foreach (var face in FindObjectsOfType<CardFace>())
-                                        {
-                                            if (face._target == toRemove.gameObject)
-                                            {
-                                                Destroy(face.gameObject);
-                                                break;
-                                            }
-                                        }
-
-                                        cardManager._cards.Remove(toRemove.gameObject);
-                                        Destroy(toRemove.transform.parent.gameObject);
-                                    }
-                                }
-                                
-                                foreach (var face in FindObjectsOfType<CardFace>())
-                                {
-                                    if (face._target == gameObject)
-                                    {
-                                        Destroy(face.gameObject);
-                                        break;
-                                    }
-                                }
-
-                                cardManager._cards.Remove(gameObject);
-                                Destroy(transform.parent.gameObject);
                             }
+                            
+                            cardManager._cards.Remove(possibleTarget.gameObject);
+                            Destroy(possibleTarget.transform.parent.gameObject);
+                            
+                            foreach (var face in FindObjectsOfType<CardFace>())
+                            {
+                                if (face._target == gameObject)
+                                {
+                                    Destroy(face.gameObject);
+                                    break;
+                                }
+                            }
+
+                            cardManager._cards.Remove(gameObject);
+                            Destroy(transform.parent.gameObject);
                             break;
                         
                             case PowerEffectType.Freeze:
