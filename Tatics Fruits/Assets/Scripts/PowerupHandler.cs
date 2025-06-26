@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class PowerupHandler
 {
@@ -38,6 +39,11 @@ public class PowerupHandler
             
             case PowerEffectType.ClearRow:
                 ClearEntireRow(targetCard, cardManager);
+                Cleanup(sourceCard, cardManager);
+                break;
+            
+            case PowerEffectType.IncreaseNumber:
+                ApplyIncreaseNumber(targetCard, sourceCard.cardTypeSo);
                 Cleanup(sourceCard, cardManager);
                 break;
             
@@ -101,6 +107,16 @@ public class PowerupHandler
         source.cardNumber = target.cardNumber;
         
         var face = source.GetComponent<CardFace>();
+        if (face != null)
+            face.UpdateCardInfo();
+    }
+    
+    private static void ApplyIncreaseNumber(Card target, CardTypeSo cardTypeSo)
+    {
+        var increase = Random.Range(cardTypeSo.increaseAmountMin, cardTypeSo.increaseAmountMax + 1);
+        target.cardNumber += increase;
+
+        var face = target.GetComponent<CardFace>();
         if (face != null)
             face.UpdateCardInfo();
     }

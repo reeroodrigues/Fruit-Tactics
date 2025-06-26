@@ -9,6 +9,7 @@ public enum PowerEffectType
     Protection,
     Joker,
     ClearRow,
+    IncreaseNumber
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]
@@ -23,4 +24,8 @@ public class CardTypeSo : ScriptableObject
 
     [Header("Power Effect Settings")] 
     public float protectionDuration = 5f;
+    
+    [Header("Power Effect Settings")]
+    public int increaseAmountMin = 1;
+    public int increaseAmountMax = 5;
 }
