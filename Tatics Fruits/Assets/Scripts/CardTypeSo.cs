@@ -8,6 +8,7 @@ public enum PowerEffectType
     Freeze,
     Protection,
     Joker,
+    ClearRow,
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]

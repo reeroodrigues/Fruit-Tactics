@@ -36,6 +36,11 @@ public class PowerupHandler
                 sourceCard.ResetCardPosition();
                 break;
             
+            case PowerEffectType.ClearRow:
+                ClearEntireRow(targetCard, cardManager);
+                Cleanup(sourceCard, cardManager);
+                break;
+            
             case PowerEffectType.None:
                 break;
             default:
@@ -62,20 +67,6 @@ public class PowerupHandler
         var face = target.GetComponent<CardFace>();
         if (face != null)
             face.UpdateCardInfo();
-    }
-
-    [Obsolete("Obsolete")]
-    private static void ExplodeSingle(Card target, CardManager manager)
-    {
-        foreach (var face in Object.FindObjectsOfType<CardFace>())
-        {
-            if (face._target != target.gameObject) continue;
-            Object.Destroy(face.gameObject);
-            break;
-        }
-
-        manager._cards.Remove(target.gameObject);
-        Object.Destroy(target.transform.parent.gameObject);
     }
 
     private static void ApplyFreeze(Card target)
@@ -112,6 +103,46 @@ public class PowerupHandler
         var face = source.GetComponent<CardFace>();
         if (face != null)
             face.UpdateCardInfo();
+    }
+    
+    [Obsolete("Obsolete")]
+    private static void ClearEntireRow(Card target, CardManager cardManager)
+    {
+        Transform parent = target.transform.parent?.parent;
+        if (parent == null) return;
+
+        foreach (Transform child in parent)
+        {
+            Card card = child.GetComponentInChildren<Card>();
+            if (card != null && !card.cardTypeSo.isPowerCard)
+            {
+                foreach (var face in Object.FindObjectsOfType<CardFace>())
+                {
+                    if (face._target == card.gameObject)
+                    {
+                        Object.Destroy(face.gameObject);
+                        break;
+                    }
+                }
+
+                cardManager._cards.Remove(card.gameObject);
+                Object.Destroy(card.transform.parent.gameObject);
+            }
+        }
+    }
+    
+    [Obsolete("Obsolete")]
+    private static void ExplodeSingle(Card target, CardManager manager)
+    {
+        foreach (var face in Object.FindObjectsOfType<CardFace>())
+        {
+            if (face._target != target.gameObject) continue;
+            Object.Destroy(face.gameObject);
+            break;
+        }
+
+        manager._cards.Remove(target.gameObject);
+        Object.Destroy(target.transform.parent.gameObject);
     }
 
     private static System.Collections.IEnumerator RemoveProtectionAfterDelay(Card target, float duration)
