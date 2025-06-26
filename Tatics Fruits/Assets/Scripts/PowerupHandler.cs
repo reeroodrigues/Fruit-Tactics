@@ -31,6 +31,11 @@ public class PowerupHandler
                 Cleanup(sourceCard, cardManager);
                 break;
             
+            case PowerEffectType.Joker:
+                ApplyJoker(sourceCard, targetCard);
+                sourceCard.ResetCardPosition();
+                break;
+            
             case PowerEffectType.None:
                 break;
             default:
@@ -95,6 +100,18 @@ public class PowerupHandler
         }
 
         target.StartCoroutine(RemoveProtectionAfterDelay(target, duration));
+    }
+    
+    private static void ApplyJoker(Card source, Card target)
+    {
+        if (target.cardTypeSo.isPowerCard || target.isProtected) return;
+        
+        source.cardTypeSo = target.cardTypeSo;
+        source.cardNumber = target.cardNumber;
+        
+        var face = source.GetComponent<CardFace>();
+        if (face != null)
+            face.UpdateCardInfo();
     }
 
     private static System.Collections.IEnumerator RemoveProtectionAfterDelay(Card target, float duration)

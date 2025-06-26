@@ -6,7 +6,8 @@ public enum PowerEffectType
     DoublePoints,
     ExplodeAdjacent,
     Freeze,
-    Protection
+    Protection,
+    Joker,
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]

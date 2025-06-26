@@ -109,7 +109,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         GetComponent<Image>().raycastTarget = true;
     }
 
-    private void ResetCardPosition()
+    public void ResetCardPosition()
     {
         transform.localPosition = Vector2.zero;
         GetComponent<Image>().raycastTarget = true;
