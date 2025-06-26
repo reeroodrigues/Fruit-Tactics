@@ -81,10 +81,13 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if (pair.Value.Count >= 2)
             {
                 var sumValue = 0;
-
-                foreach (Card card in pair.Value)
+                foreach (var card in pair.Value)
                 {
-                    sumValue += card.cardNumber;
+                    var cardScore = card.cardNumber;
+                    if (card.hasBonusPoints)
+                        cardScore += 10;
+
+                    sumValue += cardScore;
                     cardsToRemove.Add(card.gameObject);
                 }
 

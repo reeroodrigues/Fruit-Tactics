@@ -101,4 +101,9 @@ public class CardFace : MonoBehaviour
             transform.parent.SetAsLastSibling();
         }
     }
+
+    public void ShowBonusIcon()
+    {
+        // Opcional: adicionar um pequeno ícone visual na carta
+    }
 }

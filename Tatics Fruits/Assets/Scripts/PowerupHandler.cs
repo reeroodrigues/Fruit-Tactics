@@ -47,6 +47,11 @@ public class PowerupHandler
                 Cleanup(sourceCard, cardManager);
                 break;
             
+            case PowerEffectType.BonusPoints:
+                ApplyBonusPoints(targetCard);
+                Cleanup(sourceCard, cardManager);
+                break;
+            
             case PowerEffectType.None:
                 break;
             default:
@@ -121,15 +126,26 @@ public class PowerupHandler
             face.UpdateCardInfo();
     }
     
+    private static void ApplyBonusPoints(Card target)
+    {
+        target.hasBonusPoints = true;
+
+        var face = target.GetComponent<CardFace>();
+        if (face != null)
+        {
+            face.ShowBonusIcon();
+        }
+    }
+    
     [Obsolete("Obsolete")]
     private static void ClearEntireRow(Card target, CardManager cardManager)
     {
-        Transform parent = target.transform.parent?.parent;
+        var parent = target.transform.parent?.parent;
         if (parent == null) return;
 
         foreach (Transform child in parent)
         {
-            Card card = child.GetComponentInChildren<Card>();
+            var card = child.GetComponentInChildren<Card>();
             if (card != null && !card.cardTypeSo.isPowerCard)
             {
                 foreach (var face in Object.FindObjectsOfType<CardFace>())

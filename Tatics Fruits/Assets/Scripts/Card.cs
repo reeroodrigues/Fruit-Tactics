@@ -28,6 +28,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [HideInInspector] public Canvas canvas;
     [HideInInspector] public bool isFrozen = false;
     [HideInInspector] public bool isProtected = false;
+    [HideInInspector] public bool hasBonusPoints = false;
 
     [Obsolete("Obsolete")]
     private void Start()
