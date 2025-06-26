@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [Header("Settings")] 
+    [Header("Settings")]
     public CardState cardState;
 
     public CardManager cardManager;
@@ -40,13 +40,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         cardManager._cards.Add(gameObject);
         canDrag = true;
 
-        cardNumber = cardTypeSo.setAmount == 0 
-            ? Random.Range(0, cardTypeSo.maxCardNumber) 
+        cardNumber = cardTypeSo.setAmount == 0
+            ? Random.Range(0, cardTypeSo.maxCardNumber)
             : cardTypeSo.setAmount;
 
         transform.SetAsLastSibling();
     }
-    
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -54,8 +53,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
 
         cardState = CardState.IsDragging;
-
         cardManager._selectedCard = gameObject;
+
         cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = false;
     }
@@ -85,116 +84,47 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 if (possibleTarget == this) continue;
                 if (possibleTarget.cardTypeSo.isPowerCard) continue;
 
-                var targetRectTransform = possibleTarget.GetComponent<RectTransform>();
-                if (targetRectTransform == null) continue;
+                var targetRect = possibleTarget.GetComponent<RectTransform>();
+                if (targetRect == null) continue;
 
                 var powerWorldRect = RectTransformToScreenRect(powerRect, rootCanvas);
-                var targetWorldRect = RectTransformToScreenRect(targetRectTransform, rootCanvas);
+                var targetWorldRect = RectTransformToScreenRect(targetRect, rootCanvas);
 
                 if (powerWorldRect.Overlaps(targetWorldRect))
                 {
-                    switch (cardTypeSo.powerEffect)
-                    {
-                        case PowerEffectType.DoublePoints:
-                            possibleTarget.cardNumber *= 2;
-    
-                            var doubleFace = possibleTarget.GetComponent<CardFace>();
-                            if (doubleFace != null)
-                                doubleFace.UpdateCardInfo();
-                            
-                            foreach (var face in FindObjectsOfType<CardFace>())
-                            {
-                                if (face._target == gameObject)
-                                {
-                                    Destroy(face.gameObject);
-                                    break;
-                                }
-                            }
-                            
-                            cardManager._cards.Remove(gameObject);
-                            Destroy(transform.parent.gameObject);
-                            break;
-
-                        case PowerEffectType.ExplodeAdjacent:
-                            foreach (var face in FindObjectsOfType<CardFace>())
-                            {
-                                if (face._target == possibleTarget.gameObject)
-                                {
-                                    Destroy(face.gameObject);
-                                    break;
-                                }
-                            }
-                            
-                            cardManager._cards.Remove(possibleTarget.gameObject);
-                            Destroy(possibleTarget.transform.parent.gameObject);
-                            
-                            foreach (var face in FindObjectsOfType<CardFace>())
-                            {
-                                if (face._target == gameObject)
-                                {
-                                    Destroy(face.gameObject);
-                                    break;
-                                }
-                            }
-
-                            cardManager._cards.Remove(gameObject);
-                            Destroy(transform.parent.gameObject);
-                            break;
-                        
-                            case PowerEffectType.Freeze:
-                            possibleTarget.isFrozen = true;
-
-                            var frozenFace = possibleTarget.GetComponent<CardFace>();
-                            if (frozenFace != null)
-                            {
-                                frozenFace.UpdateCardInfo();
-                            }
-                            
-                            foreach (var face in FindObjectsOfType<CardFace>())
-                            {
-                                if (face._target == gameObject)
-                                {
-                                    Destroy(face.gameObject);
-                                    break;
-                                }
-                            }
-
-                            cardManager._cards.Remove(gameObject);
-                            Destroy(transform.parent.gameObject);
-                            break;
-                    }
-
-                    var parentHolder = possibleTarget.transform.parent?.GetComponent<CardHolder>();
-                    if (parentHolder != null)
-                    {
-                        parentHolder.CheckForMatchingCards();
-                    }
-                    
-                    var layoutGroup = cardManager.GetComponentInChildren<HorizontalLayoutGroup>();
-                    if (layoutGroup != null)
-                    {
-                        LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroup.GetComponent<RectTransform>());
-                    }
-
+                    PowerupHandler.ApplyPower(this, possibleTarget, cardManager);
                     return;
                 }
             }
 
-            transform.localPosition = Vector2.zero;
-            GetComponent<Image>().raycastTarget = true;
-            transform.SetAsLastSibling();
-            cardManager.GetComponent<AudioSource>().Play();
+            ResetCardPosition();
             return;
         }
-        
+
+        HandleDropArea();
+
+        transform.SetAsLastSibling();
+        cardManager.GetComponent<AudioSource>().Play();
+        GetComponent<Image>().raycastTarget = true;
+    }
+
+    private void ResetCardPosition()
+    {
+        transform.localPosition = Vector2.zero;
+        GetComponent<Image>().raycastTarget = true;
+        transform.SetAsLastSibling();
+        cardManager.GetComponent<AudioSource>().Play();
+    }
+
+    private void HandleDropArea()
+    {
         if (cardManager._hoveringMenu != null)
         {
             var cardHolder = cardManager._hoveringMenu.GetComponent<CardHolder>();
 
             if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.Discard)
             {
-                var discardArea = cardHolder.transform;
-                transform.SetParent(discardArea);
+                transform.SetParent(cardHolder.transform);
                 transform.localPosition = Vector3.zero;
             }
             else
@@ -209,14 +139,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             transform.localPosition = Vector2.zero;
         }
-
-        transform.SetAsLastSibling();
-        cardManager.GetComponent<AudioSource>().Play();
-        GetComponent<Image>().raycastTarget = true;
     }
 
-
-    
     public void OnPointerEnter(PointerEventData eventData)
     {
         hovering = true;
@@ -236,7 +160,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             _cardFace.MoveToLastSibling();
         }
     }
-    
+
     private Rect RectTransformToScreenRect(RectTransform rectTransform, Canvas canvas)
     {
         var worldCorners = new Vector3[4];
@@ -247,5 +171,4 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         return new Rect(bottomLeft, topRight - bottomLeft);
     }
-
 }
