@@ -1,27 +1,35 @@
 using System;
+using System.Collections;
 using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviour, IPowerupTarget
 {
-    public Image _timerImage;
-    public TextMeshProUGUI _timerText;
-    public GameObject _addedTimeTextPrefab;
-    public Transform _addedTimeTextParent;
-    public float _totalTime;
-    public float _remainingTime;
+    public Image timerImage;
+    public TextMeshProUGUI timerText;
+    public GameObject addedTimeTextPrefab;
+    public Transform addedTimeTextParent;
+    public float totalTime;
+    public float remainingTime;
     public event Action OnRoundEnd;
 
     private bool _isPulsing = false;
     private bool _isRunning = false;
+    private bool _isPaused;
 
-    public void SetTotalTime(float totalTime)
+    public Timer(bool isPaused)
     {
-        _totalTime = totalTime;
-        _remainingTime = _totalTime;
+        _isPaused = isPaused;
+    }
+
+    public void SetTotalTime(float time)
+    {
+        totalTime = time;
+        remainingTime = totalTime;
         UpdateTimerText();
         
         {
@@ -37,15 +45,15 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        if (!_isRunning) return;
+        if (!_isRunning || _isPaused) return;
 
-        if (_remainingTime > 0)
+        if (remainingTime > 0)
         {
-            _remainingTime -= Time.deltaTime;
-            _timerImage.fillAmount = _remainingTime / _totalTime;
+            remainingTime -= Time.deltaTime;
+            timerImage.fillAmount = remainingTime / totalTime;
             UpdateTimerText();
 
-            if (_remainingTime <= 10 && !_isPulsing)
+            if (remainingTime <= 10 && !_isPulsing)
             {
                 StartPulsingEffect();
             }
@@ -65,17 +73,17 @@ public class Timer : MonoBehaviour
 
     public void AddTime(float timeToAdd)
     {
-        _remainingTime += timeToAdd;
-        _remainingTime = Mathf.Clamp(_remainingTime, 0, _totalTime);
+        remainingTime += timeToAdd;
+        remainingTime = Mathf.Clamp(remainingTime, 0, totalTime);
         AnimateTimerText();
         ShowAddedTimeEffect(timeToAdd);
     }
 
     private void ShowAddedTimeEffect(float timeToAdd)
     {
-        if (_addedTimeTextPrefab == null || _addedTimeTextParent == null) return;
+        if (addedTimeTextPrefab == null || addedTimeTextParent == null) return;
     
-        var addedTimeText = Instantiate(_addedTimeTextPrefab, _addedTimeTextParent);
+        var addedTimeText = Instantiate(addedTimeTextPrefab, addedTimeTextParent);
         var textComponent = addedTimeText.GetComponent<TextMeshProUGUI>();
 
         if (textComponent != null)
@@ -91,53 +99,70 @@ public class Timer : MonoBehaviour
 
     private void UpdateTimerText()
     {
-        if (_timerText != null)
+        if (timerText != null)
         {
-            var seconds = Mathf.CeilToInt(_remainingTime);
-            _timerText.text = seconds.ToString();
+            var seconds = Mathf.CeilToInt(remainingTime);
+            timerText.text = seconds.ToString();
         }
     }
 
     private void AnimateTimerText()
     {
-        _timerText?.transform.DOScale(1.3f, 0.2f).SetLoops(2, LoopType.Yoyo);
+        timerText?.transform.DOScale(1.3f, 0.2f).SetLoops(2, LoopType.Yoyo);
     }
 
     private void StartPulsingEffect()
     {
-        if (_timerText == null) return;
+        if (timerText == null) return;
 
         _isPulsing = true;
-        _timerText.color = Color.red;
-        _timerText.transform.DOScale(1.3f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
+        timerText.color = Color.red;
+        timerText.transform.DOScale(1.3f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutQuad);
     }
 
     private void StopPulsingEffect()
     {
-        if (_timerText == null) return;
+        if (timerText == null) return;
 
         _isPulsing = false;
-        _timerText.color = Color.white;
-        _timerText.transform.localScale = Vector3.one;
-        _timerText.transform.DOKill();
+        timerText.color = Color.white;
+        timerText.transform.localScale = Vector3.one;
+        timerText.transform.DOKill();
     }
 
     public float GetTimeRemaining()
     {
-        return _remainingTime;
+        return remainingTime;
+    }
+
+    public void ReceivePowerup(Card sourceCard)
+    {
+        if (sourceCard.cardTypeSo.powerEffect == PowerEffectType.FreezeTime)
+        {
+            var freezeTime = sourceCard.cardTypeSo.freezeTimeDuration > 0 ? sourceCard.cardTypeSo.freezeTimeDuration : UnityEngine.Random.Range(1, 15);
+            
+            FreezeForSeconds(freezeTime);
+
+            PowerupHandler.Cleanup(sourceCard, sourceCard.cardManager);
+        }
+    }
+
+    public void FreezeForSeconds(float duration)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FreezeCoroutine(duration));
+    }
+
+    private IEnumerator FreezeCoroutine(float duration)
+    {
+        _isPaused = true;
+        yield return new WaitForSecondsRealtime(duration);
+        _isPaused = false;
     }
     
     private void EndRound()
     {
         Debug.Log("Round Ended!");
         OnRoundEnd?.Invoke();
-        
-        // StopTimer();
-        // OnRoundEnd?.Invoke();
-        // var scoreManager = FindObjectOfType<ScoreManager>();
-        // if (scoreManager != null)
-        // {
-        //     scoreManager.HandleEndOfRound();
-        // }
     }
 }

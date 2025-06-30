@@ -81,21 +81,30 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             var powerRect = GetComponent<RectTransform>();
             var rootCanvas = canvas.rootCanvas;
 
-            foreach (var possibleTarget in FindObjectsOfType<Card>())
+            var allTargets = FindObjectsOfType<MonoBehaviour>();
+            foreach (var target in allTargets)
             {
-                if (possibleTarget == this) continue;
-                if (possibleTarget.cardTypeSo.isPowerCard) continue;
+                if (target == this) continue;
 
-                var targetRect = possibleTarget.GetComponent<RectTransform>();
-                if (targetRect == null) continue;
+                var targetRectTransform = target.GetComponent<RectTransform>();
+                if (targetRectTransform == null) continue;
 
                 var powerWorldRect = RectTransformToScreenRect(powerRect, rootCanvas);
-                var targetWorldRect = RectTransformToScreenRect(targetRect, rootCanvas);
+                var targetWorldRect = RectTransformToScreenRect(targetRectTransform, rootCanvas);
 
                 if (powerWorldRect.Overlaps(targetWorldRect))
                 {
-                    PowerupHandler.ApplyPower(this, possibleTarget, cardManager);
-                    return;
+                    if (target is IPowerupTarget powerupTarget)
+                    {
+                        powerupTarget.ReceivePowerup(this);
+                        return;
+                    }
+
+                    if (target is Card targetCard)
+                    {
+                        PowerupHandler.ApplyPower(this, targetCard, cardManager);
+                        return;
+                    }
                 }
             }
 

@@ -11,7 +11,8 @@ public enum PowerEffectType
     ClearRow,
     IncreaseNumber,
     BonusPoints,
-    Cleanse
+    Cleanse,
+    FreezeTime
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]
@@ -26,8 +27,8 @@ public class CardTypeSo : ScriptableObject
 
     [Header("Power Effect Settings")] 
     public float protectionDuration = 5f;
-    
-    [Header("Power Effect Settings")]
+    public float freezeTimeDuration = 5f; 
     public int increaseAmountMin = 1;
     public int increaseAmountMax = 5;
+    
 }

@@ -40,8 +40,8 @@ namespace DefaultNamespace
 
         private void ReduceTimer()
         {
-            _timer._remainingTime = Mathf.Max(0, _timer._remainingTime - 5);
-            Debug.Log("Tempo restante: " + _timer._remainingTime);
+            _timer.remainingTime = Mathf.Max(0, _timer.remainingTime - 5);
+            Debug.Log("Tempo restante: " + _timer.remainingTime);
         }
     }
 }

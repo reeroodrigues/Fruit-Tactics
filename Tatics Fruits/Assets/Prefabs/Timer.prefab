@@ -227,12 +227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140ea40d85442169c85906ad00ba61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timerImage: {fileID: 4537799829385330845}
-  _timerText: {fileID: 3830314469725437243}
-  _addedTimeTextPrefab: {fileID: 6464627068902774802}
-  _addedTimeTextParent: {fileID: 4622382022672002799}
-  _totalTime: 99
-  _remainingTime: 0
+  timerImage: {fileID: 4537799829385330845}
+  timerText: {fileID: 3830314469725437243}
+  addedTimeTextPrefab: {fileID: 2000910968580566613}
+  addedTimeTextParent: {fileID: 4622382022672002799}
+  totalTime: 0
+  remainingTime: 0
 --- !u!1 &6464627068902774802
 GameObject:
   m_ObjectHideFlags: 0

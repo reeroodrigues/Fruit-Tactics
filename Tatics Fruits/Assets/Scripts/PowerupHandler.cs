@@ -58,6 +58,10 @@ public class PowerupHandler
                 Cleanup(sourceCard, cardManager);
                 break;
             
+            case PowerEffectType.FreezeTime:
+                ApplyFreezeTime(sourceCard, cardManager);
+                break;
+            
             case PowerEffectType.None:
                 break;
             default:
@@ -174,6 +178,38 @@ public class PowerupHandler
     }
     
     [Obsolete("Obsolete")]
+    private static void ApplyFreezeTime(Card sourceCard, CardManager manager)
+    {
+        var cardRect = sourceCard.GetComponent<RectTransform>();
+        var timerRect = manager._timer.GetComponent<RectTransform>();
+    
+        var cardWorldRect = RectTransformToScreenRect(cardRect, manager._canvas.rootCanvas);
+        var timerWorldRect = RectTransformToScreenRect(timerRect, manager._canvas.rootCanvas);
+
+        if (cardWorldRect.Overlaps(timerWorldRect))
+        {
+            var freezeDuration = sourceCard.cardTypeSo.freezeTimeDuration;
+            if (freezeDuration <= 0)
+            {
+                freezeDuration = Random.Range(1, 15);
+            }
+
+            manager._timer.FreezeForSeconds(freezeDuration);
+
+            Cleanup(sourceCard, manager);
+        }
+    }
+
+    private static Rect RectTransformToScreenRect(RectTransform rectTransform, Canvas canvas)
+    {
+        var worldCorners = new Vector3[4];
+        rectTransform.GetWorldCorners(worldCorners);
+        var bottomLeft = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[0]);
+        var topRight = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldCorners[2]);
+        return new Rect(bottomLeft, topRight - bottomLeft);
+    }
+    
+    [Obsolete("Obsolete")]
     private static void ClearEntireRow(Card target, CardManager cardManager)
     {
         var parent = target.transform.parent?.parent;
@@ -226,7 +262,7 @@ public class PowerupHandler
     }
 
     [Obsolete("Obsolete")]
-    private static void Cleanup(Card sourceCard, CardManager manager)
+    public static void Cleanup(Card sourceCard, CardManager manager)
     {
         foreach (var face in Object.FindObjectsOfType<CardFace>())
         {
