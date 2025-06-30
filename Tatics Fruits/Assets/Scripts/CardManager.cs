@@ -9,6 +9,7 @@ public class CardManager : MonoBehaviour
     [HideInInspector] public GameObject _selectedCard;
     [HideInInspector] public GameObject _hoveringMenu;
     [HideInInspector] public CardTypeSo _cardType;
+    [HideInInspector] public bool swapAllFree = false;
 
     [Header("Scripts/GameObjects")]
     public GameObject _cardParent;
@@ -18,6 +19,7 @@ public class CardManager : MonoBehaviour
     public GameObject _cardFace;
     public Canvas _canvas;
     public Timer _timer;
+    public Button _swapAllButton;
     
     private bool _isRoundOver = false;
 

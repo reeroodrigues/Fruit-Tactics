@@ -938,7 +938,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d805dcc322f8cc54792e81bb27e82fb4, type: 2}
   - {fileID: 11400000, guid: d55ae22be08194f44b79dc5d51e953e0, type: 2}
   - {fileID: 11400000, guid: aa4da343bc8f45845bb6ce4e17b21493, type: 2}
+  - {fileID: 11400000, guid: f590445e17dd8c744a876a6f378142c8, type: 2}
   timer: {fileID: 243488017}
+  cardManager: {fileID: 1473103881}
 --- !u!1001 &416019315
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2517,6 +2519,7 @@ MonoBehaviour:
   _selectedCard: {fileID: 0}
   _hoveringMenu: {fileID: 0}
   _cardType: {fileID: 0}
+  swapAllFree: 0
   _cardParent: {fileID: 4717338773919566542, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
   _defaultCardsLayoutGroup: {fileID: 242047029}
   _defaultPlayArea: {fileID: 83359194}
@@ -2524,6 +2527,7 @@ MonoBehaviour:
   _cardFace: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
   _canvas: {fileID: 2082077803}
   _timer: {fileID: 243488017}
+  _swapAllButton: {fileID: 456065598}
   _maxCards: 6
   _startingAmount: 6
   _cardTypes:
@@ -2552,6 +2556,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d805dcc322f8cc54792e81bb27e82fb4, type: 2}
   - {fileID: 11400000, guid: d55ae22be08194f44b79dc5d51e953e0, type: 2}
   - {fileID: 11400000, guid: aa4da343bc8f45845bb6ce4e17b21493, type: 2}
+  - {fileID: 11400000, guid: f590445e17dd8c744a876a6f378142c8, type: 2}
   _cards: []
 --- !u!82 &1473103882
 AudioSource:

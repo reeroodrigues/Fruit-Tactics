@@ -12,7 +12,8 @@ public enum PowerEffectType
     IncreaseNumber,
     BonusPoints,
     Cleanse,
-    FreezeTime
+    FreezeTime,
+    SwapFree
 }
 
 [CreateAssetMenu(menuName = "Card/CardType")]

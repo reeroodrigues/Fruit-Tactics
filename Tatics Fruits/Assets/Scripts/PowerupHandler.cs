@@ -62,6 +62,10 @@ public class PowerupHandler
                 ApplyFreezeTime(sourceCard, cardManager);
                 break;
             
+            case PowerEffectType.SwapFree:
+                ApplySwapFree(sourceCard, cardManager);
+                break;
+            
             case PowerEffectType.None:
                 break;
             default:
@@ -174,6 +178,28 @@ public class PowerupHandler
         foreach (var cardObj in cardsToRemove)
         {
             manager._cards.Remove(cardObj);
+        }
+    }
+
+    [Obsolete("Obsolete")]
+    private static void ApplySwapFree(Card sourceCard, CardManager manager)
+    {
+        var cardRect = sourceCard.GetComponent<RectTransform>();
+        var buttonRect = manager._swapAllButton.GetComponent<RectTransform>();
+        
+        var cardWorldRect = RectTransformToScreenRect(cardRect, manager._canvas.rootCanvas);
+        var buttonWorldRect = RectTransformToScreenRect(buttonRect, manager._canvas.rootCanvas);
+
+        if (cardWorldRect.Overlaps(buttonWorldRect))
+        {
+            Debug.Log("Swap Free is activated!");
+
+            manager.swapAllFree = true;
+            Cleanup(sourceCard, manager);
+        }
+        else
+        {
+            sourceCard.ResetCardPosition();
         }
     }
     

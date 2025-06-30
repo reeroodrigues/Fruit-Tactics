@@ -78,9 +78,27 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         if (cardTypeSo.isPowerCard)
         {
+            if (cardTypeSo.powerEffect == PowerEffectType.SwapFree)
+            {
+                var cardRect = GetComponent<RectTransform>();
+                var buttonRect = cardManager._swapAllButton.GetComponent<RectTransform>();
+
+                var cardWorldRect = RectTransformToScreenRect(cardRect, cardManager._canvas.rootCanvas);
+                var buttonWorldRect = RectTransformToScreenRect(buttonRect, cardManager._canvas.rootCanvas);
+
+                if (cardWorldRect.Overlaps(buttonWorldRect))
+                {
+                    Debug.Log("Swap Free Power Activated!");
+
+                    cardManager.swapAllFree = true;
+                    PowerupHandler.Cleanup(this, cardManager);
+                    return;
+                }
+            }
+            
             var powerRect = GetComponent<RectTransform>();
             var rootCanvas = canvas.rootCanvas;
-
+            
             var allTargets = FindObjectsOfType<MonoBehaviour>();
             foreach (var target in allTargets)
             {

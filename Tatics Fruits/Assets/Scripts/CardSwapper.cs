@@ -11,6 +11,8 @@ public class CardSwapper : MonoBehaviour
     public Transform cardVisualsParent;
     public List<CardTypeSo> availableCardTypes;
     public Timer timer;
+    
+    public CardManager cardManager;
 
     private void Start()
     {
@@ -25,6 +27,18 @@ public class CardSwapper : MonoBehaviour
     {
         if (cardVisualsParent == null || availableCardTypes == null || availableCardTypes.Count == 0)
             return;
+        
+        if (cardManager != null && cardManager.swapAllFree)
+        {
+            cardManager.swapAllFree = false;
+        }
+        else
+        {
+            if (timer != null)
+            {
+                timer.AddTime(-10f);
+            }
+        }
 
         foreach (Transform cardFaceTransform in cardVisualsParent)
         {
@@ -39,11 +53,7 @@ public class CardSwapper : MonoBehaviour
                 }
             }
         }
-
-        if (timer != null)
-        {
-            timer.AddTime(-10f);
-        }
+        
     }
 
 
