@@ -4062,7 +4062,7 @@ MonoBehaviour:
   _timer: {fileID: 647961936108584486}
   _swapAllButton: {fileID: 456065598}
   _maxCards: 6
-  _startingAmount: 6
+  _startingAmount: 5
   _cardTypes:
   - {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
   - {fileID: 11400000, guid: 05123841ee56f44fead512a82761ab6d, type: 2}
