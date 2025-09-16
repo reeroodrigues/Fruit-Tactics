@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Tutorial
@@ -23,10 +24,14 @@ namespace Tutorial
         public GameObject speechBubblePanel; // O painel do balão de texto
         public TextMeshProUGUI speechBubbleText; // O componente de texto do balão
         public Button nextButton; // O botão "Próximo"
-
+        public Button skipTutorialButton;
+        
+        [Header("Game Settings")]
+        public string gameplaySceneName = "GameplayScene";
+        
         [Header("Tutorial Steps")]
         public List<TutorialStep> tutorialSteps;
-
+        
         private int currentStepIndex = 0;
 
         void Start()
@@ -45,6 +50,7 @@ namespace Tutorial
                 pointingHandImage.gameObject.SetActive(true); // Ativa a mão
                 nextButton.onClick.RemoveAllListeners(); // Limpa listeners anteriores para evitar duplicidade
                 nextButton.onClick.AddListener(NextStep);
+                skipTutorialButton.onClick.AddListener(SkipTutorial);
                 DisplayStep(currentStepIndex);
             }
             else
@@ -89,6 +95,11 @@ namespace Tutorial
             }
         }
 
+        public void SkipTutorial()
+        {
+            SceneManager.LoadScene(gameplaySceneName);
+        }
+
         public void EndTutorial()
         {
             tutorialOverlayPanel.SetActive(false);
@@ -97,6 +108,8 @@ namespace Tutorial
             nextButton.onClick.RemoveAllListeners(); // Limpa o listener
 
             Debug.Log("Tutorial concluído!");
+            
+            SceneManager.LoadScene(gameplaySceneName);
             // PlayerPrefs.SetInt("HasCompletedTutorial", 1);
         }
     }
