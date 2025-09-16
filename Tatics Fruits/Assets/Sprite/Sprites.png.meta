@@ -149,7 +149,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Apple
+      name: Sprites_0
       rect:
         serializedVersion: 2
         x: 0
@@ -157,21 +157,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7ea8fab1af93994685c1761cc75e237
-      internalID: 1847463989
+      spriteID: 98816d3e8135f984da1a4f1d80c6c5b6
+      internalID: -461153444
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pear
+      name: Sprites_1
       rect:
         serializedVersion: 2
         x: 16
@@ -179,21 +179,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 816ac8139fc192544b17420ee74df9f3
-      internalID: 519684443
+      spriteID: 5057706ecbf42994a93b491d020d8d4d
+      internalID: 140790471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coconut
+      name: Sprites_2
       rect:
         serializedVersion: 2
         x: 32
@@ -201,21 +201,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6c760920dd4b704095293cf2a549fac
-      internalID: -1586687842
+      spriteID: a30ceb694b5b82e48b3f7d23326e0081
+      internalID: 2000098461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grape1
+      name: Sprites_3
       rect:
         serializedVersion: 2
         x: 48
@@ -223,21 +223,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d7c3f5f10e7a9c4ea690cb82bd76058
-      internalID: -1251093787
+      spriteID: b77b28699c068b44bbd50ed4471f9fee
+      internalID: 1589393525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grape2
+      name: Sprites_4
       rect:
         serializedVersion: 2
         x: 64
@@ -245,21 +245,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d592ac6d3d0b5bc469cd2dc0f934da33
-      internalID: 828239227
+      spriteID: ad8c78ff2111cde43a007778e94a2bb1
+      internalID: -1445119143
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pineapple
+      name: Sprites_5
       rect:
         serializedVersion: 2
         x: 0
@@ -267,65 +267,65 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8da06468bbcdffc4bb4a83713fe629f7
-      internalID: 986310495
+      spriteID: 06b973aeac3968f448550c00b836e9a6
+      internalID: -237730075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Lemon
+      name: Sprites_6
       rect:
         serializedVersion: 2
         x: 16
         y: 16
         width: 16
-        height: 15
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1431b2da700adff458b11e52cdf87f36
-      internalID: 1366144071
+      spriteID: 297e6c74d19f9314a8aae321928c834c
+      internalID: 1885104036
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Banana
+      name: Sprites_7
       rect:
         serializedVersion: 2
         x: 32
         y: 16
         width: 16
-        height: 15
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0d261792a0090c4b81e9f108a54e21a
-      internalID: 793172594
+      spriteID: 53c41e66b1f38c14e86e9ca6fa1952b7
+      internalID: -1893813485
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Cherry
+      name: Sprites_8
       rect:
         serializedVersion: 2
         x: 48
@@ -333,21 +333,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f05e1638b10796943bed2d2ff7460bcb
-      internalID: 1987916976
+      spriteID: 0045bd0f0e2dd8d45b470627502b2172
+      internalID: 458113364
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Orange
+      name: Sprites_9
       rect:
         serializedVersion: 2
         x: 64
@@ -355,43 +355,43 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9115b3e4cceb62c47ab4c30587dcf0a1
-      internalID: 1218446674
+      spriteID: 428ef1a88f112d048b79ca79d4a8fd0c
+      internalID: -1798291463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Avocado
+      name: Sprites_10
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 16
-        height: 15
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 644b50267c4cba34c8ba250019180156
-      internalID: -1347541644
+      spriteID: 2821beea74a180043a373599d114affb
+      internalID: 184820047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Peach
+      name: Sprites_11
       rect:
         serializedVersion: 2
         x: 16
@@ -399,43 +399,43 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5056268ff954e9c4db94a5954a25008b
-      internalID: 1914382107
+      spriteID: f560c0dc7eaa19b4a9c5c60a3a4a2d1d
+      internalID: 1931394053
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Strawberry
+      name: Sprites_12
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 16
-        height: 15
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a4bc2897c3c0e4541b188863a4b0748d
-      internalID: -1337796959
+      spriteID: cfc116391c49b704e85561ff2e3bdbaa
+      internalID: 1248271897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Kiwi
+      name: Sprites_13
       rect:
         serializedVersion: 2
         x: 48
@@ -443,21 +443,21 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9dfe383632f9d4f4eae087cf3a500d0d
-      internalID: -462256797
+      spriteID: 1ae278ae42aa002409df523a39e31355
+      internalID: 442627506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Watermelon
+      name: Sprites_14
       rect:
         serializedVersion: 2
         x: 64
@@ -465,15 +465,15 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 1}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d81e2fe74bdcf047a0933ed72e35648
-      internalID: -1595615294
+      spriteID: 7b5654f190d282941834aeedea1cb7bc
+      internalID: 1523486385
       vertices: []
       indices: 
       edges: []
@@ -492,21 +492,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Apple: 1847463989
-      Avocado: -1347541644
-      Banana: 793172594
-      Cherry: 1987916976
-      Coconut: -1586687842
-      Grape1: -1251093787
-      Grape2: 828239227
-      Kiwi: -462256797
-      Lemon: 1366144071
-      Orange: 1218446674
-      Peach: 1914382107
-      Pear: 519684443
-      Pineapple: 986310495
-      Strawberry: -1337796959
-      Watermelon: -1595615294
+      Sprites_0: -461153444
+      Sprites_1: 140790471
+      Sprites_10: 184820047
+      Sprites_11: 1931394053
+      Sprites_12: 1248271897
+      Sprites_13: 442627506
+      Sprites_14: 1523486385
+      Sprites_2: 2000098461
+      Sprites_3: 1589393525
+      Sprites_4: -1445119143
+      Sprites_5: -237730075
+      Sprites_6: 1885104036
+      Sprites_7: -1893813485
+      Sprites_8: 458113364
+      Sprites_9: -1798291463
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

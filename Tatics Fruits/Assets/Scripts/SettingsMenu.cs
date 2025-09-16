@@ -1,65 +1,76 @@
-using System.Runtime.InteropServices;
+using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 
 public class SettingsMenu : MonoBehaviour
 {
-    [Header("Música")]
-    [SerializeField] private Button musicButton;
-    [SerializeField] private Image musicIcon;
-    [SerializeField] private Sprite musicOnSprite;
-    [SerializeField] private Sprite musicOffSprite;
+    [Header("Refs")]
+    [SerializeField] private RectTransform settingsPanel;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private GameObject dimmer;
 
-    [Header("Outros Botões")]
-    [SerializeField] private Button creditsButton;
-    [SerializeField] private Button leaderboardButton;
+    [Header("Anim")] 
+    [SerializeField, Min(0.05f)] private float duration = 0.25f;
+    [SerializeField] private Ease easeIn = Ease.InOutCubic;
+    [SerializeField] private Ease easeOut = Ease.InCubic;
 
-    // [Header("Painéis")]
-    // [SerializeField] private GameObject creditsPanel;
-    // [SerializeField] private GameObject leaderboardPanel;
+    private bool _isOpen;
+    private float _panelHeight;
+    private Tweener _tween;
 
-    private bool isMusicOn;
-
-    private void Start()
+    private void Awake()
     {
-        isMusicOn = PlayerPrefs.GetInt("MusicEnabled", 1) == 1;
-        UpdateMusicIcon();
+        _panelHeight = settingsPanel.rect.height;
 
-        musicButton.onClick.AddListener(ToggleMusic);
-        // creditsButton.onClick.AddListener(OpenCredits);
-        // leaderboardButton.onClick.AddListener(OpenLeaderboard);
-    }
+        var pos = settingsPanel.anchoredPosition;
+        pos.y = _panelHeight;
+        settingsPanel.anchoredPosition = pos;
 
-    private void ToggleMusic()
-    {
-        isMusicOn = !isMusicOn;
-        PlayerPrefs.SetInt("MusicEnabled", isMusicOn ? 1 : 0);
-        UpdateMusicIcon();
-        
-    }
+        if (dimmer != null)
+            dimmer.SetActive(false);
 
-    private void UpdateMusicIcon()
-    {
-        musicIcon.sprite = isMusicOn ? musicOnSprite : musicOffSprite;
-    }
+        if (settingsButton != null)
+            settingsButton.onClick.AddListener(Toggle);
 
-    // private void OpenCredits()
-    // {
-    //     creditsPanel.SetActive(true);
-    // }
-    
-    // private void OpenLeaderboard()
-    // {
-    //     leaderboardPanel.SetActive(true);
-    // }
-
-    public void ClosePopup()
-    {
-        PlayerPrefs.Save();
-        transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+        if (dimmer != null)
         {
-            gameObject.SetActive(false);
+            var dimmerBtn = dimmer.GetComponent<Button>();
+            if (dimmerBtn != null)
+                dimmerBtn.onClick.AddListener(Close);
+        }
+    }
+
+    public void Toggle()
+    {
+        if (_isOpen)
+            Close();
+        else
+            Open();
+    }
+
+    public void Open()
+    {
+        if (_tween != null && _tween.IsActive())
+            _tween.Kill();
+
+        if (dimmer != null)
+            dimmer.SetActive(true);
+
+        _isOpen = true;
+        _tween = settingsPanel.DOAnchorPosY(0f, duration).SetEase(easeIn).SetUpdate(true);
+    }
+
+    public void Close()
+    {
+        if (_tween != null && _tween.IsActive())
+            _tween.Kill();
+
+        _isOpen = false;
+        _tween = settingsPanel.DOAnchorPosY(_panelHeight, duration).SetEase(easeOut).SetUpdate(true).OnComplete(() =>
+        {
+            if (dimmer != null)
+                dimmer.SetActive(false);
         });
     }
 }
