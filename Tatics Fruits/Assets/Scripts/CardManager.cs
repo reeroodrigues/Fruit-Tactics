@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using DefaultNamespace;
+using Tutorial;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
+    [HideInInspector] public bool _isTutorialMode = false;
+    
     [HideInInspector] public GameObject _selectedCard;
     [HideInInspector] public GameObject _hoveringMenu;
     [HideInInspector] public CardTypeSo _cardType;
@@ -38,7 +41,7 @@ public class CardManager : MonoBehaviour
             _timer.OnRoundEnd += HandleRoundEnd;
         }
 
-        if (_startingAmount > 0)
+        if (!_isTutorialMode && _startingAmount > 0)
             AddCard(_startingAmount);
     }
     
@@ -109,6 +112,15 @@ public class CardManager : MonoBehaviour
 
             Destroy(target.gameObject);
             _selectedCard = null;
+
+            if (_isTutorialMode)
+            {
+                //Verifica se a área de jogo está ocupada por 2 cartas
+                if (_defaultPlayArea.transform.childCount >= 2)
+                {
+                    TutorialManager.Instance.ResumeTutorial();
+                }
+            }
         }
     }
 
@@ -150,6 +162,23 @@ public class CardManager : MonoBehaviour
                 card.GetComponentInChildren<Card>().cardTypeSo = _cardTypes[randomCard];
                 var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
 
+                cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
+            }
+        }
+    }
+
+    public void AddSpecificCard(List<CardTypeSo> specificCards)
+    {
+        if (_isRoundOver)
+            return;
+
+        foreach (var cardTypeSo in specificCards)
+        {
+            if (_defaultCardsLayoutGroup.transform.childCount < _maxCards)
+            {
+                var card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
+                card.GetComponentInChildren<Card>().cardTypeSo = cardTypeSo;
+                var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
                 cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
             }
         }

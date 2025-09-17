@@ -1636,6 +1636,57 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &581953446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 581953448}
+  - component: {fileID: 581953449}
+  m_Layer: 0
+  m_Name: TutorialInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &581953448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581953446}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &581953449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581953446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a30bb269579214189bb32db686aab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardManager: {fileID: 1473103881}
+  tutorialCards:
+  - {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
+  - {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
+  - {fileID: 11400000, guid: 05123841ee56f44fead512a82761ab6d, type: 2}
+  - {fileID: 11400000, guid: cd99ff58d8d854f1c9f75a4d7bc3282d, type: 2}
+  - {fileID: 11400000, guid: f5cbce7ae20474b28a8759a79c4c4835, type: 2}
 --- !u!1 &607720895
 GameObject:
   m_ObjectHideFlags: 0
@@ -3946,59 +3997,71 @@ MonoBehaviour:
     targetUIPosition: {fileID: 1726583246}
     handOffset: {x: -100, y: 0}
     handRotation: 0
+    stepType: 0
   - tutorialText: "Aqui mostra o level que voc\xEA est\xE1 atualmente!\nTente se
       superar e alcan\xE7ar novos levels!"
     targetUIPosition: {fileID: 1376473396}
     handOffset: {x: -13, y: 0}
     handRotation: -90
+    stepType: 0
   - tutorialText: "Nessa barra \xE9 mostrado o seu progresso!\nConforme voc\xEA vai
       fazendo pontos, estrelas v\xE3o aparecendo!"
     targetUIPosition: {fileID: 1324107320}
     handOffset: {x: 20, y: 5}
     handRotation: 120
+    stepType: 0
   - tutorialText: "Aqui voc\xEA v\xEA o tempo restante.\r\nQuando chegar a zero,
       o level termina."
     targetUIPosition: {fileID: 744621421}
     handOffset: {x: 10, y: 5}
     handRotation: 120
+    stepType: 0
   - tutorialText: "Aqui voc\xEA v\xEA a sua pontua\xE7\xE3o!"
     targetUIPosition: {fileID: 1602575017}
     handOffset: {x: 10, y: 5}
     handRotation: 120
+    stepType: 0
   - tutorialText: "Aqui voc\xEA v\xEA a sua pontua\xE7\xE3o m\xE1xima!"
     targetUIPosition: {fileID: 184454600}
     handOffset: {x: 10, y: 5}
     handRotation: 120
+    stepType: 0
   - tutorialText: "Aqui s\xE3o mostradas as cartas que est\xE3o dispon\xEDveis para
       voc\xEA jogar e montar seus pares"
     targetUIPosition: {fileID: 666789752}
     handOffset: {x: -25, y: 0}
     handRotation: -90
+    stepType: 0
   - tutorialText: "Sempre que voc\xEA tiver menos que 6 cartas em sua m\xE3o, voc\xEA
       pode comprar novas cartas! Clique no bot\xE3o Comprar para comprar novas cartas"
     targetUIPosition: {fileID: 1011670256}
     handOffset: {x: 0, y: 10}
     handRotation: -180
+    stepType: 0
   - tutorialText: "Quando nenhuma carta fizer par, voc\xEA pode trocar uma ou todas
       as cartas da sua m\xE3o! Mas ATEN\xC7\xC3O, REALIZAR TROCAS FAZ COM QUE O TEMPO
       DIMINUA!"
     targetUIPosition: {fileID: 957734467}
     handOffset: {x: -25, y: 0}
     handRotation: -90
+    stepType: 0
   - tutorialText: "Experimente trocando apenas uma carta da sua m\xE3o!"
     targetUIPosition: {fileID: 48763958}
     handOffset: {x: -15, y: 0}
     handRotation: -90
+    stepType: 0
   - tutorialText: "Experimente agora trocar todas as cartas da sua m\xE3o!"
     targetUIPosition: {fileID: 520296267}
     handOffset: {x: -15, y: 0}
     handRotation: -90
+    stepType: 0
   - tutorialText: "\xC9 aqui que voc\xEA deve arrastar e soltar suas cartas para
       fazer pontos! Tente fazer um par arrastando duas cartas iguais da sua m\xE3o
       para c\xE1!"
     targetUIPosition: {fileID: 938168172}
     handOffset: {x: -25, y: 0}
     handRotation: -90
+    stepType: 1
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0
@@ -4049,6 +4112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eacb3ac6d5104442ab0ce608bffa2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isTutorialMode: 0
   _selectedCard: {fileID: 0}
   _hoveringMenu: {fileID: 0}
   _cardType: {fileID: 0}
@@ -5153,7 +5217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 539692413dc740f48f9d1ea831e6891e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: score
 --- !u!1 &1989095737
 GameObject:
   m_ObjectHideFlags: 0
@@ -11848,3 +11911,4 @@ SceneRoots:
   - {fileID: 2082077804}
   - {fileID: 1780655301}
   - {fileID: 1419642187}
+  - {fileID: 581953448}

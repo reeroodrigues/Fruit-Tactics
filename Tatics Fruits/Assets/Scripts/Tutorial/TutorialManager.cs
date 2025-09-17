@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,9 @@ namespace Tutorial
     public class TutorialManager : MonoBehaviour
     {
         [System.Serializable]
+        public enum StepType{ TextOnly, PlayerAction}
+        
+        [System.Serializable]
         public class TutorialStep
         {
             [TextArea]
@@ -16,6 +20,7 @@ namespace Tutorial
             public RectTransform targetUIPosition; // A posição da UI para onde a mão vai apontar
             public Vector2 handOffset = Vector2.zero; // Ajuste fino da posição da mão
             public float handRotation = 0f; // Rotação da mão (em graus)
+            public StepType stepType;
         }
 
         [Header("UI Elements")]
@@ -33,6 +38,16 @@ namespace Tutorial
         public List<TutorialStep> tutorialSteps;
         
         private int currentStepIndex = 0;
+
+        public static TutorialManager Instance;
+
+        private void Awake()
+        {
+            if (Instance == null)
+                Instance = this;
+            else
+                Destroy(gameObject);
+        }
 
         void Start()
         {
@@ -75,24 +90,36 @@ namespace Tutorial
         private void DisplayStep(int stepIndex)
         {
             TutorialStep currentStep = tutorialSteps[stepIndex];
-
-            // Atualiza o texto do balão
             speechBubbleText.text = currentStep.tutorialText;
-
-            // Move a mão para a posição do alvo + offset
+            
+            // Ele garante que a mão sempre aponta para o alvo, se houver um.
             if (currentStep.targetUIPosition != null)
             {
-                // A posição da mão será a do alvo mais o offset
                 pointingHandImage.rectTransform.position = currentStep.targetUIPosition.position + new Vector3(currentStep.handOffset.x, currentStep.handOffset.y, 0);
-            
-                // Define a rotação da mão
                 pointingHandImage.rectTransform.rotation = Quaternion.Euler(0, 0, currentStep.handRotation);
+                pointingHandImage.gameObject.SetActive(true);
             }
             else
             {
-                Debug.LogWarning($"Passo {stepIndex} não tem um 'targetUIPosition' configurado para a mão. A mão não será movida.");
-                pointingHandImage.gameObject.SetActive(false); // Esconde a mão se não houver alvo
+                // Se não houver alvo, esconde a mão
+                pointingHandImage.gameObject.SetActive(false);
             }
+
+            // Este bloco de código controla APENAS o botão "Próximo"
+            // Ele garante que o tutorial só avança com o clique do jogador para os passos de texto.
+            if (currentStep.stepType == StepType.PlayerAction)
+            {
+                nextButton.gameObject.SetActive(false); // Esconde o botão Próximo
+            }
+            else
+            {
+                nextButton.gameObject.SetActive(true); // Mostra o botão Próximo
+            }
+        }
+
+        public void ResumeTutorial()
+        {
+            NextStep();
         }
 
         public void SkipTutorial()
