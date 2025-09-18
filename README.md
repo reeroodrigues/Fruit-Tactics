@@ -1,4 +1,4 @@
-# 🍓 Tactics of Fruits
+# 🍓 Fruit Tactics
 
 Um jogo de cartas rápido e desafiador onde você precisa formar pares antes que o tempo acabe! ⏱️
 
