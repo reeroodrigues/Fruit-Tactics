@@ -1,57 +1,139 @@
-using System;
-using System.Runtime.InteropServices;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] private Button _playButton;
-    [SerializeField] private Button _howToPlayButton;
-    [SerializeField] private Button _optionsButton;
-    [SerializeField] private Transform _titleTransform;
-    [SerializeField] private SettingsMenu _settingsMenu;
-    [SerializeField] private GameObject _tutorialPanel;
+    [Header("Buttons")]
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button rankingButton;
+    [SerializeField] private Button storeButton;
+    [SerializeField] private Button dailyMissionsButton;
+    [SerializeField] private Button settingsButton;
+
+    [Header("Title")]
+    [SerializeField] private RectTransform titleTransform;
+
+    [Header("Icons ao lado dos botões")]
+    [SerializeField] private RectTransform[] sideIcons;
+
+    [Header("Settings (janela/painel)")]
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private RectTransform settingsIcon; // opcional
+
+    [Header("Animação de tilt")]
+    [SerializeField] private float initialDelay = 1.5f;   // 1ª vez
+    [SerializeField] private float repeatInterval = 3f;   // repete a cada 3s
+    [SerializeField] private float tiltAngle = 12f;
+    [SerializeField] private float tiltDuration = 0.18f;
+    [SerializeField] private float returnDuration = 0.22f;
+    [SerializeField] private float iconsStagger = 0.07f;
+
+    private Sequence _titleSeq;
 
     private void Start()
     {
-        _titleTransform.localScale = Vector3.zero;
-        _titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce);
+        // Pop do título
+        titleTransform.localScale = Vector3.zero;
+        _titleSeq = DOTween.Sequence()
+            .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
 
-        SetupButtonAnimation(_playButton);
-        SetupButtonAnimation(_howToPlayButton);
-        SetupButtonAnimation(_optionsButton);
+        // Clicks
+        playButton.onClick.AddListener(() => SceneManager.LoadScene("Gameplay Scene"));
+        rankingButton.onClick.AddListener(() => Debug.Log("Abrindo Ranking..."));
+        storeButton.onClick.AddListener(() => Debug.Log("Abrindo Loja..."));
+        dailyMissionsButton.onClick.AddListener(() => Debug.Log("Abrindo Daily Missions..."));
+        settingsButton.onClick.AddListener(OpenSettings);
 
-        _playButton.onClick.AddListener(StartGame);
-        _howToPlayButton.onClick.AddListener(() => _tutorialPanel.SetActive(true));
-        _optionsButton.onClick.AddListener(OpenOptions);
+        // Dispara e agenda repetição
+        InvokeRepeating(nameof(NudgeAllOnce), initialDelay, repeatInterval);
     }
 
-    private void SetupButtonAnimation(Button button)
+    private void OnDisable()
     {
-        button.transform.localScale = Vector3.one * 0.9f;
-        
-        var trigger = button.gameObject.AddComponent<EventTrigger>();
-
-        var pointerEnter = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-        pointerEnter.callback.AddListener((eventData) => button.transform.DOScale(1f, 0.2f));
-        trigger.triggers.Add(pointerEnter);
-
-        var pointerExit = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
-        pointerExit.callback.AddListener((eventData) => button.transform.DOScale(0.9f, 0.2f));
-        trigger.triggers.Add(pointerExit);
+        _titleSeq?.Kill();
+        CancelInvoke(nameof(NudgeAllOnce));
+        if (sideIcons != null)
+        {
+            foreach (var icon in sideIcons)
+            {
+                if (!icon) continue;
+                icon.DOKill();
+                icon.localRotation = Quaternion.identity;
+                icon.localScale = Vector3.one;
+            }
+        }
+        if (settingsIcon)
+        {
+            settingsIcon.DOKill();
+            settingsIcon.localRotation = Quaternion.identity;
+            settingsIcon.localScale = Vector3.one;
+        }
     }
 
-    private void StartGame() => SceneManager.LoadScene("Gameplay Scene");
-    private void OpenShop() => Debug.Log("Abrindo Loja...");
-    private void OpenOptions()
+    private void OnApplicationFocus(bool hasFocus)
     {
-            _settingsMenu.gameObject.SetActive(true);
-
-            _settingsMenu.transform.localScale = Vector3.zero;
-            _settingsMenu.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
+        if (!hasFocus) return;
+        // reinicia o agendamento ao voltar para o menu
+        CancelInvoke(nameof(NudgeAllOnce));
+        InvokeRepeating(nameof(NudgeAllOnce), 0.25f, repeatInterval);
     }
 
+    private void NudgeAllOnce()
+    {
+        // Ícones laterais
+        if (sideIcons != null)
+        {
+            for (int i = 0; i < sideIcons.Length; i++)
+            {
+                var icon = sideIcons[i];
+                if (!icon) continue;
+
+                var seq = DOTween.Sequence().SetDelay(i * iconsStagger);
+                seq.Append(icon.DOLocalRotate(new Vector3(0, 0, tiltAngle), tiltDuration)
+                                .SetEase(Ease.OutQuad));
+                seq.Append(icon.DOLocalRotate(Vector3.zero, returnDuration)
+                                .SetEase(Ease.InOutQuad));
+                seq.Join(icon.DOScale(1.03f, tiltDuration + returnDuration)
+                             .SetEase(Ease.InOutSine))
+                   .Append(icon.DOScale(1f, 0.08f));
+            }
+        }
+
+        // Settings (ícone ou botão)
+        if (settingsIcon)
+        {
+            DOTween.Sequence()
+                .Append(settingsIcon.DOLocalRotate(new Vector3(0, 0, -tiltAngle), tiltDuration)
+                                     .SetEase(Ease.OutQuad))
+                .Append(settingsIcon.DOLocalRotate(Vector3.zero, returnDuration)
+                                     .SetEase(Ease.InOutQuad));
+        }
+        else if (settingsButton)
+        {
+            var t = settingsButton.transform;
+            DOTween.Sequence()
+                .Append(t.DOLocalRotate(new Vector3(0, 0, -tiltAngle), tiltDuration)
+                               .SetEase(Ease.OutQuad))
+                .Append(t.DOLocalRotate(Vector3.zero, returnDuration)
+                               .SetEase(Ease.InOutQuad));
+        }
+    }
+
+    private void OpenSettings()
+    {
+        if (!settingsPanel) return;
+        settingsPanel.SetActive(true);
+        var rt = settingsPanel.transform as RectTransform;
+        if (!rt) return;
+
+        var cg = settingsPanel.GetComponent<CanvasGroup>();
+        if (cg) cg.alpha = 0f;
+
+        rt.localScale = Vector3.one * 0.92f;
+        DOTween.Sequence()
+            .Append(rt.DOScale(1f, 0.25f).SetEase(Ease.OutBack))
+            .Join(cg ? cg.DOFade(1f, 0.2f) : null);
+    }
 }
