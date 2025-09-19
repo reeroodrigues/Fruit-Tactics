@@ -42,14 +42,18 @@ public class SettingsMenu : MonoBehaviour
     private Vector2 _shownPos;
     private Vector2 _hiddenPos;
     private Tweener _slideTween;
+    
+    private GameSettingsModel _settings;
 
-    // PlayerPrefs keys
-    private const string K_MUSIC = "MusicEnabled";
-    private const string K_SFX   = "SfxEnabled";
-    private const string K_LANG  = "Lang";
+    // // PlayerPrefs keys
+    // private const string K_MUSIC = "MusicEnabled";
+    // private const string K_SFX   = "SfxEnabled";
+    // private const string K_LANG  = "Lang";
 
     private void Awake()
     {
+        _settings = SettingsRepository.Get();
+        
         // posições
         _shownPos = panel.anchoredPosition;                     // posição visível (defina no editor)
         _hiddenPos = _shownPos + new Vector2(0f, Screen.height * 1.1f); // off-screen acima
@@ -64,30 +68,27 @@ public class SettingsMenu : MonoBehaviour
         }
         if (inputBlocker) inputBlocker.enabled = false;
         IsOpen = false;
+        
+        HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
+        HookButtonWithFeedback(creditsButton, () => Application.OpenURL("https://example.com/credits"));
+        HookButtonWithFeedback(termsButton,   () => Application.OpenURL("https://example.com/terms"));
 
-        // defaults de prefs (primeira execução)
-        if (!PlayerPrefs.HasKey(K_MUSIC)) PlayerPrefs.SetInt(K_MUSIC, 1);
-        if (!PlayerPrefs.HasKey(K_SFX))   PlayerPrefs.SetInt(K_SFX,   1);
-        if (!PlayerPrefs.HasKey(K_LANG))  PlayerPrefs.SetInt(K_LANG,  (int)GameLanguage.PT_BR);
-
+        // aplicar estados
+        audioToggle.isOn = _settings.musicOn;
+        sfxToggle.isOn   = _settings.sfxOn;
+        RefreshToggleVisuals();
+        
+        // bandeiras/idioma
+        Localizer.Instance.SetLanguage(_settings.language, save:false);
+        RefreshLanguageVisual();
+        
         // liga listeners
         audioToggle.onValueChanged.AddListener(OnAudioToggleChanged);
         sfxToggle.onValueChanged.AddListener(OnSfxToggleChanged);
 
-        brButton.onClick.AddListener(() => SetLanguage(GameLanguage.PT_BR));
-        usButton.onClick.AddListener(() => SetLanguage(GameLanguage.EN_US));
-        esButton.onClick.AddListener(() => SetLanguage(GameLanguage.ES_ES));
-
-        HookButtonWithFeedback(creditsButton, "Abrir Créditos");
-        HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
-        HookButtonWithFeedback(termsButton, "Abrir Termos");
-
-        // aplica estado salvo
-        audioToggle.isOn = PlayerPrefs.GetInt(K_MUSIC, 1) == 1;
-        sfxToggle.isOn   = PlayerPrefs.GetInt(K_SFX,   1) == 1;
-        RefreshToggleVisuals();
-
-        RefreshLanguageVisual(); // respeita o idioma salvo
+        brButton.onClick.AddListener(() => SelectLanguage("pt-BR"));
+        usButton.onClick.AddListener(() => SelectLanguage("en-US"));
+        esButton.onClick.AddListener(() => SelectLanguage("es-ES"));
     }
 
     private void HookButtonWithFeedback(Button btn, string debugMsg)
@@ -177,17 +178,17 @@ public class SettingsMenu : MonoBehaviour
     // ---------- Toggles ----------
     private void OnAudioToggleChanged(bool isOn)
     {
-        PlayerPrefs.SetInt(K_MUSIC, isOn ? 1 : 0);
-        PlayerPrefs.Save();
-        // TODO: AudioManager.Instance?.SetMusicEnabled(isOn);
+        _settings.musicOn = isOn;
+        SettingsRepository.Save(_settings);
+        // AudioManager.Instance?.SetMusicEnabled(isOn);
         RefreshToggleVisuals();
     }
 
     private void OnSfxToggleChanged(bool isOn)
     {
-        PlayerPrefs.SetInt(K_SFX, isOn ? 1 : 0);
-        PlayerPrefs.Save();
-        // TODO: AudioManager.Instance?.SetSfxEnabled(isOn);
+        _settings.sfxOn = isOn;
+        SettingsRepository.Save(_settings);
+        // AudioManager.Instance?.SetSfxEnabled(isOn);
         RefreshToggleVisuals();
     }
 
@@ -198,22 +199,26 @@ public class SettingsMenu : MonoBehaviour
     }
 
     // ---------- Idiomas ----------
-    private void SetLanguage(GameLanguage lang)
+    private void SelectLanguage(string lang)
     {
-        PlayerPrefs.SetInt(K_LANG, (int)lang);
-        PlayerPrefs.Save();
-        // TODO: Localizer.Instance?.SetLanguage(lang);
+        _settings.language = lang;
+        SettingsRepository.Save(_settings);
+        Localizer.Instance.SetLanguage(lang); // dispara OnLanguageChanged → LocalizedText atualiza
         RefreshLanguageVisual();
     }
 
     private void RefreshLanguageVisual()
     {
-        var selected = (GameLanguage)PlayerPrefs.GetInt(K_LANG, (int)GameLanguage.PT_BR);
+        // Pega o idioma atual do Localizer (ou do JSON se Localizer ainda não existir)
+        string lang = Localizer.Instance != null
+            ? Localizer.Instance.CurrentLanguage
+            : SettingsRepository.Get().language;
 
-        SetFlagAlpha(brButton, selected == GameLanguage.PT_BR);
-        SetFlagAlpha(usButton, selected == GameLanguage.EN_US);
-        SetFlagAlpha(esButton, selected == GameLanguage.ES_ES);
+        SetFlagAlpha(brButton, lang == "pt-BR");
+        SetFlagAlpha(usButton, lang == "en-US");
+        SetFlagAlpha(esButton, lang == "es-ES");
     }
+
 
     private void SetFlagAlpha(Button btn, bool isSelected)
     {
@@ -223,5 +228,18 @@ public class SettingsMenu : MonoBehaviour
         c.a = isSelected ? 1f : unselectedAlpha;
         img.color = c;
         btn.interactable = !isSelected; // evita clique no já-selecionado
+    }
+    
+    private void HookButtonWithFeedback(UnityEngine.UI.Button btn, System.Action onClick)
+    {
+        if (!btn) return;
+        btn.onClick.AddListener(() =>
+        {
+            var t = btn.transform;
+            DG.Tweening.DOTween.Sequence()
+                .Append(t.DOScale(0.95f, 0.06f))
+                .Append(t.DOScale(1f,   0.10f))
+                .OnComplete(() => onClick?.Invoke());
+        });
     }
 }

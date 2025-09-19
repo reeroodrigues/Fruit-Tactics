@@ -1,0 +1,15 @@
+{
+  "menu_play": "Play",
+  "menu_ranking": "Leaderboard",
+  "menu_store": "Store",
+  "menu_daily": "Daily Missions",
+  "settings_title": "Settings",
+  "settings_audio": "Audio",
+  "settings_sfx": "SFX",
+  "br_flag": "Brazil",
+  "usa_flag": "United States",
+  "es_flag": "Spanish",
+  "credits": "Credits",
+  "terms": "Terms",
+  "delete_account": "Delete account"
+}
