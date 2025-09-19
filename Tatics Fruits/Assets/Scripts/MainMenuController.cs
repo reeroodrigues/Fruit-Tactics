@@ -21,6 +21,9 @@ public class MainMenuController : MonoBehaviour
     [Header("Settings (janela/painel)")]
     [SerializeField] private SettingsMenu settingsPanel;
     [SerializeField] private RectTransform settingsIcon; // opcional
+    
+    [Header("Ranking")]
+    [SerializeField] private GameObject rankingPanel;
 
     [Header("Animação de tilt")]
     [SerializeField] private float initialDelay = 1.5f;   // 1ª vez
@@ -41,7 +44,11 @@ public class MainMenuController : MonoBehaviour
 
         // Clicks
         playButton.onClick.AddListener(() => SceneManager.LoadScene("Gameplay Scene"));
-        rankingButton.onClick.AddListener(() => Debug.Log("Abrindo Ranking..."));
+        rankingButton.onClick.AddListener(() =>
+        {
+            if (!rankingPanel) return;
+            rankingPanel.SetActive(true); // LeaderboardController abre com animação no OnEnable
+        });
         storeButton.onClick.AddListener(() => Debug.Log("Abrindo Loja..."));
         dailyMissionsButton.onClick.AddListener(() => Debug.Log("Abrindo Daily Missions..."));
         settingsButton.onClick.AddListener(() =>

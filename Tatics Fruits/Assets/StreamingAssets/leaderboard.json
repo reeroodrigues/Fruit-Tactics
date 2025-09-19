@@ -1,0 +1,15 @@
+{
+  "daily": [
+    {"playerId":"player_002","playerName":"Mili","score":420,"timeSeconds":85},
+    {"playerId":"player_001","playerName":"Sky","score":410,"timeSeconds":90},
+    {"playerId":"player_010","playerName":"Tom","score":280,"timeSeconds":120}
+  ],
+  "weekly": [
+    {"playerId":"player_050","playerName":"Ana","score":900,"timeSeconds":140},
+    {"playerId":"player_001","playerName":"Sky","score":720,"timeSeconds":160}
+  ],
+  "alltime": [
+    {"playerId":"player_777","playerName":"Dr. Cassius","score":5000,"timeSeconds":300},
+    {"playerId":"player_001","playerName":"Sky","score":3200,"timeSeconds":310}
+  ]
+}
