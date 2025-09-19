@@ -19,7 +19,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private RectTransform[] sideIcons;
 
     [Header("Settings (janela/painel)")]
-    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private SettingsMenu settingsPanel;
     [SerializeField] private RectTransform settingsIcon; // opcional
 
     [Header("Animação de tilt")]
@@ -44,7 +44,12 @@ public class MainMenuController : MonoBehaviour
         rankingButton.onClick.AddListener(() => Debug.Log("Abrindo Ranking..."));
         storeButton.onClick.AddListener(() => Debug.Log("Abrindo Loja..."));
         dailyMissionsButton.onClick.AddListener(() => Debug.Log("Abrindo Daily Missions..."));
-        settingsButton.onClick.AddListener(OpenSettings);
+        settingsButton.onClick.AddListener(() =>
+        {
+            if (settingsPanel == null)
+                return;
+            settingsPanel.Toggle();
+        });
 
         // Dispara e agenda repetição
         InvokeRepeating(nameof(NudgeAllOnce), initialDelay, repeatInterval);
@@ -119,21 +124,5 @@ public class MainMenuController : MonoBehaviour
                 .Append(t.DOLocalRotate(Vector3.zero, returnDuration)
                                .SetEase(Ease.InOutQuad));
         }
-    }
-
-    private void OpenSettings()
-    {
-        if (!settingsPanel) return;
-        settingsPanel.SetActive(true);
-        var rt = settingsPanel.transform as RectTransform;
-        if (!rt) return;
-
-        var cg = settingsPanel.GetComponent<CanvasGroup>();
-        if (cg) cg.alpha = 0f;
-
-        rt.localScale = Vector3.one * 0.92f;
-        DOTween.Sequence()
-            .Append(rt.DOScale(1f, 0.25f).SetEase(Ease.OutBack))
-            .Join(cg ? cg.DOFade(1f, 0.2f) : null);
     }
 }
