@@ -204,4 +204,23 @@ public class PlayerProfileController : MonoBehaviour
         Save();
         return true;
     }
+    
+    // ======================
+    // Missões Diárias
+    // ======================
+
+    public void SaveProfile()
+    {
+        JsonDataService.Save("player_profile.json", Data);
+    }
+
+    public void AddGoldAndSave(int amount)
+    {
+        if (amount == 0)
+            return;
+        
+        Data.Gold = Mathf.Max(0, Data.Gold + amount);
+        SaveProfile();
+        UpdateGoldUI();
+    }
 }

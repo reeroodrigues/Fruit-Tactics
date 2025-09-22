@@ -18,6 +18,10 @@ public class MainMenuController : MonoBehaviour
     [Header("Icons ao lado dos botões")]
     [SerializeField] private RectTransform[] sideIcons;
 
+    [Header("Badges")]
+    [SerializeField] private DailyMissionsController dailyController;
+    [SerializeField] private GameObject dailyBadge;
+
     [Header("Settings (janela/painel)")]
     [SerializeField] private SettingsMenu settingsPanel;
     [SerializeField] private RectTransform settingsIcon; // opcional
@@ -30,6 +34,12 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject storePanel;          // painel da loja (GameObject) — desativado por padrão
     [SerializeField] private RectTransform storeRoot;        // raiz visual da loja (para escalar)
     [SerializeField] private CanvasGroup storeCanvasGroup;   // CanvasGroup para fade
+    
+    // === NOVO: DailyMissions ===
+    [Header("DailyMissions")]
+    [SerializeField] private GameObject dailyMissionsPanel;          // painel de dailymissions (GameObject) — desativado por padrão
+    [SerializeField] private RectTransform dailyMissionsRoot;        // raiz visual do dailymissions (para escalar)
+    [SerializeField] private CanvasGroup dailyMissionsCanvasGroup;   // CanvasGroup para fade
 
     [Header("Animação de tilt")]
     [SerializeField] private float initialDelay = 1.5f;   // 1ª vez
@@ -59,7 +69,26 @@ public class MainMenuController : MonoBehaviour
         // === NOVO: abrir loja ===
         storeButton.onClick.AddListener(OpenStorePanel);
 
-        dailyMissionsButton.onClick.AddListener(() => Debug.Log("Abrindo Daily Missions..."));
+        dailyMissionsButton.onClick.AddListener(() =>
+            {
+                dailyMissionsPanel.SetActive(true);
+            });
+        
+        //badge
+        if (dailyController)
+        {
+            dailyController.OnAttentionChanged += (has) =>
+            {
+                if (dailyBadge)
+                    dailyBadge.SetActive(has);
+            };
+            if (dailyBadge)
+            {
+                dailyBadge.SetActive(dailyController.HasAnyClaimAvailable());
+            }
+        }
+        
+        
         settingsButton.onClick.AddListener(() =>
         {
             if (settingsPanel == null) return;
