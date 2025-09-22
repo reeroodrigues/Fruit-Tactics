@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8006a474e0b4e3b845c3a6214667de, type: 3}
   m_Name: FreezeTime
   m_EditorClassIdentifier: 
+  id: freezeTime
+  displayName: Freeze Time
   cardIcon: {fileID: -536520908, guid: 8886857afe51bec4fba8a0c740e4ef8b, type: 3}
   maxCardNumber: 0
   setAmount: 0
+  priceGold: 500
+  rarity: 
   isPowerCard: 1
   powerEffect: 10
   protectionDuration: 5

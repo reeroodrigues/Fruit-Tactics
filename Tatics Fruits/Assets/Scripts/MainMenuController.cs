@@ -25,6 +25,12 @@ public class MainMenuController : MonoBehaviour
     [Header("Ranking")]
     [SerializeField] private GameObject rankingPanel;
 
+    // === NOVO: Loja ===
+    [Header("Store")]
+    [SerializeField] private GameObject storePanel;          // painel da loja (GameObject) — desativado por padrão
+    [SerializeField] private RectTransform storeRoot;        // raiz visual da loja (para escalar)
+    [SerializeField] private CanvasGroup storeCanvasGroup;   // CanvasGroup para fade
+
     [Header("Animação de tilt")]
     [SerializeField] private float initialDelay = 1.5f;   // 1ª vez
     [SerializeField] private float repeatInterval = 3f;   // repete a cada 3s
@@ -49,12 +55,14 @@ public class MainMenuController : MonoBehaviour
             if (!rankingPanel) return;
             rankingPanel.SetActive(true); // LeaderboardController abre com animação no OnEnable
         });
-        storeButton.onClick.AddListener(() => Debug.Log("Abrindo Loja..."));
+
+        // === NOVO: abrir loja ===
+        storeButton.onClick.AddListener(OpenStorePanel);
+
         dailyMissionsButton.onClick.AddListener(() => Debug.Log("Abrindo Daily Missions..."));
         settingsButton.onClick.AddListener(() =>
         {
-            if (settingsPanel == null)
-                return;
+            if (settingsPanel == null) return;
             settingsPanel.Toggle();
         });
 
@@ -130,6 +138,56 @@ public class MainMenuController : MonoBehaviour
                                .SetEase(Ease.OutQuad))
                 .Append(t.DOLocalRotate(Vector3.zero, returnDuration)
                                .SetEase(Ease.InOutQuad));
+        }
+    }
+
+    // ===== Loja =====
+
+    private void OpenStorePanel()
+    {
+        if (!storePanel) return;
+
+        // ativa painel e reseta estado visual
+        storePanel.SetActive(true);
+        if (storeRoot) storeRoot.localScale = Vector3.one * 0.85f;
+
+        if (!storeCanvasGroup && storeRoot) // fallback: tenta pegar no StoreRoot
+            storeCanvasGroup = storeRoot.GetComponent<CanvasGroup>();
+
+        if (storeCanvasGroup)
+        {
+            storeCanvasGroup.alpha = 0f;
+            storeCanvasGroup.interactable = false;
+            storeCanvasGroup.blocksRaycasts = true;
+            // anima
+            DOTween.Kill(storeCanvasGroup); // garante que não empilhe animações
+            DOTween.Sequence()
+                .Append(storeCanvasGroup.DOFade(1f, 0.18f))
+                .Join(storeRoot.DOScale(1f, 0.22f).SetEase(Ease.OutBack))
+                .OnComplete(() => storeCanvasGroup.interactable = true);
+        }
+        else if (storeRoot)
+        {
+            storeRoot.DOScale(1f, 0.22f).SetEase(Ease.OutBack);
+        }
+    }
+
+    // Ligue este método no botão "X" da loja (no Inspector)
+    public void CloseStorePanel()
+    {
+        if (!storePanel) return;
+
+        if (storeCanvasGroup && storeRoot)
+        {
+            storeCanvasGroup.interactable = false;
+            DOTween.Sequence()
+                .Append(storeCanvasGroup.DOFade(0f, 0.15f))
+                .Join(storeRoot.DOScale(0.9f, 0.15f).SetEase(Ease.InSine))
+                .OnComplete(() => storePanel.SetActive(false));
+        }
+        else
+        {
+            storePanel.SetActive(false);
         }
     }
 }

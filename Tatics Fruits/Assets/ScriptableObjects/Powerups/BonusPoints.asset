@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8006a474e0b4e3b845c3a6214667de, type: 3}
   m_Name: BonusPoints
   m_EditorClassIdentifier: 
+  id: bonusPoint
+  displayName: Bonus Point
   cardIcon: {fileID: -768593662, guid: a9cce450baf222a4886fd9ce1f437213, type: 3}
   maxCardNumber: 0
   setAmount: 0
+  priceGold: 100
+  rarity: 
   isPowerCard: 1
   powerEffect: 8
   protectionDuration: 5
+  freezeTimeDuration: 5
   increaseAmountMin: 1
   increaseAmountMax: 5
