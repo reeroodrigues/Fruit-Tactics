@@ -14,6 +14,7 @@ public class DailyMissionsController : MonoBehaviour
     
     public event Action<bool> OnAttentionChanged;
     public event Action OnDailyLoginChanged;
+    public event Action OnDailyMissionsChanged; 
     public bool UseLocalTime => useLocalTime;
     public DateTime GetNow() => useLocalTime ? DateTime.Now : DateTime.UtcNow;
 
@@ -116,6 +117,9 @@ public class DailyMissionsController : MonoBehaviour
         }
 
         profile.SaveProfile();
+        OnDailyMissionsChanged?.Invoke();
+        FireAttention();
+
     }
     
     public List<DailyLoginDayInfo> GetLoginDays()
@@ -200,6 +204,7 @@ public class DailyMissionsController : MonoBehaviour
         profile.AddGoldAndSave(st.rewardGold);
         st.claimed = true;
         profile.SaveProfile();
+        OnDailyMissionsChanged?.Invoke();
         FireAttention();
         return true;
     }
@@ -215,22 +220,33 @@ public class DailyMissionsController : MonoBehaviour
         var list = profile.Data.Daily.missions;
         if (list == null) return;
 
+        bool changed = false;
+
         foreach (var st in list)
         {
             var def = FindDef(st.missionId);
-            if (def == null || def.eventType != MissionEventType.WinLevel)
-                continue;
-            
+            if (def == null || def.eventType != MissionEventType.WinLevel) continue;
             if (def.levelParam > 0 && def.levelParam != level) continue;
             if (st.completed) continue;
 
+            int before = st.progress;
             st.progress = Mathf.Min(st.target, st.progress + 1);
-            if (st.progress >= st.target) st.completed = true;
+            if (st.progress != before) changed = true;
+            if (st.progress >= st.target && !st.completed)
+            {
+                st.completed = true;
+                changed = true;
+            }
         }
 
-        profile.SaveProfile();
-        FireAttention();
+        if (changed)
+        {
+            profile.SaveProfile();
+            OnDailyMissionsChanged?.Invoke();
+            FireAttention();
+        }
     }
+
 
     public bool HasAnyClaimAvailable()
     {
@@ -238,6 +254,13 @@ public class DailyMissionsController : MonoBehaviour
         bool login = IsDailyLoginAvailable();
         return anyMission || login;
     }
+    
+    public bool HasMissionClaimAvailable()
+    {
+        var list = profile.Data?.Daily?.missions;
+        return list != null && list.Any(m => m.completed && !m.claimed);
+    }
+
 
     public void FireAttention()
     {

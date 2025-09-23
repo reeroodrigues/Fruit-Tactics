@@ -25,6 +25,8 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     [SerializeField] private Image bonusTabBg;
     [SerializeField] private Color tabSelected = Color.white;
     [SerializeField] private Color tabUnselected = new Color(1,1,1,0.5f);
+    [SerializeField] private GameObject bonusTabBadge;
+    [SerializeField] private GameObject missionsTabBadge;
 
     [Header("Panels (contents)")]
     [SerializeField] private GameObject missionsPanelRoot;
@@ -70,12 +72,15 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     {
         controller.EnsureDayGenerated();
         controller.OnDailyLoginChanged += RefreshLoginGrid;
+        controller.OnDailyMissionsChanged += HandleMissionsChanged;
 
         if (startOnMissions) 
             SwitchTo(Tab.Missions, instant:true);
         else 
             SwitchTo(Tab.Bonus,    instant:true);
 
+        UpdateMissionsTabBadge();
+        UpdateBonusTabBadge();
         StartCountdown();
         Show();
     }
@@ -83,6 +88,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     private void OnDisable()
     {
         controller.OnDailyLoginChanged -= RefreshLoginGrid;
+        controller.OnDailyMissionsChanged -= HandleMissionsChanged;
 
         if (_countdownCo != null)
         {
@@ -96,6 +102,29 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         if (bonusPanelCg)    DOTween.Kill(bonusPanelCg);
     }
 
+    private void UpdateBonusTabBadge()
+    {
+        if (!bonusTabBadge || controller == null)
+            return;
+
+        var hasClaim = controller.IsDailyLoginAvailable();
+        bonusTabBadge.SetActive(hasClaim);
+    }
+    
+    private void UpdateMissionsTabBadge()
+    {
+        if (!missionsTabBadge || controller == null) return;
+        missionsTabBadge.SetActive(controller.HasMissionClaimAvailable());
+    }
+
+    private void HandleMissionsChanged()
+    {
+        UpdateMissionsTabBadge();
+        if (_current == Tab.Missions)
+            RefreshAllMissionItems();
+    }
+
+    
     public void Show()
     {
         gameObject.SetActive(true);
@@ -168,9 +197,12 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             BuildLoginGridIfNeeded();
             RefreshLoginGrid();
         }
+        
+        UpdateMissionsTabBadge();
+        UpdateBonusTabBadge();
+
     }
     
-
     private void BuildMissionsIfNeeded()
     {
         if (_missionsBuilt || missionItemPrefab == null || missionsParent == null) return;
@@ -193,6 +225,8 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             var item = t.GetComponent<DailyMissionItemView>();
             if (item) item.Refresh();
         }
+        
+        UpdateMissionsTabBadge();
     }
 
     private void StartCountdown()
@@ -224,6 +258,8 @@ public class DailyMissionsPanelTabs : MonoBehaviour
                 else
                 {
                     RefreshLoginGrid();
+                    UpdateBonusTabBadge();
+                    UpdateMissionsTabBadge();
                 }
 
                 controller.FireAttention();
@@ -285,5 +321,6 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         {
             _loginItems[i].Refresh(days[i]);
         }
+        UpdateBonusTabBadge();
     }
 }
