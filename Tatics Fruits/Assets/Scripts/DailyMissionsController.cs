@@ -13,8 +13,9 @@ public class DailyMissionsController : MonoBehaviour
     [SerializeField] private bool useLocalTime = true;
     
     public event Action<bool> OnAttentionChanged;
-    
     public event Action OnDailyLoginChanged;
+    public bool UseLocalTime => useLocalTime;
+    public DateTime GetNow() => useLocalTime ? DateTime.Now : DateTime.UtcNow;
 
     private string TodayKey =>
         (useLocalTime ? DateTime.Now : DateTime.UtcNow).ToString("yyyyMMdd");
@@ -202,6 +203,12 @@ public class DailyMissionsController : MonoBehaviour
         FireAttention();
         return true;
     }
+
+    public DateTime GetNextResetTime()
+    {
+        var now = GetNow();
+        return now.Date.AddDays(1);
+    }
     
     public void ReportWinLevel(int level)
     {
@@ -232,7 +239,7 @@ public class DailyMissionsController : MonoBehaviour
         return anyMission || login;
     }
 
-    private void FireAttention()
+    public void FireAttention()
     {
         OnAttentionChanged?.Invoke(HasAnyClaimAvailable());
     }

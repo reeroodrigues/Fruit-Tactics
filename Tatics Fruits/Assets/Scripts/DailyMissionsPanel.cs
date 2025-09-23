@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,12 +45,17 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     [Header("Defaults")]
     [SerializeField] private bool startOnMissions = true;
 
+    [Header("Daily Reset")]
+    [SerializeField] private TextMeshProUGUI resetCountdownText;
+    [SerializeField] private float countdownRefreshSeconds = 0.5f;
+
     private bool _missionsBuilt;
     private bool _loginBuilt;
     private readonly List<DailyLoginDayItemView> _loginItems = new();
 
     private enum Tab { Missions, Bonus }
     private Tab _current;
+    private Coroutine _countdownCo;
 
     private void Awake()
     {
@@ -61,7 +69,6 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     private void OnEnable()
     {
         controller.EnsureDayGenerated();
-        
         controller.OnDailyLoginChanged += RefreshLoginGrid;
 
         if (startOnMissions) 
@@ -69,12 +76,19 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         else 
             SwitchTo(Tab.Bonus,    instant:true);
 
+        StartCountdown();
         Show();
     }
 
     private void OnDisable()
     {
         controller.OnDailyLoginChanged -= RefreshLoginGrid;
+
+        if (_countdownCo != null)
+        {
+            StopCoroutine(_countdownCo);
+            _countdownCo = null;
+        }
 
         DOTween.Kill(panelCanvasGroup);
         DOTween.Kill(window);
@@ -179,6 +193,59 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             var item = t.GetComponent<DailyMissionItemView>();
             if (item) item.Refresh();
         }
+    }
+
+    private void StartCountdown()
+    {
+        if (_countdownCo != null)
+            StopCoroutine(_countdownCo);
+
+        _countdownCo = StartCoroutine(CountdownLoop());
+    }
+
+    private IEnumerator CountdownLoop()
+    {
+        while (isActiveAndEnabled)
+        {
+            var now = controller.GetNow();
+            var next = controller.GetNextResetTime();
+            var remaining = next - now;
+
+            if (remaining <= TimeSpan.Zero)
+            {
+                controller.EnsureDayGenerated();
+
+                if (_current == Tab.Missions)
+                {
+                    _missionsBuilt = false;
+                    BuildMissionsIfNeeded();
+                    RefreshAllMissionItems();
+                }
+                else
+                {
+                    RefreshLoginGrid();
+                }
+
+                controller.FireAttention();
+                
+                now = controller.GetNow();
+                next = controller.GetNextResetTime();
+                remaining = next - now;
+            }
+
+            if (resetCountdownText)
+                resetCountdownText.text = FormatRemaining(remaining);
+
+            yield return new WaitForSeconds(Mathf.Max(0.1f, countdownRefreshSeconds));
+        }
+    }
+
+    private string FormatRemaining(TimeSpan t)
+    {
+        var hours = (int)Math.Floor(t.TotalHours);
+        var minutes = t.Minutes;
+        var seconds = t.Seconds;
+        return $"{hours:00}:{minutes:00}:{seconds:00}";
     }
 
     private void BuildLoginGridIfNeeded()
