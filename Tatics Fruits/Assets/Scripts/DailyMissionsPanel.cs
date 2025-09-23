@@ -74,6 +74,9 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         controller.OnDailyLoginChanged += RefreshLoginGrid;
         controller.OnDailyMissionsChanged += HandleMissionsChanged;
 
+        if (profile)
+            profile.RequestShowGoldHud();
+
         if (startOnMissions) 
             SwitchTo(Tab.Missions, instant:true);
         else 
@@ -89,6 +92,9 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     {
         controller.OnDailyLoginChanged -= RefreshLoginGrid;
         controller.OnDailyMissionsChanged -= HandleMissionsChanged;
+
+        if (profile)
+            profile.ReleaseShowGoldHud();
 
         if (_countdownCo != null)
         {

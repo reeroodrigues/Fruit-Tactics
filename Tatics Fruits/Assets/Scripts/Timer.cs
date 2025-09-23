@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour, IPowerupTarget
+public class Timer : MonoBehaviour
 {
     public Image timerImage;
     public TextMeshProUGUI timerText;
@@ -133,18 +133,6 @@ public class Timer : MonoBehaviour, IPowerupTarget
     public float GetTimeRemaining()
     {
         return remainingTime;
-    }
-
-    public void ReceivePowerup(Card sourceCard)
-    {
-        if (sourceCard.cardTypeSo.powerEffect == PowerEffectType.FreezeTime)
-        {
-            var freezeTime = sourceCard.cardTypeSo.freezeTimeDuration > 0 ? sourceCard.cardTypeSo.freezeTimeDuration : UnityEngine.Random.Range(1, 15);
-            
-            FreezeForSeconds(freezeTime);
-
-            PowerupHandler.Cleanup(sourceCard, sourceCard.cardManager);
-        }
     }
 
     public void FreezeForSeconds(float duration)

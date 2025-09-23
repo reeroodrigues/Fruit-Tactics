@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9197b480e66489ca069e87443da1e82, type: 3}
+  m_Name: PowerUp_Time_freeze
+  m_EditorClassIdentifier: 
+  effect: 1
+  displayName: Pausa o timer por 3 segundos
+  icon: {fileID: -210140209625983428, guid: 7aed19365798dfe4b86083e014b97e87, type: 3}
+  rarity: Common
+  priceGold: 100
+  duration: 3
+  amount: 10
+  multiplier: 1
+  shufflePercent: 0.25
+  extraSecondsPerMatch: 0
+  bonusGoldPerPair: 0
+  uses: 1

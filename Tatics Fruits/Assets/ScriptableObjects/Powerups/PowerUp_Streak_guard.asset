@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9197b480e66489ca069e87443da1e82, type: 3}
+  m_Name: PowerUp_Streak_guard
+  m_EditorClassIdentifier: 
+  effect: 5
+  displayName: "O pr\xF3ximo erro n\xE3o quebra a sequ\xEAncia"
+  icon: {fileID: 859760811568117912, guid: 406ee38a867b17040a6f4129e5f84804, type: 3}
+  rarity: Common
+  priceGold: 100
+  duration: 3
+  amount: 10
+  multiplier: 2
+  shufflePercent: 0.25
+  extraSecondsPerMatch: 0
+  bonusGoldPerPair: 0
+  uses: 1

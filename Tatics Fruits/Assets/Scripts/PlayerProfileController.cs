@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Serialization;
 
 public class PlayerProfileController : MonoBehaviour
 {
@@ -18,20 +19,21 @@ public class PlayerProfileController : MonoBehaviour
     [SerializeField] private Button closeAvatarPanelButton;
 
     [Header("UI / Economia")]
-    [SerializeField] private TextMeshProUGUI _goldText;
-
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private GameObject goldHudRoot;
+    [SerializeField] private bool goldHutVisibleByDefault = false;
+    
     [Header("Deck")]
-    [SerializeField] private int _deckLimit = 5;
+    [SerializeField] private int deckLimit = 5;
 
+    private int goldHudRefCount = 0;
     private const string FileName = "player_profile.json";
     private const string NameRegex = @"^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$";
     public bool IsLoaded { get; private set; }
     public event Action OnProfileLoaded;
-    
-    public PlayerProfileData Data { get; private set; } = new PlayerProfileData();
-    
     public event Action<int> OnGoldChanged;
-    
+    public PlayerProfileData Data { get; private set; } = new PlayerProfileData();
+
     private void Awake()
     {
         if (!JsonDataService.TryLoad<PlayerProfileData>(FileName, out var loaded))
@@ -51,6 +53,9 @@ public class PlayerProfileController : MonoBehaviour
 
         IsLoaded = true;
         OnProfileLoaded?.Invoke();
+
+        goldHudRefCount = goldHutVisibleByDefault ? 1 : 0;
+        ApplyGoldHudVisibility();
     }
 
     private void Start()
@@ -77,6 +82,36 @@ public class PlayerProfileController : MonoBehaviour
         
         if (closeAvatarPanelButton != null)
             closeAvatarPanelButton.onClick.AddListener(CloseAvatarSelection);
+    }
+
+    private GameObject GoldHudTarget()
+    {
+        if (goldHudRoot)
+            return goldHudRoot;
+
+        if (goldText)
+            return goldText.transform?.parent ? goldText.transform.parent.gameObject : null;
+        
+        return null;
+    }
+
+    private void ApplyGoldHudVisibility()
+    {
+        var go = GoldHudTarget();
+        if (go)
+            go.SetActive(goldHudRefCount > 0);
+    }
+
+    public void RequestShowGoldHud()
+    {
+        goldHudRefCount++;
+        ApplyGoldHudVisibility();
+    }
+
+    public void ReleaseShowGoldHud()
+    {
+        goldHudRefCount = Mathf.Max(0, goldHudRefCount - 1);
+        ApplyGoldHudVisibility();
     }
 
     private void MigrateFromPlayerPrefsIfNeeded()
@@ -112,7 +147,7 @@ public class PlayerProfileController : MonoBehaviour
 
     private void UpdateGoldUI()
     {
-        if (_goldText) _goldText.text = Data.Gold.ToString();
+        if (goldText) goldText.text = Data.Gold.ToString();
         OnGoldChanged?.Invoke(Data.Gold);
     }
 
@@ -200,7 +235,7 @@ public class PlayerProfileController : MonoBehaviour
         if (string.IsNullOrEmpty(cardId)) return false;
         if (!HasCard(cardId)) return false;
         if (Data.EquippedDeck.Contains(cardId)) return true;
-        if (Data.EquippedDeck.Count >= _deckLimit) return false;
+        if (Data.EquippedDeck.Count >= deckLimit) return false;
 
         Data.EquippedDeck.Add(cardId);
         Save();
