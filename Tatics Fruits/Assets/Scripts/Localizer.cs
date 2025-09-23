@@ -54,6 +54,19 @@ public class Localizer : MonoBehaviour
         OnLanguageChanged?.Invoke();
     }
 
+    public string TrFormat(string key, string fallback, params object[] args)
+    {
+        var fmt = Tr(key, fallback);
+        try
+        {
+            return string.Format(fmt, args);
+        }
+        catch (Exception e)
+        {
+            return fmt;
+        }
+    }
+
     private void LoadTable(string language)
     {
         _table.Clear();

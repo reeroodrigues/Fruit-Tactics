@@ -1195,6 +1195,7 @@ GameObject:
   - component: {fileID: 254790671}
   - component: {fileID: 254790674}
   - component: {fileID: 254790673}
+  - component: {fileID: 254790675}
   m_Layer: 5
   m_Name: DailyMission Text
   m_TagString: Untagged
@@ -1320,6 +1321,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254790670}
   m_CullTransparentMesh: 1
+--- !u!114 &254790675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254790670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: missions_end
+  fallback: 
 --- !u!1 &295222285
 GameObject:
   m_ObjectHideFlags: 0
@@ -7156,6 +7171,7 @@ GameObject:
   - component: {fileID: 788426674}
   - component: {fileID: 788426676}
   - component: {fileID: 788426675}
+  - component: {fileID: 788426677}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -7281,6 +7297,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788426673}
   m_CullTransparentMesh: 1
+--- !u!114 &788426677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788426673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: daily_missions
+  fallback: 
 --- !u!1 &788910604
 GameObject:
   m_ObjectHideFlags: 0
@@ -7971,7 +8001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: store
+  key: daily_missions
   fallback: 
 --- !u!114 &895470178
 MonoBehaviour:
@@ -9202,6 +9232,7 @@ GameObject:
   - component: {fileID: 1015797453}
   - component: {fileID: 1015797455}
   - component: {fileID: 1015797454}
+  - component: {fileID: 1015797456}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -9327,6 +9358,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1015797452}
   m_CullTransparentMesh: 1
+--- !u!114 &1015797456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015797452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: daily_bonus
+  fallback: 
 --- !u!1 &1022359940
 GameObject:
   m_ObjectHideFlags: 0

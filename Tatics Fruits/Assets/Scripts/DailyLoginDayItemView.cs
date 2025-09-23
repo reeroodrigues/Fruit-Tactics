@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 public class DailyLoginDayItemView : MonoBehaviour
@@ -17,19 +19,47 @@ public class DailyLoginDayItemView : MonoBehaviour
 
     private DailyMissionsController.DailyLoginDayInfo _info;
 
+    private void SetDayLabel()
+    {
+        if (!dayLabel)
+            return;
+
+        int n = _index + 1;
+        if (Localizer.Instance != null)
+            dayLabel.text = Localizer.Instance.TrFormat("day_text", "Dia {0}", n);
+        else
+        {
+            dayLabel.text = $"Dia {n}";
+        }
+    }
+
     public void Setup(DailyMissionsController ctrl, DailyMissionsController.DailyLoginDayInfo info)
     {
         _ctrl = ctrl;
         _index = info.Index;
         _info = info;
-
-        if (dayLabel)   dayLabel.text = $"Dia {_index + 1}";
-        if (rewardText) rewardText.text = $"+{info.Reward} Gold";
+        
+        SetDayLabel();
+        if (rewardText)
+            rewardText.text = $"+{info.Reward} {Localizer.Instance.Tr("prize_text","Gold")}";
 
         ApplyState(info);
 
         claimButton.onClick.RemoveAllListeners();
         claimButton.onClick.AddListener(OnClaimClicked);
+    }
+
+    private void OnEnable()
+    {
+        if (Localizer.Instance != null)
+            Localizer.Instance.OnLanguageChanged += SetDayLabel;
+        SetDayLabel();
+    }
+
+    private void OnDisable()
+    {
+        if (Localizer.Instance != null)
+            Localizer.Instance.OnLanguageChanged -= SetDayLabel;
     }
 
     public void Refresh(DailyMissionsController.DailyLoginDayInfo info)

@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 1983815756483248280}
   - component: {fileID: 9199194637993002315}
   - component: {fileID: 976169779087677716}
+  - component: {fileID: 7555271496214145244}
   m_Layer: 5
   m_Name: Day Text
   m_TagString: Untagged
@@ -461,6 +462,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7555271496214145244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470106119153691786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: day_text
+  fallback: 
 --- !u!1 &6211961441121676414
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,6 +487,7 @@ GameObject:
   - component: {fileID: 3701911285656397309}
   - component: {fileID: 2258272614850443698}
   - component: {fileID: 4256044075987958747}
+  - component: {fileID: 1263396306884447717}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -597,6 +613,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1263396306884447717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6211961441121676414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: c
+  fallback: 
 --- !u!1 &8043978105625815390
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,6 +718,7 @@ GameObject:
   - component: {fileID: 3233826615231224502}
   - component: {fileID: 2871348138642702836}
   - component: {fileID: 7848846905084762541}
+  - component: {fileID: 575558609769348577}
   m_Layer: 5
   m_Name: Prize Text
   m_TagString: Untagged
@@ -813,3 +844,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &575558609769348577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052801670730711309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: prize_text
+  fallback: 

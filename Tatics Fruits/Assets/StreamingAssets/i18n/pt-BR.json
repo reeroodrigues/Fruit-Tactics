@@ -13,5 +13,13 @@
   "terms": "Termos",
   "delete_account": "Deletar conta",
   "ranking": "Ranking",
-  "store": "Loja"
+  "store": "Loja",
+  "daily_missions": "Missões diárias",
+  "daily_bonus": "Bônus diário",
+  "missions_end": "As missões se encerram em:",
+  "day_text": "Dia {0}",
+  "prize_text": "moedas",
+  "collect_button": "Coletar",
+  "claimed_collect_button" : "Coletado",
+  "special_daily_bonus": "Bônus especial a cada 7 dias!"
 }
