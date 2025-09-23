@@ -8,14 +8,14 @@ using System;
 public class PlayerProfileController : MonoBehaviour
 {
     [Header("UI / Perfil")]
-    [SerializeField] private GameObject _profilePanel;
-    [SerializeField] private TextMeshProUGUI _playerNameText;
-    [SerializeField] private Image _avatarImage;
-    [SerializeField] private Sprite[] _avatars;
-    [SerializeField] private TMP_InputField _playerNameInput;
-    [SerializeField] private TextMeshProUGUI _playerNameErrorText;
-    [SerializeField] private GameObject _avatarSelectionPanel;
-    [SerializeField] private Button _closeAvatarPanelButton;
+    [SerializeField] private GameObject profilePanel;
+    [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private Image avatarImage;
+    [SerializeField] private Sprite[] avatars;
+    [SerializeField] private TMP_InputField playerNameInput;
+    [SerializeField] private TextMeshProUGUI playerNameErrorText;
+    [SerializeField] private GameObject avatarSelectionPanel;
+    [SerializeField] private Button closeAvatarPanelButton;
 
     [Header("UI / Economia")]
     [SerializeField] private TextMeshProUGUI _goldText;
@@ -25,43 +25,62 @@ public class PlayerProfileController : MonoBehaviour
 
     private const string FileName = "player_profile.json";
     private const string NameRegex = @"^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$";
-
-    // Dados em memória
+    public bool IsLoaded { get; private set; }
+    public event Action OnProfileLoaded;
+    
     public PlayerProfileData Data { get; private set; } = new PlayerProfileData();
     
-    public event Action<int> OnGoldChanged; // dispara com o valor atual de Gold 
-
-    private void Start()
+    public event Action<int> OnGoldChanged;
+    
+    private void Awake()
     {
-        // 1) Tenta carregar JSON. Se não existir, cria novo.
         if (!JsonDataService.TryLoad<PlayerProfileData>(FileName, out var loaded))
         {
             Data = new PlayerProfileData();
-            MigrateFromPlayerPrefsIfNeeded(); // primeira vez: busca PlayerPrefs antigos
-            Save();                           // já salva o arquivo inicial
+            MigrateFromPlayerPrefsIfNeeded();
+            Save();
         }
         else
         {
             Data = loaded ?? new PlayerProfileData();
-            // fallback de listas nulas (caso antigo)
-            if (Data.OwnedCards == null) Data.OwnedCards = new System.Collections.Generic.List<string>();
-            if (Data.EquippedDeck == null) Data.EquippedDeck = new System.Collections.Generic.List<string>();
+            if (Data.OwnedCards == null)    Data.OwnedCards = new System.Collections.Generic.List<string>();
+            if (Data.EquippedDeck == null)  Data.EquippedDeck = new System.Collections.Generic.List<string>();
+            if (Data.Daily == null)         Data.Daily = new DailySystemData();
+            if (Data.Daily.Login == null)   Data.Daily.Login = new DailyLoginData();
         }
 
-        // 2) UI inicial
+        IsLoaded = true;
+        OnProfileLoaded?.Invoke();
+    }
+
+    private void Start()
+    {
+        if (!JsonDataService.TryLoad<PlayerProfileData>(FileName, out var loaded))
+        {
+            Data = new PlayerProfileData();
+            MigrateFromPlayerPrefsIfNeeded();
+            Save();
+        }
+        else
+        {
+            Data = loaded ?? new PlayerProfileData();
+            if (Data.OwnedCards == null) Data.OwnedCards = new System.Collections.Generic.List<string>();
+            
+            if (Data.EquippedDeck == null) Data.EquippedDeck = new System.Collections.Generic.List<string>();
+        }
+        
         ApplyProfileUI();
         UpdateGoldUI();
-
-        // 3) Listeners
-        if (_playerNameInput != null)
-            _playerNameInput.onEndEdit.AddListener(ValidatePlayerName);
-        if (_closeAvatarPanelButton != null)
-            _closeAvatarPanelButton.onClick.AddListener(CloseAvatarSelection);
+        
+        if (playerNameInput != null)
+            playerNameInput.onEndEdit.AddListener(ValidatePlayerName);
+        
+        if (closeAvatarPanelButton != null)
+            closeAvatarPanelButton.onClick.AddListener(CloseAvatarSelection);
     }
 
     private void MigrateFromPlayerPrefsIfNeeded()
     {
-        // Migra apenas se estiver com valores padrão
         if (Data.PlayerName == "Jogador")
         {
             var legacyName = PlayerPrefs.GetString("PlayerName", "Jogador");
@@ -72,24 +91,22 @@ public class PlayerProfileController : MonoBehaviour
         if (Data.AvatarIndex == 0)
         {
             var legacyAvatar = PlayerPrefs.GetInt("AvatarIndex", 0);
-            Data.AvatarIndex = Mathf.Clamp(legacyAvatar, 0, _avatars != null && _avatars.Length > 0 ? _avatars.Length - 1 : 0);
+            Data.AvatarIndex = Mathf.Clamp(legacyAvatar, 0, avatars != null && avatars.Length > 0 ? avatars.Length - 1 : 0);
         }
-
-        // Se quiser, limpe os antigos:
-        // PlayerPrefs.DeleteKey("PlayerName");
-        // PlayerPrefs.DeleteKey("AvatarIndex");
-        // PlayerPrefs.Save();
     }
 
     private void ApplyProfileUI()
     {
-        if (_playerNameText)  _playerNameText.text = Data.PlayerName;
-        if (_playerNameInput) _playerNameInput.text = Data.PlayerName;
+        if (playerNameText)
+            playerNameText.text = Data.PlayerName;
+        
+        if (playerNameInput) 
+            playerNameInput.text = Data.PlayerName;
 
-        if (_avatars != null && _avatars.Length > 0 && _avatarImage)
+        if (avatars != null && avatars.Length > 0 && avatarImage)
         {
-            var idx = Mathf.Clamp(Data.AvatarIndex, 0, _avatars.Length - 1);
-            _avatarImage.sprite = _avatars[idx];
+            var idx = Mathf.Clamp(Data.AvatarIndex, 0, avatars.Length - 1);
+            avatarImage.sprite = avatars[idx];
         }
     }
 
@@ -100,30 +117,31 @@ public class PlayerProfileController : MonoBehaviour
     }
 
     private void Save() => JsonDataService.Save(FileName, Data);
+    
 
-    // ============
-    // Ações de UI
-    // ============
+    public void OpenProfile()  => profilePanel?.SetActive(true);
+    public void CloseProfile() => profilePanel?.SetActive(false);
 
-    public void OpenProfile()  => _profilePanel?.SetActive(true);
-    public void CloseProfile() => _profilePanel?.SetActive(false);
-
-    public void OpenAvatarSelection()  => _avatarSelectionPanel?.SetActive(true);
-    public void CloseAvatarSelection() => _avatarSelectionPanel?.SetActive(false);
+    public void OpenAvatarSelection()  => avatarSelectionPanel?.SetActive(true);
+    public void CloseAvatarSelection() => avatarSelectionPanel?.SetActive(false);
 
     public void ChangeAvatar()
     {
-        if (_avatars == null || _avatars.Length == 0) return;
-        Data.AvatarIndex = (Data.AvatarIndex + 1) % _avatars.Length;
-        _avatarImage.sprite = _avatars[Data.AvatarIndex];
+        if (avatars == null || avatars.Length == 0) 
+            return;
+        
+        Data.AvatarIndex = (Data.AvatarIndex + 1) % avatars.Length;
+        avatarImage.sprite = avatars[Data.AvatarIndex];
         Save();
     }
 
     public void SelectAvatar(int avatarIndex)
     {
-        if (_avatars == null || _avatars.Length == 0) return;
-        Data.AvatarIndex = Mathf.Clamp(avatarIndex, 0, _avatars.Length - 1);
-        _avatarImage.sprite = _avatars[Data.AvatarIndex];
+        if (avatars == null || avatars.Length == 0) 
+            return;
+        
+        Data.AvatarIndex = Mathf.Clamp(avatarIndex, 0, avatars.Length - 1);
+        avatarImage.sprite = avatars[Data.AvatarIndex];
         Save();
         CloseAvatarSelection();
     }
@@ -132,21 +150,17 @@ public class PlayerProfileController : MonoBehaviour
     {
         if (!Regex.IsMatch(name, NameRegex))
         {
-            if (_playerNameErrorText) _playerNameErrorText.text = "Nome inválido! Apenas letras são permitidas.";
-            if (_playerNameInput)     _playerNameInput.text = Data.PlayerName; // restaura
+            if (playerNameErrorText) playerNameErrorText.text = "Nome inválido! Apenas letras são permitidas.";
+            if (playerNameInput)     playerNameInput.text = Data.PlayerName;
         }
         else
         {
-            if (_playerNameErrorText) _playerNameErrorText.text = "";
-            if (_playerNameText)      _playerNameText.text = name;
+            if (playerNameErrorText) playerNameErrorText.text = "";
+            if (playerNameText)      playerNameText.text = name;
             Data.PlayerName = name;
             Save();
         }
     }
-
-    // ======================
-    // Economia & Coleção
-    // ======================
 
     public bool CanAfford(int price) => Data.Gold >= price;
 
@@ -173,17 +187,13 @@ public class PlayerProfileController : MonoBehaviour
     public bool TryPurchaseCard(string cardId, int price)
     {
         if (string.IsNullOrEmpty(cardId)) return false;
-        if (HasCard(cardId)) return true;         // já possui
-        if (!TrySpendGold(price)) return false;   // não tem ouro
+        if (HasCard(cardId)) return true;
+        if (!TrySpendGold(price)) return false;
 
         Data.OwnedCards.Add(cardId);
         Save();
         return true;
     }
-
-    // ======================
-    // Deck (limite: _deckLimit)
-    // ======================
 
     public bool EquipToDeck(string cardId)
     {
@@ -204,10 +214,6 @@ public class PlayerProfileController : MonoBehaviour
         Save();
         return true;
     }
-    
-    // ======================
-    // Missões Diárias
-    // ======================
 
     public void SaveProfile()
     {

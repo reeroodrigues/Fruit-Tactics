@@ -9,14 +9,14 @@ public class LocalizedText : MonoBehaviour
     [SerializeField] private string key;
     [TextArea] public string fallback;
 
-    private TextMeshProUGUI tmp;
-    private TextMeshProUGUI ugui;
-    private bool subscribed;
+    private TextMeshProUGUI _tmp;
+    private TextMeshProUGUI _ugui;
+    private bool _subscribed;
 
     private void Awake()
     {
-        tmp = GetComponent<TextMeshProUGUI>();
-        ugui = GetComponent<TextMeshProUGUI>();
+        _tmp = GetComponent<TextMeshProUGUI>();
+        _ugui = GetComponent<TextMeshProUGUI>();
     }
 
     private void OnEnable()
@@ -31,7 +31,6 @@ public class LocalizedText : MonoBehaviour
 
     private IEnumerator EnsureSubscribedThenRefresh()
     {
-        // espera até o Localizer existir (normalmente instantâneo com o Bootstrap)
         while (Localizer.Instance == null) yield return null;
 
         TrySubscribe();
@@ -40,23 +39,23 @@ public class LocalizedText : MonoBehaviour
 
     private void TrySubscribe()
     {
-        if (subscribed || Localizer.Instance == null) return;
+        if (_subscribed || Localizer.Instance == null) return;
         Localizer.Instance.OnLanguageChanged += Refresh;
-        subscribed = true;
+        _subscribed = true;
     }
 
     private void TryUnsubscribe()
     {
-        if (!subscribed || Localizer.Instance == null) return;
+        if (!_subscribed || Localizer.Instance == null) return;
         Localizer.Instance.OnLanguageChanged -= Refresh;
-        subscribed = false;
+        _subscribed = false;
     }
 
     public void Refresh()
     {
         if (Localizer.Instance == null) return;
         var txt = Localizer.Instance.Tr(key, fallback);
-        if (tmp) tmp.text = txt;
-        else if (ugui) ugui.text = txt;
+        if (_tmp) _tmp.text = txt;
+        else if (_ugui) _ugui.text = txt;
     }
 }

@@ -7,21 +7,21 @@ public enum GameLanguage { PT_BR = 0, EN_US = 1, ES_ES = 2 }
 public class SettingsMenu : MonoBehaviour
 {
     [Header("Panel/Canvas")]
-    [SerializeField] private RectTransform panel;      // container que desliza
-    [SerializeField] private CanvasGroup canvasGroup;  // para fade/blocksRaycasts
-    [SerializeField] private Image inputBlocker;       // Image full-screen (cor transparente), Raycast Target ON
+    [SerializeField] private RectTransform panel;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Image inputBlocker;
     [SerializeField] private float slideDuration = 0.35f;
-    [SerializeField] private float overshoot = 0.8f;   // Ease.OutBack
+    [SerializeField] private float overshoot = 0.8f;
 
     [Header("Toggles")]
-    [SerializeField] private Toggle audioToggle;       // Master/Music
-    [SerializeField] private Image  audioBackground;   // Image do fundo do toggle (vai trocar a cor)
+    [SerializeField] private Toggle audioToggle;
+    [SerializeField] private Image  audioBackground;
     [SerializeField] private Toggle sfxToggle;
     [SerializeField] private Image  sfxBackground;
 
     [Header("Toggle Colors")]
-    [SerializeField] private Color onColor  = new Color(0.38f, 0.78f, 0.35f); // verde folha
-    [SerializeField] private Color offColor = new Color(0.90f, 0.30f, 0.25f); // vermelho
+    [SerializeField] private Color onColor  = new Color(0.38f, 0.78f, 0.35f);
+    [SerializeField] private Color offColor = new Color(0.90f, 0.30f, 0.25f);
 
     [Header("Languages (flags as Buttons)")]
     [SerializeField] private Button brButton;
@@ -45,20 +45,13 @@ public class SettingsMenu : MonoBehaviour
     
     private GameSettingsModel _settings;
 
-    // // PlayerPrefs keys
-    // private const string K_MUSIC = "MusicEnabled";
-    // private const string K_SFX   = "SfxEnabled";
-    // private const string K_LANG  = "Lang";
-
     private void Awake()
     {
         _settings = SettingsRepository.Get();
         
-        // posições
-        _shownPos = panel.anchoredPosition;                     // posição visível (defina no editor)
-        _hiddenPos = _shownPos + new Vector2(0f, Screen.height * 1.1f); // off-screen acima
-
-        // estado inicial fechado
+        _shownPos = panel.anchoredPosition;
+        _hiddenPos = _shownPos + new Vector2(0f, Screen.height * 1.1f);
+        
         panel.anchoredPosition = _hiddenPos;
         if (canvasGroup)
         {
@@ -72,17 +65,14 @@ public class SettingsMenu : MonoBehaviour
         HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
         HookButtonWithFeedback(creditsButton, () => Application.OpenURL("https://example.com/credits"));
         HookButtonWithFeedback(termsButton,   () => Application.OpenURL("https://example.com/terms"));
-
-        // aplicar estados
+        
         audioToggle.isOn = _settings.musicOn;
         sfxToggle.isOn   = _settings.sfxOn;
         RefreshToggleVisuals();
         
-        // bandeiras/idioma
         Localizer.Instance.SetLanguage(_settings.language, save:false);
         RefreshLanguageVisual();
         
-        // liga listeners
         audioToggle.onValueChanged.AddListener(OnAudioToggleChanged);
         sfxToggle.onValueChanged.AddListener(OnSfxToggleChanged);
 
@@ -96,7 +86,6 @@ public class SettingsMenu : MonoBehaviour
         if (!btn) return;
         btn.onClick.AddListener(() =>
         {
-            // feedback visual rápido
             var t = btn.transform;
             DOTween.Sequence()
                 .Append(t.DOScale(0.95f, 0.06f))
@@ -106,8 +95,7 @@ public class SettingsMenu : MonoBehaviour
             Debug.Log(debugMsg);
         });
     }
-
-    // ---------- Open / Close ----------
+    
     public void Toggle()
     {
         if (IsOpen) Hide();
@@ -120,13 +108,13 @@ public class SettingsMenu : MonoBehaviour
 
         if (inputBlocker)
         {
-            inputBlocker.enabled = true;                 // ativa o bloqueio de clique por baixo
+            inputBlocker.enabled = true;
             inputBlocker.raycastTarget = true;
         }
         if (canvasGroup)
         {
             canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;           // garante que o próprio painel capture os cliques
+            canvasGroup.blocksRaycasts = true;
         }
         SetMainButtonsInteractable(false);
 
@@ -174,8 +162,7 @@ public class SettingsMenu : MonoBehaviour
         foreach (var b in buttonsToDisable)
             if (b) b.interactable = value;
     }
-
-    // ---------- Toggles ----------
+    
     private void OnAudioToggleChanged(bool isOn)
     {
         _settings.musicOn = isOn;
@@ -197,19 +184,17 @@ public class SettingsMenu : MonoBehaviour
         if (audioBackground) audioBackground.color = audioToggle.isOn ? onColor : offColor;
         if (sfxBackground)   sfxBackground.color   = sfxToggle.isOn   ? onColor : offColor;
     }
-
-    // ---------- Idiomas ----------
+    
     private void SelectLanguage(string lang)
     {
         _settings.language = lang;
         SettingsRepository.Save(_settings);
-        Localizer.Instance.SetLanguage(lang); // dispara OnLanguageChanged → LocalizedText atualiza
+        Localizer.Instance.SetLanguage(lang);
         RefreshLanguageVisual();
     }
 
     private void RefreshLanguageVisual()
     {
-        // Pega o idioma atual do Localizer (ou do JSON se Localizer ainda não existir)
         string lang = Localizer.Instance != null
             ? Localizer.Instance.CurrentLanguage
             : SettingsRepository.Get().language;
@@ -227,7 +212,7 @@ public class SettingsMenu : MonoBehaviour
         var c = img.color;
         c.a = isSelected ? 1f : unselectedAlpha;
         img.color = c;
-        btn.interactable = !isSelected; // evita clique no já-selecionado
+        btn.interactable = !isSelected;
     }
     
     private void HookButtonWithFeedback(UnityEngine.UI.Button btn, System.Action onClick)

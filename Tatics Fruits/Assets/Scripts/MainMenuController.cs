@@ -24,26 +24,24 @@ public class MainMenuController : MonoBehaviour
 
     [Header("Settings (janela/painel)")]
     [SerializeField] private SettingsMenu settingsPanel;
-    [SerializeField] private RectTransform settingsIcon; // opcional
+    [SerializeField] private RectTransform settingsIcon;
     
     [Header("Ranking")]
     [SerializeField] private GameObject rankingPanel;
-
-    // === NOVO: Loja ===
-    [Header("Store")]
-    [SerializeField] private GameObject storePanel;          // painel da loja (GameObject) — desativado por padrão
-    [SerializeField] private RectTransform storeRoot;        // raiz visual da loja (para escalar)
-    [SerializeField] private CanvasGroup storeCanvasGroup;   // CanvasGroup para fade
     
-    // === NOVO: DailyMissions ===
+    [Header("Store")]
+    [SerializeField] private GameObject storePanel;
+    [SerializeField] private RectTransform storeRoot;
+    [SerializeField] private CanvasGroup storeCanvasGroup;
+    
     [Header("DailyMissions")]
-    [SerializeField] private GameObject dailyMissionsPanel;          // painel de dailymissions (GameObject) — desativado por padrão
-    [SerializeField] private RectTransform dailyMissionsRoot;        // raiz visual do dailymissions (para escalar)
-    [SerializeField] private CanvasGroup dailyMissionsCanvasGroup;   // CanvasGroup para fade
+    [SerializeField] private GameObject dailyMissionsPanel;
+    [SerializeField] private RectTransform dailyMissionsRoot;
+    [SerializeField] private CanvasGroup dailyMissionsCanvasGroup;
 
     [Header("Animação de tilt")]
-    [SerializeField] private float initialDelay = 1.5f;   // 1ª vez
-    [SerializeField] private float repeatInterval = 3f;   // repete a cada 3s
+    [SerializeField] private float initialDelay = 1.5f;
+    [SerializeField] private float repeatInterval = 3f;
     [SerializeField] private float tiltAngle = 12f;
     [SerializeField] private float tiltDuration = 0.18f;
     [SerializeField] private float returnDuration = 0.22f;
@@ -53,20 +51,17 @@ public class MainMenuController : MonoBehaviour
 
     private void Start()
     {
-        // Pop do título
         titleTransform.localScale = Vector3.zero;
         _titleSeq = DOTween.Sequence()
             .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
-
-        // Clicks
+        
         playButton.onClick.AddListener(() => SceneManager.LoadScene("Gameplay Scene"));
         rankingButton.onClick.AddListener(() =>
         {
             if (!rankingPanel) return;
-            rankingPanel.SetActive(true); // LeaderboardController abre com animação no OnEnable
+            rankingPanel.SetActive(true);
         });
-
-        // === NOVO: abrir loja ===
+        
         storeButton.onClick.AddListener(OpenStorePanel);
 
         dailyMissionsButton.onClick.AddListener(() =>
@@ -74,7 +69,6 @@ public class MainMenuController : MonoBehaviour
                 dailyMissionsPanel.SetActive(true);
             });
         
-        //badge
         if (dailyController)
         {
             dailyController.OnAttentionChanged += (has) =>
@@ -94,8 +88,7 @@ public class MainMenuController : MonoBehaviour
             if (settingsPanel == null) return;
             settingsPanel.Toggle();
         });
-
-        // Dispara e agenda repetição
+        
         InvokeRepeating(nameof(NudgeAllOnce), initialDelay, repeatInterval);
     }
 
@@ -124,14 +117,12 @@ public class MainMenuController : MonoBehaviour
     private void OnApplicationFocus(bool hasFocus)
     {
         if (!hasFocus) return;
-        // reinicia o agendamento ao voltar para o menu
         CancelInvoke(nameof(NudgeAllOnce));
         InvokeRepeating(nameof(NudgeAllOnce), 0.25f, repeatInterval);
     }
 
     private void NudgeAllOnce()
     {
-        // Ícones laterais
         if (sideIcons != null)
         {
             for (int i = 0; i < sideIcons.Length; i++)
@@ -149,8 +140,7 @@ public class MainMenuController : MonoBehaviour
                    .Append(icon.DOScale(1f, 0.08f));
             }
         }
-
-        // Settings (ícone ou botão)
+        
         if (settingsIcon)
         {
             DOTween.Sequence()
@@ -170,17 +160,14 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    // ===== Loja =====
-
     private void OpenStorePanel()
     {
         if (!storePanel) return;
-
-        // ativa painel e reseta estado visual
+        
         storePanel.SetActive(true);
         if (storeRoot) storeRoot.localScale = Vector3.one * 0.85f;
 
-        if (!storeCanvasGroup && storeRoot) // fallback: tenta pegar no StoreRoot
+        if (!storeCanvasGroup && storeRoot)
             storeCanvasGroup = storeRoot.GetComponent<CanvasGroup>();
 
         if (storeCanvasGroup)
@@ -188,8 +175,7 @@ public class MainMenuController : MonoBehaviour
             storeCanvasGroup.alpha = 0f;
             storeCanvasGroup.interactable = false;
             storeCanvasGroup.blocksRaycasts = true;
-            // anima
-            DOTween.Kill(storeCanvasGroup); // garante que não empilhe animações
+            DOTween.Kill(storeCanvasGroup);
             DOTween.Sequence()
                 .Append(storeCanvasGroup.DOFade(1f, 0.18f))
                 .Join(storeRoot.DOScale(1f, 0.22f).SetEase(Ease.OutBack))
@@ -200,8 +186,7 @@ public class MainMenuController : MonoBehaviour
             storeRoot.DOScale(1f, 0.22f).SetEase(Ease.OutBack);
         }
     }
-
-    // Ligue este método no botão "X" da loja (no Inspector)
+    
     public void CloseStorePanel()
     {
         if (!storePanel) return;

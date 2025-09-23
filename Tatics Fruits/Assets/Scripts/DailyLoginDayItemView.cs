@@ -5,22 +5,26 @@ using UnityEngine.UI;
 public class DailyLoginDayItemView : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI dayLabel;    // "Dia 1" .. "Dia 7"
-    [SerializeField] private TextMeshProUGUI rewardText;  // "+XX Gold"
-    [SerializeField] private Button claimButton;          // botão de coletar
-    [SerializeField] private CanvasGroup dimGroup;        // alpha = 0.4 quando claimed
-    [SerializeField] private GameObject glow;             // ativar quando claimable
+    [SerializeField] private TextMeshProUGUI dayLabel;
+    [SerializeField] private TextMeshProUGUI rewardText;
+    [SerializeField] private Button claimButton;
+    [SerializeField] private CanvasGroup dimGroup;
+    [SerializeField] private GameObject glow;
 
     private DailyMissionsController _ctrl;
     private int _index;
+    private bool _claiming;
+
+    private DailyMissionsController.DailyLoginDayInfo _info;
 
     public void Setup(DailyMissionsController ctrl, DailyMissionsController.DailyLoginDayInfo info)
     {
         _ctrl = ctrl;
-        _index = info.index;
+        _index = info.Index;
+        _info = info;
 
         if (dayLabel)   dayLabel.text = $"Dia {_index + 1}";
-        if (rewardText) rewardText.text = $"+{info.reward} Gold";
+        if (rewardText) rewardText.text = $"+{info.Reward} Gold";
 
         ApplyState(info);
 
@@ -30,22 +34,36 @@ public class DailyLoginDayItemView : MonoBehaviour
 
     public void Refresh(DailyMissionsController.DailyLoginDayInfo info)
     {
-        if (rewardText) rewardText.text = $"+{info.reward} Gold";
+        _info = info;
+        if (rewardText) rewardText.text = $"+{info.Reward} Gold";
         ApplyState(info);
     }
 
     private void ApplyState(DailyMissionsController.DailyLoginDayInfo info)
     {
-        if (dimGroup) dimGroup.alpha = info.claimed ? 0.4f : 1f;
-        if (glow)     glow.SetActive(info.claimable);
-        if (claimButton) claimButton.interactable = info.claimable;
+        if (dimGroup) dimGroup.alpha = info.Claimed ? 0.4f : 1f;
+        if (glow)     glow.SetActive(info.Claimable);
+        if (claimButton) claimButton.interactable = info.Claimable && !_claiming;
     }
 
     private void OnClaimClicked()
     {
-        if (_ctrl != null && _ctrl.TryClaimDailyLoginDay(_index))
+        if (_claiming) return;
+        _claiming = true;
+        if (claimButton) claimButton.interactable = false;
+        
+        bool ok = _ctrl != null && _ctrl.TryClaimDailyLoginDay(_index);
+
+        if (ok)
         {
-            // a grid vai receber o callback e chamar Refresh()
+            _info.Claimed = true;
+            _info.Claimable = false;
+            Refresh(_info);
+        }
+        else
+        {
+            _claiming = false;
+            if (claimButton) claimButton.interactable = _info.Claimable;
         }
     }
 }

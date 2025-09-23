@@ -11,8 +11,7 @@ public class ShopItemView : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private GameObject ownedOverlay;
     [SerializeField] private GameObject ribbonNew;
-
-    // dados do item
+    
     private string _cardId;
     private int _price;
     private PlayerProfileController _profile;
@@ -31,8 +30,7 @@ public class ShopItemView : MonoBehaviour
 
         buyButton.onClick.RemoveAllListeners();
         buyButton.onClick.AddListener(OnBuyClick);
-
-        // reage a mudanças de gold
+        
         _profile.OnGoldChanged += _ => RefreshState();
 
         RefreshState();
@@ -41,7 +39,7 @@ public class ShopItemView : MonoBehaviour
     private void OnDestroy()
     {
         if (_profile != null)
-            _profile.OnGoldChanged -= _ => RefreshState(); // segurança: remover assinatura
+            _profile.OnGoldChanged -= _ => RefreshState();
     }
 
     private void OnEnable() => RefreshState();
@@ -55,8 +53,7 @@ public class ShopItemView : MonoBehaviour
 
         bool canBuy = !owned && _profile.CanAfford(_price);
         if (buyButton) buyButton.interactable = canBuy;
-
-        // preço meio apagado quando já possui
+        
         if (priceText) priceText.alpha = owned ? 0.5f : 1f;
         if (title) title.alpha = owned ? 0.6f : 1f;
     }

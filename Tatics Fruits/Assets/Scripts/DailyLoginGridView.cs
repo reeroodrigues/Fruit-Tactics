@@ -7,9 +7,9 @@ public class DailyLoginGridView : MonoBehaviour
     [SerializeField] private DailyMissionsController controller;
 
     [Header("UI")]
-    [SerializeField] private Transform gridParent;                 // onde instanciar
-    [SerializeField] private DailyLoginDayItemView dayPrefab;      // dias 1..6
-    [SerializeField] private DailyLoginDayItemView specialPrefab;  // dia 7
+    [SerializeField] private Transform gridParent;
+    [SerializeField] private DailyLoginDayItemView dayPrefab;
+    [SerializeField] private DailyLoginDayItemView specialPrefab;
 
     private readonly List<DailyLoginDayItemView> _items = new();
 
@@ -31,7 +31,7 @@ public class DailyLoginGridView : MonoBehaviour
         foreach (Transform t in gridParent) Destroy(t.gameObject);
         _items.Clear();
 
-        var days = controller.GetLoginDays(); // sempre 7
+        var days = controller.GetLoginDays();
 
         for (int i = 0; i < days.Count; i++)
         {

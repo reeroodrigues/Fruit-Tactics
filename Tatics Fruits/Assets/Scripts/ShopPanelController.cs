@@ -16,7 +16,7 @@ public class ShopPanelController : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private Transform gridParent;
     [SerializeField] private ShopItemView itemPrefab;
-    [SerializeField] private Transform featuredParent;   // opcional
+    [SerializeField] private Transform featuredParent;
     [SerializeField] private ShopItemView featuredPrefab;
     
 
@@ -57,14 +57,12 @@ public class ShopPanelController : MonoBehaviour
         if (catalog != null && catalog.Count > 0)
             featured = catalog[0];
         
-        //Destaque
         if (featuredParent != null && featuredPrefab != null && featured != null)
         {
             var go = Instantiate(featuredPrefab, featuredParent);
             go.Setup(featured.id, featured.displayName, featured.cardIcon, featured.priceGold, profile, isNew:true);
         }
         
-        //Restante do grid
         foreach (var so in catalog)
         {
             if (featured != null && so == featured)

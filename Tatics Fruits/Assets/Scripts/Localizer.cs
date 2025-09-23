@@ -92,7 +92,6 @@ public class Localizer : MonoBehaviour
 
     private string Wrap(string raw)
     {
-        // raw é { "a":"b", "c":"d" }, transformamos para { "entries":[{"key":"a","value":"b"}, ...] }
         var dict = MiniJson.Deserialize(raw) as Dictionary<string, object>;
         var list = new List<LocalizationEntry>();
         foreach (var kv in dict) list.Add(new LocalizationEntry { key = kv.Key, value = kv.Value.ToString() });

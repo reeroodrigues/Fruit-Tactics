@@ -151,7 +151,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             var cardHolder = cardManager._hoveringMenu.GetComponent<CardHolder>();
 
-            if (cardHolder != null && cardHolder._holderType == CardHolder.HolderType.Discard)
+            if (cardHolder != null && cardHolder.holderType == CardHolder.HolderType.Discard)
             {
                 transform.SetParent(cardHolder.transform);
                 transform.localPosition = Vector3.zero;

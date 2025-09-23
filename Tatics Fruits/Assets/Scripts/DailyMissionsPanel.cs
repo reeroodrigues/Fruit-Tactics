@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,42 +10,44 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     [SerializeField] private PlayerProfileController profile;
 
     [Header("Root / Anim")]
-    [SerializeField] private CanvasGroup panelCanvasGroup;   // CanvasGroup no root
-    [SerializeField] private RectTransform window;           // janela (para scale)
-    [SerializeField] private Button closeButton;             // botão X (fecha)
-    [SerializeField] private Button dimButton;               // opcional: botão no Dim para fechar ao tocar fora
+    [SerializeField] private CanvasGroup panelCanvasGroup;
+    [SerializeField] private RectTransform window;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Button dimButton;
 
     [Header("Tabs (buttons)")]
-    [SerializeField] private Button missionsTabButton;       // "Missões diárias"
-    [SerializeField] private Button bonusTabButton;          // "Bônus diário"
-    [SerializeField] private Image missionsTabBg;            // opcional: bg do botão (pra destacar seleção)
-    [SerializeField] private Image bonusTabBg;               // opcional: bg do botão
+    [SerializeField] private Button missionsTabButton;
+    [SerializeField] private Button bonusTabButton;
+    [SerializeField] private Image missionsTabBg;
+    [SerializeField] private Image bonusTabBg;
     [SerializeField] private Color tabSelected = Color.white;
     [SerializeField] private Color tabUnselected = new Color(1,1,1,0.5f);
 
     [Header("Panels (contents)")]
-    [SerializeField] private GameObject missionsPanelRoot;   // seu "Content - DailyMission" (ou equivalente)
-    [SerializeField] private CanvasGroup missionsPanelCg;    // CanvasGroup do painel de missões (opcional)
-    [SerializeField] private GameObject bonusPanelRoot;      // seu "Content - DailyBonus" (ou equivalente)
-    [SerializeField] private CanvasGroup bonusPanelCg;       // CanvasGroup do painel de login (opcional)
+    [SerializeField] private GameObject missionsPanelRoot;
+    [SerializeField] private CanvasGroup missionsPanelCg;
+    [SerializeField] private GameObject bonusPanelRoot;
+    [SerializeField] private CanvasGroup bonusPanelCg;
 
     [Header("Missions List")]
-    [SerializeField] private Transform missionsParent;       // onde instanciar os itens
+    [SerializeField] private Transform missionsParent;
     [SerializeField] private DailyMissionItemView missionItemPrefab;
 
-    [Header("Daily Login UI")]
-    [SerializeField] private Button dailyLoginButton;        // botão "Coletar"
-    [SerializeField] private TextMeshProUGUI dailyLoginText; // "Coletar +50 Gold"
-    [SerializeField] private GameObject dailyLoginBadge;     // etiqueta "Disponível"
+    [Header("Daily Login (grid 7/7)")]
+    [SerializeField] private Transform loginGridParent;
+    [SerializeField] private Transform loginSpecialGridParent;
+    [SerializeField] private DailyLoginDayItemView loginDayPrefab;
+    [SerializeField] private DailyLoginDayItemView loginDaySpecialPrefab;
 
     [Header("Defaults")]
-    [SerializeField] private bool startOnMissions = true;    // abre com Missões por padrão
+    [SerializeField] private bool startOnMissions = true;
 
     private bool _missionsBuilt;
+    private bool _loginBuilt;
+    private readonly List<DailyLoginDayItemView> _loginItems = new();
+
     private enum Tab { Missions, Bonus }
     private Tab _current;
-
-    // ---------- Lifecycle ----------
 
     private void Awake()
     {
@@ -55,31 +56,31 @@ public class DailyMissionsPanelTabs : MonoBehaviour
 
         missionsTabButton.onClick.AddListener(() => SwitchTo(Tab.Missions));
         bonusTabButton.onClick.AddListener(() => SwitchTo(Tab.Bonus));
-
-        if (dailyLoginButton) dailyLoginButton.onClick.AddListener(OnClickClaimLogin);
     }
 
     private void OnEnable()
     {
-        // garante set do dia e estado inicial
         controller.EnsureDayGenerated();
+        
+        controller.OnDailyLoginChanged += RefreshLoginGrid;
 
-        if (startOnMissions) SwitchTo(Tab.Missions, instant:true);
-        else                 SwitchTo(Tab.Bonus,    instant:true);
+        if (startOnMissions) 
+            SwitchTo(Tab.Missions, instant:true);
+        else 
+            SwitchTo(Tab.Bonus,    instant:true);
 
-        // animação de abertura
         Show();
     }
 
     private void OnDisable()
     {
+        controller.OnDailyLoginChanged -= RefreshLoginGrid;
+
         DOTween.Kill(panelCanvasGroup);
         DOTween.Kill(window);
         if (missionsPanelCg) DOTween.Kill(missionsPanelCg);
         if (bonusPanelCg)    DOTween.Kill(bonusPanelCg);
     }
-
-    // ---------- Public Show/Hide ----------
 
     public void Show()
     {
@@ -108,21 +109,20 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             .OnComplete(() => gameObject.SetActive(false));
     }
 
-    // ---------- Tabs ----------
-
     private void SwitchTo(Tab tab, bool instant = false)
     {
         _current = tab;
 
-        // Ativa/Desativa roots
         missionsPanelRoot.SetActive(tab == Tab.Missions);
         bonusPanelRoot.SetActive(tab == Tab.Bonus);
-
-        // Fade suave entre painéis (se CanvasGroup estiver atribuído)
+        
         if (!instant)
         {
-            if (missionsPanelCg) missionsPanelCg.alpha = (tab == Tab.Missions) ? 0f : 1f;
-            if (bonusPanelCg)    bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 0f : 1f;
+            if (missionsPanelCg) 
+                missionsPanelCg.alpha = (tab == Tab.Missions) ? 0f : 1f;
+            
+            if (bonusPanelCg)    
+                bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 0f : 1f;
 
             if (tab == Tab.Missions && missionsPanelCg)
                 missionsPanelCg.DOFade(1f, 0.18f);
@@ -131,27 +131,31 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         }
         else
         {
-            if (missionsPanelCg) missionsPanelCg.alpha = (tab == Tab.Missions) ? 1f : 0f;
-            if (bonusPanelCg)    bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 1f : 0f;
+            if (missionsPanelCg) 
+                missionsPanelCg.alpha = (tab == Tab.Missions) ? 1f : 0f;
+            
+            if (bonusPanelCg)
+                bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 1f : 0f;
         }
-
-        // Estilo visual dos botões
-        if (missionsTabBg) missionsTabBg.color = (tab == Tab.Missions) ? tabSelected : tabUnselected;
-        if (bonusTabBg)    bonusTabBg.color    = (tab == Tab.Bonus)    ? tabSelected : tabUnselected;
-
-        // Conteúdo de cada aba
+        
+        if (missionsTabBg)
+            missionsTabBg.color = (tab == Tab.Missions) ? tabSelected : tabUnselected;
+        
+        if (bonusTabBg)
+            bonusTabBg.color    = (tab == Tab.Bonus)    ? tabSelected : tabUnselected;
+        
         if (tab == Tab.Missions)
         {
             BuildMissionsIfNeeded();
-            RefreshAllMissionItems(); // caso tenha progredido algo enquanto painel estava fechado
+            RefreshAllMissionItems();
         }
         else
         {
-            RefreshLogin();
+            BuildLoginGridIfNeeded();
+            RefreshLoginGrid();
         }
     }
-
-    // ---------- Missões ----------
+    
 
     private void BuildMissionsIfNeeded()
     {
@@ -170,7 +174,6 @@ public class DailyMissionsPanelTabs : MonoBehaviour
 
     private void RefreshAllMissionItems()
     {
-        // percorre os itens e pede para atualizarem UI
         foreach (Transform t in missionsParent)
         {
             var item = t.GetComponent<DailyMissionItemView>();
@@ -178,21 +181,42 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         }
     }
 
-    // ---------- Login diário ----------
-
-    private void RefreshLogin()
+    private void BuildLoginGridIfNeeded()
     {
-        if (dailyLoginText)  dailyLoginText.text = $"Coletar +{profile.Data.Daily.loginRewardGold} Gold";
+        if (_loginBuilt || loginGridParent == null || loginDayPrefab == null) 
+            return;
+        
+        foreach (Transform t in loginGridParent) Destroy(t.gameObject);
+        if (loginSpecialGridParent)
+            foreach (Transform t in loginSpecialGridParent) Destroy(t.gameObject);
 
-        bool available = controller.IsDailyLoginAvailable();
+        _loginItems.Clear();
 
-        if (dailyLoginButton) dailyLoginButton.interactable = available;
-        if (dailyLoginBadge)  dailyLoginBadge.SetActive(available);
+        var days = controller.GetLoginDays();
+        for (int i = 0; i < days.Count; i++)
+        {
+            var info = days[i];
+            
+            bool isSpecial = (i == 6) && (loginDaySpecialPrefab != null);
+            var prefab       = isSpecial ? loginDaySpecialPrefab : loginDayPrefab;
+            var targetParent = (isSpecial && loginSpecialGridParent != null) ? loginSpecialGridParent : loginGridParent;
+
+            var item = Instantiate(prefab, targetParent);
+            item.Setup(controller, info);
+            _loginItems.Add(item);
+        }
+
+        _loginBuilt = true;
     }
 
-    private void OnClickClaimLogin()
+    private void RefreshLoginGrid()
     {
-        if (controller.TryClaimDailyLogin())
-            RefreshLogin();
+        if (!_loginBuilt) return;
+
+        var days = controller.GetLoginDays();
+        for (int i = 0; i < _loginItems.Count && i < days.Count; i++)
+        {
+            _loginItems[i].Refresh(days[i]);
+        }
     }
 }

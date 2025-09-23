@@ -94,7 +94,7 @@ public class CardManager : MonoBehaviour
         if (_selectedCard == null)
             return;
 
-        if (_defaultPlayArea._available)
+        if (_defaultPlayArea.available)
         {
             var target = _selectedCard.transform.parent;
             _selectedCard.transform.position = _defaultPlayArea.transform.position;

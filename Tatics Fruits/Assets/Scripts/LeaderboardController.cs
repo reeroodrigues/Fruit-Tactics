@@ -8,7 +8,7 @@ public class LeaderboardController : MonoBehaviour
     [Header("Panel")]
     [SerializeField] RectTransform panel;
     [SerializeField] CanvasGroup canvasGroup;
-    [SerializeField] Image overlay; // Image full-screen, raycastTarget=ON (bloqueia cliques por baixo)
+    [SerializeField] Image overlay;
 
     [Header("List")]
     [SerializeField] ScrollRect scroll;
@@ -28,8 +28,7 @@ public class LeaderboardController : MonoBehaviour
     {
         if (backButton) backButton.onClick.AddListener(Close);
         if (refreshButton) refreshButton.onClick.AddListener(RefreshData);
-
-        // Garante bloqueio de input: o Ranking deve capturar todos os cliques
+        
         if (canvasGroup)
         {
             canvasGroup.interactable = true;
@@ -37,7 +36,7 @@ public class LeaderboardController : MonoBehaviour
         }
         if (overlay)
         {
-            overlay.raycastTarget = true; // IMPORTANTÍSSIMO
+            overlay.raycastTarget = true;
             overlay.gameObject.SetActive(true);
         }
     }
@@ -68,12 +67,11 @@ public class LeaderboardController : MonoBehaviour
     private void RefreshData()
     {
         _data = LeaderboardService.LoadLocal();
-        RenderList(_data?.allTime ?? _data?.daily); // mostra all-time; se não houver, cai pro daily
+        RenderList(_data?.allTime ?? _data?.daily);
     }
 
     private void RenderList(LeaderboardEntry[] list)
     {
-        // limpa
         foreach (var r in _rows) if (r) Destroy(r.gameObject);
         _rows.Clear();
 
