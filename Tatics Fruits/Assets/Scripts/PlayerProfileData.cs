@@ -25,7 +25,7 @@ public class DailyLoginData
     
     public List<bool> claimed = new List<bool> { false,false,false,false,false,false,false };
     
-    public List<int> rewards = new List<int> { 20, 30, 40, 60, 80, 100, 200 };
+    public List<int> rewards = new List<int> { 30, 40, 50, 60, 80, 100, 200 };
 }
 #endregion
 

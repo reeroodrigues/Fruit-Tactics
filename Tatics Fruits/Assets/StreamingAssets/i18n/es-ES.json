@@ -2,8 +2,8 @@
   "menu_play": "Jugar",
   "menu_ranking": "Ranking",
   "menu_store": "Tienda",
-  "menu_daily": "Misiones Diarias",
-  "settings_title": "Ajustes",
+  "menu_daily": "Misiones diarias",
+  "settings_title": "Configuración",
   "settings_audio": "Audio",
   "settings_sfx": "SFX",
   "br_flag": "Brasil",
@@ -11,27 +11,58 @@
   "es_flag": "España",
   "credits": "Créditos",
   "terms": "Términos",
-  "delete_account": "Deletar conta",
+  "delete_account": "Eliminar cuenta",
   "ranking": "Ranking",
   "store": "Tienda",
   "daily_missions": "Misiones diarias",
   "daily_bonus": "Bono diario",
   "missions_end": "Las misiones terminan en:",
-  "day_text": "Dia {0}",
-  "prize_text": "oro",
-  "collect_button": "Coletar",
-  "claimed_collect_button" : "Coletado",
+  "day_text": "Día {0}",
+  "prize_text": "monedas",
+  "collect_button": "Reclamar",
+  "claimed_collect_button": "Reclamado",
   "purchase": "Comprado",
   "special_daily_bonus": "¡Bono especial cada 7 días!",
-  "time_plus_name": "Relógio+",
-  "time_plus_desc": "Adiciona +{0}s ao cronômetro.",
+
+  "time_plus_name": "Reloj+",
+  "time_plus_desc": "Añade +{0} segundos al cronómetro.",
+
   "combo_boost_name": "Combo x{0}",
-  "combo_boost_desc": "Multiplicador x{0} por {1}s.",
-  "time_freeze_name": "Congelar Tempo",
-  "time_freeze_desc": "Pausa o timer por {0}s (você continua jogando).",
-  "wildcard_name": "Coringa",
-  "wildcard_desc": "A próxima carta aberta combina com qualquer fruta.",
-  "mission.win_level_1": "Vença o nível {0}",
-  "mission.win_level_2": "Vença o nível {0}",
-  "mission.win_level":   "Vença o nível {0}"
+  "combo_boost_desc": "Multiplicador x{0} durante {1} segundos.",
+
+  "time_freeze_name": "Congelar tiempo",
+  "time_freeze_desc": "Pausa el cronómetro durante {0} segundos.",
+
+  "chain_extend_name": "Cadena",
+  "chain_extend_desc": "Mientras aciertes seguidos, +{0} segundo por par.",
+
+  "gold_rush_name": "Fiebre de oro",
+  "gold_rush_desc": "Cada par correcto otorga +{0} de Oro.",
+
+  "last_chance_name": "Última oportunidad",
+  "last_chance_desc": "Al llegar a 0 segundos, ganas +{0} segundos.",
+
+  "row_clear_name": "Destruir carta",
+  "row_clear_desc": "Destruye una carta de tu mano.",
+
+  "shuffle_full_name": "Cambiar todas las cartas",
+  "shuffle_full_desc": "Cambia todas las cartas de tu mano sin perder tiempo.",
+
+  "shuffle_soft_name": "Cambiar una carta",
+  "shuffle_soft_desc": "Cambia una carta de tu mano sin perder tiempo.",
+
+  "streak_guard_name": "Protegido",
+  "streak_guard_desc": "Si fallas durante la racha, la racha continúa.",
+
+  "time_match_name": "Más tiempo",
+  "time_match_desc": "Durante {0} segundos, cada par correcto te da +{0} segundos extra.",
+
+  "undo_miss_name": "Deshacer",
+  "undo_miss_desc": "Ignora una carta jugada erróneamente.",
+
+  "wildcard_name": "Comodín",
+  "wildcard_desc": "La próxima carta volteada combina con cualquier fruta.",
+
+  "mission_win_level": "Gana el nivel {0}",
+  "mission_collect_pairs": "Haz {0} pares correctos"
 }
