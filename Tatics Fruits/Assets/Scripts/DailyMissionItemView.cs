@@ -152,7 +152,7 @@ public class DailyMissionItemView : MonoBehaviour
     {
         if (!rewardText) return;
         string goldWord = (Localizer.Instance != null)
-            ? Localizer.Instance.Tr("currency.gold", "Gold")
+            ? Localizer.Instance.Tr("prize_text", "Gold")
             : "Gold";
         rewardText.text = $"+{_state.rewardGold} {goldWord}";
     }
