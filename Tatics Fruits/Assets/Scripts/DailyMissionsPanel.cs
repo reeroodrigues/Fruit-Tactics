@@ -248,8 +248,9 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         var list = controller.GetMissions();
         foreach (var st in list)
         {
+            var def = controller.GetDefinition(st.missionId);
             var item = Instantiate(missionItemPrefab, missionsParent);
-            item.Setup(controller, st);
+            item.Setup(controller, st, def);
         }
         _missionsBuilt = true;
     }

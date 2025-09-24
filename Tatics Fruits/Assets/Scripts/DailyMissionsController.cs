@@ -121,6 +121,11 @@ public class DailyMissionsController : MonoBehaviour
         FireAttention();
 
     }
+
+    public DailyMissionSo GetDefinition(string missionId)
+    {
+        return missionPool.FirstOrDefault(m => m && m.id == missionId);
+    }
     
     public List<DailyLoginDayInfo> GetLoginDays()
     {

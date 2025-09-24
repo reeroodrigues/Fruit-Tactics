@@ -64,7 +64,6 @@
   "wildcard_desc": "A próxima carta aberta combina com qualquer fruta.",
   
   
-  "mission.win_level_1": "Vença o nível {0}",
-  "mission.win_level_2": "Vença o nível {0}",
-  "mission.win_level":   "Vença o nível {0}"
+  "mission_win_level": "Vença o nível {0}",
+  "mission_collect_pairs": "Faça {0} pares certos"
 }
