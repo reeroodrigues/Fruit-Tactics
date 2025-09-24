@@ -38,12 +38,10 @@ public class ShopPanelController : MonoBehaviour
 
     private void Awake()
     {
-        // NÃO adicione listeners aqui (serão gerenciados no OnEnable/OnDisable)
 
         if ((catalog == null || catalog.Count == 0))
             catalog = Resources.LoadAll<PowerUpCardSO>("PowerUps").ToList();
-
-        // Estado inicial seguro
+        
         if (panelCanvasGroup)
         {
             panelCanvasGroup.alpha = 0f;
@@ -58,7 +56,6 @@ public class ShopPanelController : MonoBehaviour
 
     private void OnEnable()
     {
-        // listeners corretos
         if (closeButton)
         {
             closeButton.onClick.RemoveListener(Hide);
@@ -142,21 +139,19 @@ public class ShopPanelController : MonoBehaviour
         }
     }
 
-    // ===== Safe Show/Hide =====
-
     public void Show()
     {
         if (_animating) return;
         _animating = true;
 
-        gameObject.SetActive(true); // dispara OnEnable antes de animar
+        gameObject.SetActive(true);
 
         if (panelCanvasGroup)
         {
             panelCanvasGroup.DOKill();
             panelCanvasGroup.alpha = 0f;
             panelCanvasGroup.interactable = false;
-            panelCanvasGroup.blocksRaycasts = false; // liga no fim
+            panelCanvasGroup.blocksRaycasts = false;
         }
         if (window)
         {
@@ -187,7 +182,7 @@ public class ShopPanelController : MonoBehaviour
         {
             panelCanvasGroup.DOKill();
             panelCanvasGroup.interactable = false;
-            panelCanvasGroup.blocksRaycasts = false; // solta já
+            panelCanvasGroup.blocksRaycasts = false;
         }
         if (window) window.DOKill();
 

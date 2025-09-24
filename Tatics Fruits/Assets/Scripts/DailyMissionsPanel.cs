@@ -58,8 +58,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     private enum Tab { Missions, Bonus }
     private Tab _current;
     private Coroutine _countdownCo;
-
-    // NEW: guard p/ transição segura
+    
     private bool _animating;
 
     private void Awake()
@@ -106,8 +105,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         DOTween.Kill(window);
         if (missionsPanelCg) DOTween.Kill(missionsPanelCg);
         if (bonusPanelCg)    DOTween.Kill(bonusPanelCg);
-
-        // reset seguro: nada fica bloqueando toques
+        
         if (panelCanvasGroup)
         {
             panelCanvasGroup.alpha = 0f;
@@ -136,8 +134,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         if (_current == Tab.Missions)
             RefreshAllMissionItems();
     }
-
-    // ===== Safe Show/Hide =====
+    
 
     public void Show()
     {
@@ -151,7 +148,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             panelCanvasGroup.DOKill();
             panelCanvasGroup.alpha = 0f;
             panelCanvasGroup.interactable = false;
-            panelCanvasGroup.blocksRaycasts = false; // liga só no fim
+            panelCanvasGroup.blocksRaycasts = false;
         }
         if (window)
         {
@@ -182,7 +179,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         {
             panelCanvasGroup.DOKill();
             panelCanvasGroup.interactable = false;
-            panelCanvasGroup.blocksRaycasts = false; // solta já no começo
+            panelCanvasGroup.blocksRaycasts = false;
         }
         if (window) window.DOKill();
 
@@ -195,8 +192,6 @@ public class DailyMissionsPanelTabs : MonoBehaviour
                 _animating = false;
             });
     }
-
-    // ===== Tabs =====
 
     private void SwitchTo(Tab tab, bool instant = false)
     {

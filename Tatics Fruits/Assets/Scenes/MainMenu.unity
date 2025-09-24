@@ -11012,8 +11012,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 138b6144d8c5eda45af1dd80e0e2fa7c, type: 2}
   - {fileID: 11400000, guid: c952c66c33bf4284b81e3002fb3b86c3, type: 2}
   - {fileID: 11400000, guid: 598f69bd401d3df4db2c649ae70d3a2f, type: 2}
-  - {fileID: 11400000, guid: de67f9daba5572c42be7f841beb4747a, type: 2}
-  - {fileID: 11400000, guid: dbb8698a47c16d442be720969ed6ac54, type: 2}
+  - {fileID: 11400000, guid: 4614cb36be88a19499e0e5fdd110ac90, type: 2}
+  - {fileID: 11400000, guid: 90903da16ca19e445b2e76f09a14b897, type: 2}
   missionsPerDay: 5
   useLocalTime: 1
 --- !u!4 &1330019149

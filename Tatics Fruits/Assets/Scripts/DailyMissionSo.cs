@@ -1,18 +1,24 @@
 using UnityEngine;
 
-public enum MissionEventType
-{
-    WinLevel
-}
+public enum MissionEventType { WinLevel = 1 }
 
-[CreateAssetMenu(fileName = "DailyMissions", menuName = "Game/DailyMissions")]
+[CreateAssetMenu(menuName = "Game/Daily Mission", fileName = "DailyMission_")]
 public class DailyMissionSo : ScriptableObject
 {
-    public string id; //"win_level_1", etc...
-    [TextArea] public string descriptionTemplate; //"Vença o nível {level}"
-    public MissionEventType eventType =  MissionEventType.WinLevel;
-    public int target = 1; //ex: 1 vitória
-    public int rewardGold = 100; //quanto dá de gold
-    public int levelParam = 1; //para WinLeve, qual nível? (0= qualquer)
-}
+    [Header("Identity")]
+    public string id;
+    public MissionEventType eventType = MissionEventType.WinLevel;
 
+    [Header("Design")]
+    public int target = 1;
+    public int rewardGold = 50;
+    public int levelParam = 0;
+
+    [Header("Localization")]
+    [Tooltip("Chave no arquivo de idiomas. Ex.: mission_win_level")]
+    public string descriptionKey;
+
+    [TextArea]
+    [Tooltip("Fallback caso a chave não exista. Ex.: \"Vença o nível {0}\"")]
+    public string descriptionTemplate = "Vença o nível {0}";
+}

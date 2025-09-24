@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3753c349b78c45b392fad0e236fef698, type: 3}
   m_Name: Win Level 7
   m_EditorClassIdentifier: 
-  id: win_level_7
-  descriptionTemplate: "Ven\xE7a o n\xEDvel 7"
-  eventType: 0
+  id: mission_win_level
+  eventType: 1
   target: 1
   rewardGold: 200
   levelParam: 7
+  descriptionKey: mission_collect_pairs
+  descriptionTemplate: 

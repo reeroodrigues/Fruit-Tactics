@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Win Level 5
   m_EditorClassIdentifier: 
   id: mission_collect_pairs
-  descriptionTemplate: 
-  eventType: 0
+  eventType: 1
   target: 1
   rewardGold: 180
   levelParam: 5
+  descriptionKey: mission_collect_pairs
+  descriptionTemplate: 

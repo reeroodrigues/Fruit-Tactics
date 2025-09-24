@@ -10,32 +10,31 @@ public class DailyMissionItemView : MonoBehaviour
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
     [SerializeField] private TextMeshProUGUI rewardText;
+
+    [Header("Claim UI")]
     [SerializeField] private Button claimButton;
     [SerializeField] private GameObject claimStamp;
+    
+    [SerializeField] private bool hideProgressWhenCompleted = false;
 
     private DailyMissionsController _ctrl;
     private DailyMissionState _state;
-    private DailyMissionSo _def; // opcional: definição (SO) desta missão
+    private DailyMissionSo _def;
+    
 
-    // ========= API =========
-
-    // Versão completa: recebe o SO (recomendado)
     public void Setup(DailyMissionsController ctrl, DailyMissionState state, DailyMissionSo def)
     {
         _ctrl = ctrl;
         _state = state;
         _def = def;
-
         Wire();
     }
-
-    // Versão antiga (continua funcionando): sem SO; o script tenta inferir level pelo id
+    
     public void Setup(DailyMissionsController ctrl, DailyMissionState state)
     {
         _ctrl = ctrl;
         _state = state;
         _def = null;
-
         Wire();
     }
 
@@ -48,11 +47,7 @@ public class DailyMissionItemView : MonoBehaviour
         if (claimButton)
         {
             claimButton.onClick.RemoveAllListeners();
-            claimButton.onClick.AddListener(() =>
-            {
-                if (_ctrl.TryClaimMission(_state.missionId))
-                    Refresh();
-            });
+            claimButton.onClick.AddListener(OnClickClaim);
         }
 
         if (Localizer.Instance != null)
@@ -73,8 +68,7 @@ public class DailyMissionItemView : MonoBehaviour
         SetDescriptionLocalized();
         SetRewardLocalized();
     }
-
-    // ========= UI Refresh =========
+    
 
     public void Refresh()
     {
@@ -85,54 +79,64 @@ public class DailyMissionItemView : MonoBehaviour
         {
             progressBar.maxValue = max;
             progressBar.value = cur;
+
+            bool hide = hideProgressWhenCompleted && _state.completed;
+            progressBar.gameObject.SetActive(!hide);
         }
 
         if (progressText)
-            progressText.text = $"{cur}/{max}";
-
-        if (claimButton)
-            claimButton.interactable = _state.completed && !_state.claimed;
-
-        if (claimStamp)
-            claimStamp.SetActive(_state.claimed);
+        {
+            bool hide = hideProgressWhenCompleted && _state.completed;
+            progressText.gameObject.SetActive(!hide);
+            if (!hide) progressText.text = $"{cur}/{max}";
+        }
+        
+        bool showClaim = _state.completed && !_state.claimed;
+        if (claimButton) claimButton.gameObject.SetActive(showClaim);
+        
+        if (claimStamp) claimStamp.SetActive(_state.claimed);
     }
 
-    // ========= Localização da descrição =========
+    private void OnClickClaim()
+    {
+        if (_ctrl == null) return;
+
+        if (_ctrl.TryClaimMission(_state.missionId))
+        {
+            _state.claimed = true;
+            Refresh();
+        }
+    }
+    
 
     private void SetDescriptionLocalized()
     {
         if (!descriptionText) return;
 
-        // 1) chave de localização
-        // prioridade: descriptionKey do SO (se você quiser adicionar no SO)
-        // senão, padrão "mission.<id>"
-        string locKey = _def != null && !string.IsNullOrEmpty(_def.descriptionTemplate)
-                        ? $"mission.{_def.id}"
-                        : $"mission.{_state.missionId}";
+        string key = (!string.IsNullOrEmpty(_def?.descriptionKey))
+                       ? _def.descriptionKey
+                       : (!string.IsNullOrEmpty(_state.missionId) ? $"mission.{_state.missionId}" : null);
 
-        // 2) fallback (se não houver localizer/chave não encontrada)
-        // use o template do SO, se houver; caso contrário, o snapshot salvo no dia
-        string fallback = (_def != null && !string.IsNullOrEmpty(_def.descriptionTemplate))
+        string fallback = !string.IsNullOrEmpty(_def?.descriptionTemplate)
                             ? _def.descriptionTemplate
                             : (!string.IsNullOrEmpty(_state.description) ? _state.description : _state.missionId);
 
-        // 3) parâmetros
-        // {0} = level (se aplicar), {1} = target
-        int level = (_def != null) ? Mathf.Max(0, _def.levelParam) : ExtractTrailingNumber(_state.missionId);
-        object[] args = (level > 0) ? new object[] { level, _state.target }
-                                    : new object[] { _state.target };
+        int level = (_def != null && _def.levelParam > 0) ? _def.levelParam : ExtractTrailingNumber(_state.missionId);
+        object[] args = (level > 0) ? new object[] { level, _state.target } : new object[] { _state.target };
 
-        if (Localizer.Instance != null)
+        if (Localizer.Instance != null && !string.IsNullOrEmpty(key))
         {
-            descriptionText.text = Localizer.Instance.TrFormat(locKey, fallback, args);
+            string txt = Localizer.Instance.TrFormat(key, fallback, args);
+            if (txt == fallback && key.Contains("."))
+                txt = Localizer.Instance.TrFormat(key.Replace('.', '_'), fallback, args);
+            descriptionText.text = txt;
         }
         else
         {
-            // fallback: tenta substituir {level} e {target} se existirem no texto
             string txt = fallback;
             txt = txt.Replace("{level}", level.ToString());
             txt = txt.Replace("{target}", _state.target.ToString());
-            try { txt = string.Format(txt, args); } catch { /* ignora se não tiver placeholders */ }
+            try { txt = string.Format(txt, args); } catch { }
             descriptionText.text = txt;
         }
     }

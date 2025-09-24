@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Win Level 4
   m_EditorClassIdentifier: 
   id: mission_collect_pairs
-  descriptionTemplate: 
-  eventType: 0
+  eventType: 1
   target: 1
   rewardGold: 160
   levelParam: 4
+  descriptionKey: mission_win_level
+  descriptionTemplate: 

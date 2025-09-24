@@ -8,14 +8,11 @@ public class ShopItemView : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private Image icon;
-
-    // Título do card (nome do powerup)
+    
     [SerializeField] private TextMeshProUGUI title;
-
-    // Descrição do powerup (localizada)
+    
     [SerializeField] private TextMeshProUGUI descriptionText;
-
-    // Preço fora do botão (opcional)
+    
     [SerializeField] private TextMeshProUGUI priceText;
 
     [SerializeField] private TextMeshProUGUI rarityText;
@@ -52,7 +49,7 @@ public class ShopItemView : MonoBehaviour
     private string _cardId;
     private int _price;
     private PlayerProfileController _profile;
-    private PowerUpCardSO _so; // referência para re-localizar quando trocar idioma
+    private PowerUpCardSO _so;
 
     private Color _btnOriginalColor = Color.white;
     private Tween _activeTween;
@@ -73,15 +70,13 @@ public class ShopItemView : MonoBehaviour
         if (buyButton && buyButtonGraphic && buyButton.targetGraphic != buyButtonGraphic)
             buyButton.targetGraphic = buyButtonGraphic;
     }
-
-    // ---------- NOVO: Setup direto do ScriptableObject ----------
+    
     public void SetupFromSO(PowerUpCardSO so, PlayerProfileController profile, bool isNew = false)
     {
         _so = so;
         Setup(so.Id, so.GetLocalizedName(), so.icon, so.priceGold, profile, isNew, so.rarity);
         if (descriptionText) descriptionText.text = so.GetLocalizedDescription();
-
-        // re-localiza quando trocar língua
+        
         if (Localizer.Instance != null)
         {
             Localizer.Instance.OnLanguageChanged -= RelocalizeFromSO;
@@ -94,19 +89,17 @@ public class ShopItemView : MonoBehaviour
         if (_so == null) return;
         if (title) title.text = _so.GetLocalizedName();
         if (descriptionText) descriptionText.text = _so.GetLocalizedDescription();
-
-        // também re-renderiza o label do botão (palavra Gold pode mudar)
+        
         RefreshState();
     }
-
-    // ---------- Setup antigo (continua funcionando) ----------
+    
     public void Setup(string cardId, string displayName, Sprite sprite, int priceGold,
                       PlayerProfileController profile, bool isNew = false, string rarity = null)
     {
         _cardId  = cardId;
         _price   = priceGold;
         _profile = profile;
-        _so      = null; // não veio SO – sem re-localização de descrição automática
+        _so      = null;
 
         if (icon)  icon.sprite = sprite;
         if (title) title.text  = displayName;

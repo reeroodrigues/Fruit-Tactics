@@ -4,13 +4,12 @@ using UnityEngine;
 public class PowerUpCardSO : ScriptableObject
 {
     [Header("Identidade")]
-    public PowerUpEffect effect;            // define o ID lógico
-    public string displayName;              // fallback do título
+    public PowerUpEffect effect;
+    public string displayName;
     public Sprite icon;
-    public string rarity = "Common";        // "Common", "Uncommon", "Rare", "Epic"
+    public string rarity = "Common";
     public int priceGold = 100;
-
-    // Use isto como ID estável para salvar no JSON (OwnedCards)
+    
     public string Id => effect.ToString();
 
     [Header("Parâmetros Comuns")]
@@ -36,9 +35,9 @@ public class PowerUpCardSO : ScriptableObject
     [Min(0)] public int uses = 1;
 
     [Header("Localização (opcional)")]
-    public string nameKey;                  // ex.: "pu.time_plus.name"
-    public string descriptionKey;           // ex.: "pu.time_plus.desc"
-    [TextArea] public string descriptionFallback; // ex.: "Adiciona +{0}s ao cronômetro."
+    public string nameKey;
+    public string descriptionKey;
+    [TextArea] public string descriptionFallback;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -46,7 +45,7 @@ public class PowerUpCardSO : ScriptableObject
         switch (effect)
         {
             case PowerUpEffect.time_plus:
-                if (amount <= 0) amount = 10; // +10s
+                if (amount <= 0) amount = 10;
                 break;
             case PowerUpEffect.time_freeze:
                 if (duration <= 0) duration = 3f;
@@ -83,8 +82,7 @@ public class PowerUpCardSO : ScriptableObject
         }
     }
 #endif
-
-    // ---------- Helpers de Localização ----------
+    
 
     public string GetLocalizedName()
     {
@@ -98,7 +96,6 @@ public class PowerUpCardSO : ScriptableObject
         object[] args = GetFormatArgs();
         if (Localizer.Instance != null && !string.IsNullOrEmpty(descriptionKey))
             return Localizer.Instance.TrFormat(descriptionKey, descriptionFallback, args);
-        // fallback sem Localizer
         string fmt = string.IsNullOrEmpty(descriptionFallback) ? displayName : descriptionFallback;
         try { return string.Format(fmt, args); } catch { return fmt; }
     }
