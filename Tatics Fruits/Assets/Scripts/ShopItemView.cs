@@ -9,22 +9,40 @@ public class ShopItemView : MonoBehaviour
     [Header("Refs")]
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI title;
+
+    // Texto de preço FORA do botão (opcional). Se você mostra o preço DENTRO do botão,
+    // deixe nulo ou aponte para um TMP diferente do label do botão.
     [SerializeField] private TextMeshProUGUI priceText;
+
     [SerializeField] private TextMeshProUGUI rarityText;
+
     [SerializeField] private Button buyButton;
     [SerializeField] private Image  buyButtonGraphic;
+
+    // TMP que fica DENTRO do botão "Comprar"
+    [SerializeField] private TextMeshProUGUI buyLabel;
+
     [SerializeField] private GameObject ownedOverlay;
     [SerializeField] private GameObject ribbonNew;
 
     [Header("Behavior")]
     [SerializeField] private bool disableButtonWhenCantAfford = false;
+
+    // Mostra o preço dentro do botão
     [SerializeField] private bool showPriceInsideButton = true;
+
+    // NOVO: quando verdadeiro, o botão mostra SOMENTE o valor (ex.: "100")
+    [SerializeField] private bool showOnlyPriceInButton = true;
+
+    // Se quiser complementar com a palavra "Gold"
+    [SerializeField] private bool showGoldWordInButton = false;
 
     [Header("Localization Keys")]
     [SerializeField] private string buyTextKey   = "shop.buy";
     [SerializeField] private string ownedTextKey = "shop.owned";
     [SerializeField] private string goldTextKey  = "currency.gold";
-    
+
+    // Injete sua função de tradução em algum bootstrap: ShopItemView.Translate = Localizer.Instance.Tr;
     public static Func<string, string> Translate = key => key;
 
     [Header("FX")]
@@ -41,7 +59,6 @@ public class ShopItemView : MonoBehaviour
     private int _price;
     private PlayerProfileController _profile;
 
-    private TextMeshProUGUI _buyLabel;
     private Color _btnOriginalColor = Color.white;
     private Tween _activeTween;
 
@@ -49,15 +66,17 @@ public class ShopItemView : MonoBehaviour
 
     private void Awake()
     {
-        if (buyButton)
-            _buyLabel = buyButton.GetComponentInChildren<TextMeshProUGUI>(true);
-        
+        // Se não foi atribuído no Inspector, tenta achar no botão
+        if (!buyLabel && buyButton)
+            buyLabel = buyButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
         if (!buyButtonGraphic && buyButton)
             buyButtonGraphic = buyButton.targetGraphic as Image;
 
         if (buyButtonGraphic)
             _btnOriginalColor = buyButtonGraphic.color;
-        
+
+        // Garante que o targetGraphic do Button é a imagem de fundo (não o TMP)
         if (buyButton && buyButtonGraphic && buyButton.targetGraphic != buyButtonGraphic)
             buyButton.targetGraphic = buyButtonGraphic;
     }
@@ -65,12 +84,13 @@ public class ShopItemView : MonoBehaviour
     public void Setup(string cardId, string displayName, Sprite sprite, int priceGold,
                       PlayerProfileController profile, bool isNew = false, string rarity = null)
     {
-        _cardId = cardId;
-        _price  = priceGold;
+        _cardId  = cardId;
+        _price   = priceGold;
         _profile = profile;
 
         if (icon)  icon.sprite = sprite;
-        if (title) title.text = displayName;
+        if (title) title.text  = displayName;
+
         if (priceText) priceText.text = $"{priceGold} {T(goldTextKey)}";
         if (ribbonNew) ribbonNew.SetActive(isNew);
         if (rarityText) rarityText.text = string.IsNullOrEmpty(rarity) ? "" : rarity;
@@ -91,7 +111,7 @@ public class ShopItemView : MonoBehaviour
 
     private void OnDisable()
     {
-        if (buyButton) buyButton.transform.DOKill();
+        if (buyButton)        buyButton.transform.DOKill();
         if (buyButtonGraphic) buyButtonGraphic.DOKill();
         _activeTween?.Kill();
         _activeTween = null;
@@ -113,34 +133,53 @@ public class ShopItemView : MonoBehaviour
         if (ownedOverlay) ownedOverlay.SetActive(owned);
 
         bool hasMoney = _profile.CanAfford(_price);
-        
+
         bool interactable = !owned && (!disableButtonWhenCantAfford || hasMoney);
         if (buyButton) buyButton.interactable = interactable;
-        
-        if (_buyLabel)
+
+        // Label dentro do botão
+        if (buyLabel)
         {
-            _buyLabel.gameObject.SetActive(true);
-            _buyLabel.enabled = true;
-            _buyLabel.alpha = 1f;
+            buyLabel.gameObject.SetActive(true);
+            buyLabel.enabled = true;
+            buyLabel.alpha   = 1f;
 
             string buyWord   = T(buyTextKey);
             string ownedWord = T(ownedTextKey);
             string goldWord  = T(goldTextKey);
 
             if (owned)
-                _buyLabel.text = ownedWord;
+            {
+                buyLabel.text = ownedWord;
+            }
             else if (showPriceInsideButton)
-                _buyLabel.text = $"{buyWord}\n{_price} {goldWord}";
+            {
+                if (showOnlyPriceInButton)
+                {
+                    // SOMENTE o valor (com ou sem "Gold")
+                    buyLabel.text = showGoldWordInButton ? $"{_price} {goldWord}" : $"{_price}";
+                }
+                else
+                {
+                    // Texto + preço (modo antigo)
+                    buyLabel.text = $"{buyWord}\n{_price} {goldWord}";
+                }
+            }
             else
-                _buyLabel.text = buyWord;
+            {
+                // Sem preço no botão, apenas o texto "Comprar"
+                buyLabel.text = buyWord;
+            }
         }
-        
-        if (priceText) priceText.gameObject.SetActive(!showPriceInsideButton);
+
+        // Se houver um priceText separado, só esconda se NÃO for o mesmo label do botão
+        if (priceText && priceText != buyLabel)
+            priceText.gameObject.SetActive(!showPriceInsideButton);
 
         if (title) title.alpha = owned ? 0.6f : 1f;
-        
+
         if (buyButtonGraphic) buyButtonGraphic.color = _btnOriginalColor;
-        if (buyButton) buyButton.transform.localScale = Vector3.one;
+        if (buyButton)        buyButton.transform.localScale = Vector3.one;
     }
 
     private void OnBuyClick()
@@ -169,9 +208,9 @@ public class ShopItemView : MonoBehaviour
             buyButton.transform.DOKill();
             buyButton.transform.localScale = Vector3.one;
             buyButton.transform.DOShakeScale(
-                duration: cantAffordShakeDuration,
-                strength: cantAffordShakeStrength,
-                vibrato:  cantAffordShakeVibrato,
+                duration:  cantAffordShakeDuration,
+                strength:  cantAffordShakeStrength,
+                vibrato:   cantAffordShakeVibrato,
                 randomness: 90f
             );
         }

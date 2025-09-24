@@ -21,5 +21,6 @@
   "prize_text": "golds",
   "collect_button": "Collect",
   "claimed_collect_button" : "Claimed",
+  "purchase": "Purchase",
   "special_daily_bonus": "Special bonus every 7 days!"
 }

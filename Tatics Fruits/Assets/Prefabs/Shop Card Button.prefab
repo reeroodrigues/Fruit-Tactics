@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4974930993254650260
 RectTransform:
   m_ObjectHideFlags: 0
@@ -898,14 +898,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 9182830376633436118}
   title: {fileID: 1633695583006669831}
-  priceText: {fileID: 4199445817730706062}
+  priceText: {fileID: 0}
   rarityText: {fileID: 5495343885908798843}
   buyButton: {fileID: 8345924725337453210}
   buyButtonGraphic: {fileID: 7123215477346888529}
+  buyLabel: {fileID: 4199445817730706062}
   ownedOverlay: {fileID: 78368063935815392}
   ribbonNew: {fileID: 2080520972430224726}
   disableButtonWhenCantAfford: 0
   showPriceInsideButton: 1
+  showOnlyPriceInButton: 1
+  showGoldWordInButton: 0
   buyTextKey: shop.buy
   ownedTextKey: shop.owned
   goldTextKey: currency.gold
@@ -1199,6 +1202,7 @@ GameObject:
   - component: {fileID: 2942848788921380320}
   - component: {fileID: 1244246041047874930}
   - component: {fileID: 708229773378709518}
+  - component: {fileID: 3576716890360453001}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1324,3 +1328,17 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3576716890360453001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8631903582760024108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: purchase
+  fallback: 
