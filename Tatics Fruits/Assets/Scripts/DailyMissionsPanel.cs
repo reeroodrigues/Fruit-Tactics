@@ -59,6 +59,9 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     private Tab _current;
     private Coroutine _countdownCo;
 
+    // NEW: guard p/ transição segura
+    private bool _animating;
+
     private void Awake()
     {
         if (closeButton) closeButton.onClick.AddListener(Hide);
@@ -74,17 +77,15 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         controller.OnDailyLoginChanged += RefreshLoginGrid;
         controller.OnDailyMissionsChanged += HandleMissionsChanged;
 
-        if (profile)
-            profile.RequestShowGoldHud();
+        if (profile) profile.RequestShowGoldHud();
 
-        if (startOnMissions) 
-            SwitchTo(Tab.Missions, instant:true);
-        else 
-            SwitchTo(Tab.Bonus,    instant:true);
+        if (startOnMissions) SwitchTo(Tab.Missions, instant:true);
+        else                 SwitchTo(Tab.Bonus,    instant:true);
 
         UpdateMissionsTabBadge();
         UpdateBonusTabBadge();
         StartCountdown();
+
         Show();
     }
 
@@ -93,8 +94,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         controller.OnDailyLoginChanged -= RefreshLoginGrid;
         controller.OnDailyMissionsChanged -= HandleMissionsChanged;
 
-        if (profile)
-            profile.ReleaseShowGoldHud();
+        if (profile) profile.ReleaseShowGoldHud();
 
         if (_countdownCo != null)
         {
@@ -106,13 +106,20 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         DOTween.Kill(window);
         if (missionsPanelCg) DOTween.Kill(missionsPanelCg);
         if (bonusPanelCg)    DOTween.Kill(bonusPanelCg);
+
+        // reset seguro: nada fica bloqueando toques
+        if (panelCanvasGroup)
+        {
+            panelCanvasGroup.alpha = 0f;
+            panelCanvasGroup.interactable = false;
+            panelCanvasGroup.blocksRaycasts = false;
+        }
+        _animating = false;
     }
 
     private void UpdateBonusTabBadge()
     {
-        if (!bonusTabBadge || controller == null)
-            return;
-
+        if (!bonusTabBadge || controller == null) return;
         var hasClaim = controller.IsDailyLoginAvailable();
         bonusTabBadge.SetActive(hasClaim);
     }
@@ -130,33 +137,66 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             RefreshAllMissionItems();
     }
 
-    
+    // ===== Safe Show/Hide =====
+
     public void Show()
     {
+        if (_animating) return;
+        _animating = true;
+
         gameObject.SetActive(true);
 
         if (panelCanvasGroup)
         {
-            panelCanvasGroup.interactable = false;
-            panelCanvasGroup.blocksRaycasts = true;
+            panelCanvasGroup.DOKill();
             panelCanvasGroup.alpha = 0f;
+            panelCanvasGroup.interactable = false;
+            panelCanvasGroup.blocksRaycasts = false; // liga só no fim
         }
-        if (window) window.localScale = Vector3.one * 0.9f;
+        if (window)
+        {
+            window.DOKill();
+            window.localScale = Vector3.one * 0.9f;
+        }
 
         DOTween.Sequence()
             .Append(panelCanvasGroup ? panelCanvasGroup.DOFade(1f, 0.18f) : null)
             .Join(window ? window.DOScale(1f, 0.22f).SetEase(Ease.OutBack) : null)
-            .OnComplete(() => { if (panelCanvasGroup) panelCanvasGroup.interactable = true; });
+            .OnComplete(() =>
+            {
+                if (panelCanvasGroup)
+                {
+                    panelCanvasGroup.interactable = true;
+                    panelCanvasGroup.blocksRaycasts = true;
+                }
+                _animating = false;
+            });
     }
 
     public void Hide()
     {
-        if (panelCanvasGroup) panelCanvasGroup.interactable = false;
+        if (_animating) return;
+        _animating = true;
+
+        if (panelCanvasGroup)
+        {
+            panelCanvasGroup.DOKill();
+            panelCanvasGroup.interactable = false;
+            panelCanvasGroup.blocksRaycasts = false; // solta já no começo
+        }
+        if (window) window.DOKill();
+
         DOTween.Sequence()
             .Append(panelCanvasGroup ? panelCanvasGroup.DOFade(0f, 0.15f) : null)
             .Join(window ? window.DOScale(0.94f, 0.15f).SetEase(Ease.InSine) : null)
-            .OnComplete(() => gameObject.SetActive(false));
+            .OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+                _animating = false;
+            });
     }
+
+    // ===== Tabs =====
 
     private void SwitchTo(Tab tab, bool instant = false)
     {
@@ -167,11 +207,8 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         
         if (!instant)
         {
-            if (missionsPanelCg) 
-                missionsPanelCg.alpha = (tab == Tab.Missions) ? 0f : 1f;
-            
-            if (bonusPanelCg)    
-                bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 0f : 1f;
+            if (missionsPanelCg) missionsPanelCg.alpha = (tab == Tab.Missions) ? 0f : 1f;
+            if (bonusPanelCg)    bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 0f : 1f;
 
             if (tab == Tab.Missions && missionsPanelCg)
                 missionsPanelCg.DOFade(1f, 0.18f);
@@ -180,18 +217,12 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         }
         else
         {
-            if (missionsPanelCg) 
-                missionsPanelCg.alpha = (tab == Tab.Missions) ? 1f : 0f;
-            
-            if (bonusPanelCg)
-                bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 1f : 0f;
+            if (missionsPanelCg) missionsPanelCg.alpha = (tab == Tab.Missions) ? 1f : 0f;
+            if (bonusPanelCg)    bonusPanelCg.alpha    = (tab == Tab.Bonus)    ? 1f : 0f;
         }
         
-        if (missionsTabBg)
-            missionsTabBg.color = (tab == Tab.Missions) ? tabSelected : tabUnselected;
-        
-        if (bonusTabBg)
-            bonusTabBg.color    = (tab == Tab.Bonus)    ? tabSelected : tabUnselected;
+        if (missionsTabBg) missionsTabBg.color = (tab == Tab.Missions) ? tabSelected : tabUnselected;
+        if (bonusTabBg)    bonusTabBg.color    = (tab == Tab.Bonus)    ? tabSelected : tabUnselected;
         
         if (tab == Tab.Missions)
         {
@@ -206,7 +237,6 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         
         UpdateMissionsTabBadge();
         UpdateBonusTabBadge();
-
     }
     
     private void BuildMissionsIfNeeded()
@@ -231,15 +261,12 @@ public class DailyMissionsPanelTabs : MonoBehaviour
             var item = t.GetComponent<DailyMissionItemView>();
             if (item) item.Refresh();
         }
-        
         UpdateMissionsTabBadge();
     }
 
     private void StartCountdown()
     {
-        if (_countdownCo != null)
-            StopCoroutine(_countdownCo);
-
+        if (_countdownCo != null) StopCoroutine(_countdownCo);
         _countdownCo = StartCoroutine(CountdownLoop());
     }
 
@@ -292,12 +319,10 @@ public class DailyMissionsPanelTabs : MonoBehaviour
 
     private void BuildLoginGridIfNeeded()
     {
-        if (_loginBuilt || loginGridParent == null || loginDayPrefab == null) 
-            return;
+        if (_loginBuilt || loginGridParent == null || loginDayPrefab == null) return;
         
         foreach (Transform t in loginGridParent) Destroy(t.gameObject);
-        if (loginSpecialGridParent)
-            foreach (Transform t in loginSpecialGridParent) Destroy(t.gameObject);
+        if (loginSpecialGridParent) foreach (Transform t in loginSpecialGridParent) Destroy(t.gameObject);
 
         _loginItems.Clear();
 
@@ -305,8 +330,7 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         for (int i = 0; i < days.Count; i++)
         {
             var info = days[i];
-            
-            bool isSpecial = (i == 6) && (loginDaySpecialPrefab != null);
+            bool isSpecial   = (i == 6) && (loginDaySpecialPrefab != null);
             var prefab       = isSpecial ? loginDaySpecialPrefab : loginDayPrefab;
             var targetParent = (isSpecial && loginSpecialGridParent != null) ? loginSpecialGridParent : loginGridParent;
 

@@ -49,11 +49,14 @@ public class ShopItemView : MonoBehaviour
 
     private void Awake()
     {
-        if (buyButton) _buyLabel = buyButton.GetComponentInChildren<TextMeshProUGUI>(true);
+        if (buyButton)
+            _buyLabel = buyButton.GetComponentInChildren<TextMeshProUGUI>(true);
         
-        if (!buyButtonGraphic && buyButton) buyButtonGraphic = buyButton.targetGraphic as Image;
+        if (!buyButtonGraphic && buyButton)
+            buyButtonGraphic = buyButton.targetGraphic as Image;
 
-        if (buyButtonGraphic) _btnOriginalColor = buyButtonGraphic.color;
+        if (buyButtonGraphic)
+            _btnOriginalColor = buyButtonGraphic.color;
         
         if (buyButton && buyButtonGraphic && buyButton.targetGraphic != buyButtonGraphic)
             buyButton.targetGraphic = buyButtonGraphic;

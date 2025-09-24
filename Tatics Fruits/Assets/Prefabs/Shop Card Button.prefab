@@ -906,8 +906,9 @@ MonoBehaviour:
   ribbonNew: {fileID: 2080520972430224726}
   disableButtonWhenCantAfford: 0
   showPriceInsideButton: 1
-  buyText: Comprar
-  ownedText: Comprado
+  buyTextKey: shop.buy
+  ownedTextKey: shop.owned
+  goldTextKey: currency.gold
   cantAffordShakeDuration: 0.35
   cantAffordShakeStrength: 0.25
   cantAffordShakeVibrato: 18

@@ -28,16 +28,10 @@ public class MainMenuController : MonoBehaviour
     
     [Header("Ranking")]
     [SerializeField] private GameObject rankingPanel;
-    
-    [Header("Store")]
-    [SerializeField] private GameObject storePanel;
-    [SerializeField] private RectTransform storeRoot;
-    [SerializeField] private CanvasGroup storeCanvasGroup;
-    
-    [Header("DailyMissions")]
-    [SerializeField] private GameObject dailyMissionsPanel;
-    [SerializeField] private RectTransform dailyMissionsRoot;
-    [SerializeField] private CanvasGroup dailyMissionsCanvasGroup;
+
+    [Header("Panels")]
+    [SerializeField] private ShopPanelController shopPanel;                 // << usar Show/Hide do painel
+    [SerializeField] private DailyMissionsPanelTabs dailyMissionsPanel;     // << usar Show/Hide do painel
 
     [Header("Animação de tilt")]
     [SerializeField] private float initialDelay = 1.5f;
@@ -49,8 +43,12 @@ public class MainMenuController : MonoBehaviour
 
     private Sequence _titleSeq;
 
+    // guard simples para evitar spam ao alternar
+    private bool _switching;
+
     private void Start()
     {
+        // Pop do título
         titleTransform.localScale = Vector3.zero;
         _titleSeq = DOTween.Sequence()
             .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
@@ -61,31 +59,22 @@ public class MainMenuController : MonoBehaviour
             if (!rankingPanel) return;
             rankingPanel.SetActive(true);
         });
-        
-        storeButton.onClick.AddListener(OpenStorePanel);
 
-        dailyMissionsButton.onClick.AddListener(() =>
-            {
-                dailyMissionsPanel.SetActive(true);
-            });
+        storeButton.onClick.AddListener(OpenStorePanel);
+        dailyMissionsButton.onClick.AddListener(OpenDailyPanel);
         
         if (dailyController)
         {
             dailyController.OnAttentionChanged += (has) =>
             {
-                if (dailyBadge)
-                    dailyBadge.SetActive(has);
+                if (dailyBadge) dailyBadge.SetActive(has);
             };
-            if (dailyBadge)
-            {
-                dailyBadge.SetActive(dailyController.HasAnyClaimAvailable());
-            }
+            if (dailyBadge) dailyBadge.SetActive(dailyController.HasAnyClaimAvailable());
         }
-        
         
         settingsButton.onClick.AddListener(() =>
         {
-            if (settingsPanel == null) return;
+            if (!settingsPanel) return;
             settingsPanel.Toggle();
         });
         
@@ -131,12 +120,9 @@ public class MainMenuController : MonoBehaviour
                 if (!icon) continue;
 
                 var seq = DOTween.Sequence().SetDelay(i * iconsStagger);
-                seq.Append(icon.DOLocalRotate(new Vector3(0, 0, tiltAngle), tiltDuration)
-                                .SetEase(Ease.OutQuad));
-                seq.Append(icon.DOLocalRotate(Vector3.zero, returnDuration)
-                                .SetEase(Ease.InOutQuad));
-                seq.Join(icon.DOScale(1.03f, tiltDuration + returnDuration)
-                             .SetEase(Ease.InOutSine))
+                seq.Append(icon.DOLocalRotate(new Vector3(0, 0, tiltAngle), tiltDuration).SetEase(Ease.OutQuad));
+                seq.Append(icon.DOLocalRotate(Vector3.zero, returnDuration).SetEase(Ease.InOutQuad));
+                seq.Join(icon.DOScale(1.03f, tiltDuration + returnDuration).SetEase(Ease.InOutSine))
                    .Append(icon.DOScale(1f, 0.08f));
             }
         }
@@ -144,64 +130,44 @@ public class MainMenuController : MonoBehaviour
         if (settingsIcon)
         {
             DOTween.Sequence()
-                .Append(settingsIcon.DOLocalRotate(new Vector3(0, 0, -tiltAngle), tiltDuration)
-                                     .SetEase(Ease.OutQuad))
-                .Append(settingsIcon.DOLocalRotate(Vector3.zero, returnDuration)
-                                     .SetEase(Ease.InOutQuad));
+                .Append(settingsIcon.DOLocalRotate(new Vector3(0, 0, -tiltAngle), tiltDuration).SetEase(Ease.OutQuad))
+                .Append(settingsIcon.DOLocalRotate(Vector3.zero, returnDuration).SetEase(Ease.InOutQuad));
         }
         else if (settingsButton)
         {
             var t = settingsButton.transform;
             DOTween.Sequence()
-                .Append(t.DOLocalRotate(new Vector3(0, 0, -tiltAngle), tiltDuration)
-                               .SetEase(Ease.OutQuad))
-                .Append(t.DOLocalRotate(Vector3.zero, returnDuration)
-                               .SetEase(Ease.InOutQuad));
+                .Append(t.DOLocalRotate(new Vector3(0, 0, -tiltAngle), tiltDuration).SetEase(Ease.OutQuad))
+                .Append(t.DOLocalRotate(Vector3.zero, returnDuration).SetEase(Ease.InOutQuad));
         }
     }
+
+    // ===== Open/Close helpers com troca rápida segura =====
 
     private void OpenStorePanel()
     {
-        if (!storePanel) return;
-        
-        storePanel.SetActive(true);
-        if (storeRoot) storeRoot.localScale = Vector3.one * 0.85f;
+        if (_switching) return;
+        _switching = true;
 
-        if (!storeCanvasGroup && storeRoot)
-            storeCanvasGroup = storeRoot.GetComponent<CanvasGroup>();
+        // Fecha o outro painel (sem esperar animação)
+        if (dailyMissionsPanel && dailyMissionsPanel.gameObject.activeInHierarchy)
+            dailyMissionsPanel.Hide();
 
-        if (storeCanvasGroup)
-        {
-            storeCanvasGroup.alpha = 0f;
-            storeCanvasGroup.interactable = false;
-            storeCanvasGroup.blocksRaycasts = true;
-            DOTween.Kill(storeCanvasGroup);
-            DOTween.Sequence()
-                .Append(storeCanvasGroup.DOFade(1f, 0.18f))
-                .Join(storeRoot.DOScale(1f, 0.22f).SetEase(Ease.OutBack))
-                .OnComplete(() => storeCanvasGroup.interactable = true);
-        }
-        else if (storeRoot)
-        {
-            storeRoot.DOScale(1f, 0.22f).SetEase(Ease.OutBack);
-        }
+        if (shopPanel) shopPanel.Show();
+
+        DOVirtual.DelayedCall(0.05f, () => _switching = false);
     }
-    
-    public void CloseStorePanel()
-    {
-        if (!storePanel) return;
 
-        if (storeCanvasGroup && storeRoot)
-        {
-            storeCanvasGroup.interactable = false;
-            DOTween.Sequence()
-                .Append(storeCanvasGroup.DOFade(0f, 0.15f))
-                .Join(storeRoot.DOScale(0.9f, 0.15f).SetEase(Ease.InSine))
-                .OnComplete(() => storePanel.SetActive(false));
-        }
-        else
-        {
-            storePanel.SetActive(false);
-        }
+    private void OpenDailyPanel()
+    {
+        if (_switching) return;
+        _switching = true;
+
+        if (shopPanel && shopPanel.gameObject.activeInHierarchy)
+            shopPanel.Hide();
+
+        if (dailyMissionsPanel) dailyMissionsPanel.Show();
+
+        DOVirtual.DelayedCall(0.05f, () => _switching = false);
     }
 }

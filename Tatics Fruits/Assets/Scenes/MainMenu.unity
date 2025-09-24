@@ -3396,6 +3396,11 @@ MonoBehaviour:
   itemPrefab: {fileID: 956839107911045771, guid: 00ecc2fb7b39feb49977d6b976abf10d, type: 3}
   featuredParent: {fileID: 711025118}
   featuredPrefab: {fileID: 956839107911045771, guid: 00ecc2fb7b39feb49977d6b976abf10d, type: 3}
+  panelCanvasGroup: {fileID: 490595936}
+  window: {fileID: 1306211947}
+  fadeIn: 0.18
+  fadeOut: 0.15
+  scaleIn: 0.22
   showFeatured: 0
   sortByPriceAsc: 1
 --- !u!1 &492029100
@@ -3789,6 +3794,8 @@ MonoBehaviour:
   inputBlocker: {fileID: 0}
   slideDuration: 0.35
   overshoot: 0.8
+  blockClicksOutside: 0
+  closeOnDimClick: 0
   audioToggle: {fileID: 575612164}
   audioBackground: {fileID: 528097184}
   sfxToggle: {fileID: 522972580}
@@ -17834,12 +17841,8 @@ MonoBehaviour:
   settingsPanel: {fileID: 518797699}
   settingsIcon: {fileID: 594398919}
   rankingPanel: {fileID: 1873984826}
-  storePanel: {fileID: 490595933}
-  storeRoot: {fileID: 490595934}
-  storeCanvasGroup: {fileID: 490595936}
-  dailyMissionsPanel: {fileID: 795167724}
-  dailyMissionsRoot: {fileID: 795167725}
-  dailyMissionsCanvasGroup: {fileID: 795167727}
+  shopPanel: {fileID: 490595939}
+  dailyMissionsPanel: {fileID: 795167730}
   initialDelay: 1.5
   repeatInterval: 5
   tiltAngle: 12
