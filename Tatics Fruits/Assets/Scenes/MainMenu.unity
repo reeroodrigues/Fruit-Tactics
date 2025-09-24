@@ -7964,7 +7964,7 @@ GameObject:
   - component: {fileID: 895470178}
   - component: {fileID: 895470177}
   m_Layer: 5
-  m_Name: Store Text
+  m_Name: DailyMission Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7986,8 +7986,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -57.527, y: -83.018555}
-  m_SizeDelta: {x: 964.08, y: 165.938}
+  m_AnchoredPosition: {x: 34, y: -82.969}
+  m_SizeDelta: {x: 762.35, y: 165.938}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &895470177
 MonoBehaviour:
@@ -8023,7 +8023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Daily Missions
+  m_text: "Miss\xF5es Di\xE1rias"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
@@ -8050,12 +8050,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 120.2
+  m_fontSize: 70.95
   m_fontSizeBase: 165.9
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 139.71
+  m_fontSizeMax: 70.95
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

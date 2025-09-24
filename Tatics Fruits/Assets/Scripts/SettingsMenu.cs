@@ -9,9 +9,13 @@ public class SettingsMenu : MonoBehaviour
     [Header("Panel/Canvas")]
     [SerializeField] private RectTransform panel;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Image inputBlocker;
+    [SerializeField] private Image inputBlocker;               // Dim opcional (visual)
     [SerializeField] private float slideDuration = 0.35f;
     [SerializeField] private float overshoot = 0.8f;
+
+    [Header("Dim behavior (opcional)")]
+    [SerializeField] private bool blockClicksOutside = false;  // se TRUE, dim captura cliques fora
+    [SerializeField] private bool closeOnDimClick   = false;   // se TRUE, clicar no dim fecha
 
     [Header("Toggles")]
     [SerializeField] private Toggle audioToggle;
@@ -41,17 +45,20 @@ public class SettingsMenu : MonoBehaviour
 
     private Vector2 _shownPos;
     private Vector2 _hiddenPos;
-    private Tweener _slideTween;
-    
+    private Sequence _slideTween;
+    private bool _animating;
+
     private GameSettingsModel _settings;
 
     private void Awake()
     {
         _settings = SettingsRepository.Get();
-        
-        _shownPos = panel.anchoredPosition;
+
+        // Posições (usa a posição atual na hierarquia; nada de reordenar)
+        _shownPos  = panel.anchoredPosition;
         _hiddenPos = _shownPos + new Vector2(0f, Screen.height * 1.1f);
-        
+
+        // Estado inicial: escondido e sem capturar toques
         panel.anchoredPosition = _hiddenPos;
         if (canvasGroup)
         {
@@ -59,26 +66,69 @@ public class SettingsMenu : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
         }
-        if (inputBlocker) inputBlocker.enabled = false;
+        if (inputBlocker)
+        {
+            inputBlocker.enabled = true;               // visual pode ficar ligado
+            inputBlocker.raycastTarget = false;        // <- por padrão, NÃO bloqueia cliques
+            // close-on-dim opcional (precisa de Button no Image se quiser clicar)
+            var dimButton = inputBlocker.GetComponent<Button>();
+            if (closeOnDimClick && dimButton != null)
+            {
+                dimButton.onClick.RemoveAllListeners();
+                dimButton.onClick.AddListener(Hide);
+                inputBlocker.raycastTarget = true;     // só captura se for fechar no dim
+            }
+        }
+        panel.gameObject.SetActive(false);
         IsOpen = false;
-        
+        _animating = false;
+
+        // Botões extra (efeito tap)
         HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
         HookButtonWithFeedback(creditsButton, () => Application.OpenURL("https://example.com/credits"));
         HookButtonWithFeedback(termsButton,   () => Application.OpenURL("https://example.com/terms"));
-        
+
+        // Toggles
         audioToggle.isOn = _settings.musicOn;
         sfxToggle.isOn   = _settings.sfxOn;
         RefreshToggleVisuals();
-        
+
+        // Idioma inicial
         Localizer.Instance.SetLanguage(_settings.language, save:false);
         RefreshLanguageVisual();
-        
+
+        // Listeners
         audioToggle.onValueChanged.AddListener(OnAudioToggleChanged);
         sfxToggle.onValueChanged.AddListener(OnSfxToggleChanged);
 
         brButton.onClick.AddListener(() => SelectLanguage("pt-BR"));
         usButton.onClick.AddListener(() => SelectLanguage("en-US"));
         esButton.onClick.AddListener(() => SelectLanguage("es-ES"));
+    }
+
+    private void OnDisable()
+    {
+        // Mata animação e zera estados para não precisar "abrir 2x"
+        _slideTween?.Kill();
+        _slideTween = null;
+        _animating = false;
+
+        if (canvasGroup)
+        {
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+
+        // Dim: mantém visual, mas sem bloquear (a menos que closeOnDimClick esteja ativo)
+        if (inputBlocker)
+        {
+            if (!closeOnDimClick) inputBlocker.raycastTarget = false;
+        }
+
+        panel.gameObject.SetActive(false);
+        IsOpen = false;
+        SetMainButtonsInteractable(true);
     }
 
     private void HookButtonWithFeedback(Button btn, string debugMsg)
@@ -95,65 +145,105 @@ public class SettingsMenu : MonoBehaviour
             Debug.Log(debugMsg);
         });
     }
-    
+
+    private void HookButtonWithFeedback(Button btn, System.Action onClick)
+    {
+        if (!btn) return;
+        btn.onClick.AddListener(() =>
+        {
+            var t = btn.transform;
+            DOTween.Sequence()
+                .Append(t.DOScale(0.95f, 0.06f))
+                .Append(t.DOScale(1f,   0.10f))
+                .OnComplete(() => onClick?.Invoke());
+        });
+    }
+
     public void Toggle()
     {
+        if (_animating) return;
         if (IsOpen) Hide();
         else Show();
     }
 
     public void Show()
     {
+        if (_animating) return;
+        _animating = true;
         IsOpen = true;
 
+        // NÃO reordena na hierarquia — mantém como está
+        // Dim: por padrão não bloqueia cliques fora, apenas visual
         if (inputBlocker)
         {
             inputBlocker.enabled = true;
-            inputBlocker.raycastTarget = true;
+            inputBlocker.raycastTarget = closeOnDimClick || blockClicksOutside;
         }
+
+        // Durante a entrada, o painel não captura cliques
         if (canvasGroup)
         {
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
         }
         SetMainButtonsInteractable(false);
 
         _slideTween?.Kill();
         panel.gameObject.SetActive(true);
         panel.anchoredPosition = _hiddenPos;
-        if (canvasGroup) canvasGroup.alpha = 0f;
 
-        _slideTween = panel.DOAnchorPos(_shownPos, slideDuration)
-            .SetEase(Ease.OutBack, overshoot);
-
-        if (canvasGroup) canvasGroup.DOFade(1f, slideDuration * 0.9f);
+        // Anima entrar
+        _slideTween = DOTween.Sequence()
+            .Append(panel.DOAnchorPos(_shownPos, slideDuration).SetEase(Ease.OutBack, overshoot))
+            .Join(canvasGroup ? canvasGroup.DOFade(1f, slideDuration * 0.9f) : null)
+            .OnComplete(() =>
+            {
+                if (canvasGroup)
+                {
+                    canvasGroup.interactable = true;
+                    canvasGroup.blocksRaycasts = true; // captura somente dentro do painel
+                }
+                _slideTween = null;
+                _animating = false;
+            });
     }
 
     public void Hide()
     {
+        if (_animating || !IsOpen) return;
+        _animating = true;
         IsOpen = false;
 
         _slideTween?.Kill();
-        _slideTween = panel.DOAnchorPos(_hiddenPos, slideDuration * 0.85f)
-            .SetEase(Ease.InBack);
 
-        if (canvasGroup) canvasGroup.DOFade(0f, slideDuration * 0.8f);
-
-        _slideTween.OnComplete(() =>
+        // Imediato: painel deixa de capturar cliques
+        if (canvasGroup)
         {
-            panel.gameObject.SetActive(false);
-            if (canvasGroup)
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+        }
+        // Dim deixa de bloquear (se estava)
+        if (inputBlocker)
+        {
+            inputBlocker.raycastTarget = false;
+        }
+
+        _slideTween = DOTween.Sequence()
+            .Append(panel.DOAnchorPos(_hiddenPos, slideDuration * 0.85f).SetEase(Ease.InBack))
+            .Join(canvasGroup ? canvasGroup.DOFade(0f, slideDuration * 0.8f) : null)
+            .OnComplete(() =>
             {
-                canvasGroup.interactable = false;
-                canvasGroup.blocksRaycasts = false;
-            }
-            if (inputBlocker)
-            {
-                inputBlocker.enabled = false;
-                inputBlocker.raycastTarget = false;
-            }
-            SetMainButtonsInteractable(true);
-        });
+                panel.gameObject.SetActive(false);
+                // Mantém dim visual ligado/desligado conforme estava, mas sem bloquear
+                if (inputBlocker)
+                {
+                    if (!closeOnDimClick) inputBlocker.raycastTarget = false;
+                }
+                SetMainButtonsInteractable(true);
+                _slideTween = null;
+                _animating = false;
+            });
     }
 
     private void SetMainButtonsInteractable(bool value)
@@ -162,7 +252,7 @@ public class SettingsMenu : MonoBehaviour
         foreach (var b in buttonsToDisable)
             if (b) b.interactable = value;
     }
-    
+
     private void OnAudioToggleChanged(bool isOn)
     {
         _settings.musicOn = isOn;
@@ -184,7 +274,7 @@ public class SettingsMenu : MonoBehaviour
         if (audioBackground) audioBackground.color = audioToggle.isOn ? onColor : offColor;
         if (sfxBackground)   sfxBackground.color   = sfxToggle.isOn   ? onColor : offColor;
     }
-    
+
     private void SelectLanguage(string lang)
     {
         _settings.language = lang;
@@ -204,7 +294,6 @@ public class SettingsMenu : MonoBehaviour
         SetFlagAlpha(esButton, lang == "es-ES");
     }
 
-
     private void SetFlagAlpha(Button btn, bool isSelected)
     {
         if (!btn) return;
@@ -213,18 +302,5 @@ public class SettingsMenu : MonoBehaviour
         c.a = isSelected ? 1f : unselectedAlpha;
         img.color = c;
         btn.interactable = !isSelected;
-    }
-    
-    private void HookButtonWithFeedback(UnityEngine.UI.Button btn, System.Action onClick)
-    {
-        if (!btn) return;
-        btn.onClick.AddListener(() =>
-        {
-            var t = btn.transform;
-            DG.Tweening.DOTween.Sequence()
-                .Append(t.DOScale(0.95f, 0.06f))
-                .Append(t.DOScale(1f,   0.10f))
-                .OnComplete(() => onClick?.Invoke());
-        });
     }
 }

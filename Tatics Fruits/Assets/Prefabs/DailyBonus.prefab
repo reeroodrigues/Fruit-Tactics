@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: c
+  key: collect_button
   fallback: 
 --- !u!1 &8043978105625815390
 GameObject:
