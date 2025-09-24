@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Time_freeze
   m_EditorClassIdentifier: 
   effect: 1
-  displayName: Pausa o timer por 3 segundos
+  displayName: 
   icon: {fileID: -210140209625983428, guid: 7aed19365798dfe4b86083e014b97e87, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: time_freeze_name
+  descriptionKey: time_freeze_desc
+  descriptionFallback: 

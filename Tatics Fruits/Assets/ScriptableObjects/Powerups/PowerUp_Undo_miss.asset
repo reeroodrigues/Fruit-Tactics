@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Undo_miss
   m_EditorClassIdentifier: 
   effect: 3
-  displayName: "Ignora a pr\xF3xima penalidade por erro"
+  displayName: 
   icon: {fileID: 2004085629894259582, guid: 8f8ddb4510c97aa4cbb7b7e7728d2199, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: undo_miss_name
+  descriptionKey: undo_miss_desc
+  descriptionFallback: 

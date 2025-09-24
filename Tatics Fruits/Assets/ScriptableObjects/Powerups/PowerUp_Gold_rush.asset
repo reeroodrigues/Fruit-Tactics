@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Gold_rush
   m_EditorClassIdentifier: 
   effect: 12
-  displayName: "Cada par certo, te d\xE1 +10 de Gold"
+  displayName: 
   icon: {fileID: -1304711346292872925, guid: 62432effc0756364eb09d4530adb429e, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 2
   bonusGoldPerPair: 1
   uses: 1
+  nameKey: gold_rush_name
+  descriptionKey: gold_rush_desc
+  descriptionFallback: 

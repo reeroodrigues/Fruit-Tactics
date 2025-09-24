@@ -22,5 +22,49 @@
   "collect_button": "Coletar",
   "claimed_collect_button" : "Coletado",
   "purchase": "Comprado",
-  "special_daily_bonus": "Bônus especial a cada 7 dias!"
+  "special_daily_bonus": "Bônus especial a cada 7 dias!",
+  
+  "time_plus_name": "Relógio+",
+  "time_plus_desc": "Adiciona +{0} segundos ao cronômetro.",
+  
+  "combo_boost_name": "Combo x{0}",
+  "combo_boost_desc": "Multiplicador x{0} por {1}.",
+  
+  "time_freeze_name": "Congelar Tempo",
+  "time_freeze_desc": "Pausa o timer por {0} segundos.",
+  
+  "chain_extend_name": "Combo",
+  "chain_extend_desc": "Enquanto acertar pares seguidamente, +{0} segundo por par",
+  
+  "gold_rush_name": "Corrida pelo ouro",
+  "gold_rush_desc": "Cada par certo, te dá +{0} de Gold",
+  
+  "last_chance_name": "Última chance",
+  "last_chance_desc": "Ao chegar em 0 segundos, ganha +{0} segundos",
+  
+  "row_clear_name": "Destrói carta",
+  "row_clear_desc": "Destrói uma carta da sua mão",
+  
+  "shuffle_full_name": "Troca todas as cartas",
+  "shuffle_full_desc": "Troca todas as cartas da sua mão, sem remover tempo",
+  
+  "shuffle_soft_name": "Troca uma carta",
+  "shuffle_soft_desc": "Troca uma carta da sua mão, sem remover o tempo",
+  
+  "streak_guard_name": "Protegido",
+  "streak_guard_desc": "Caso jogue uma carta errada, no meio da sequencia, a sequencia continua",
+  
+  "time_match_name": "Mais tempo",
+  "time_match_desc": "Por {0} segundos, cada par certo te dá +{0} segundos extras",
+  
+  "undo_miss_name": "Desfazer",
+  "undo_miss_desc": "Ignora uma carta jogada de forma errada",
+  
+  "wildcard_name": "Coringa",
+  "wildcard_desc": "A próxima carta aberta combina com qualquer fruta.",
+  
+  
+  "mission.win_level_1": "Vença o nível {0}",
+  "mission.win_level_2": "Vença o nível {0}",
+  "mission.win_level":   "Vença o nível {0}"
 }

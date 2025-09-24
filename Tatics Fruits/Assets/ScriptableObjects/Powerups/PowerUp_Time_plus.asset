@@ -13,14 +13,17 @@ MonoBehaviour:
   m_Name: PowerUp_Time_plus
   m_EditorClassIdentifier: 
   effect: 0
-  displayName: "Adiciona mais 10 segundos ao cron\xF4metro"
+  displayName: 
   icon: {fileID: 2867508445206123394, guid: 365e45d58a3672045a17e6718588972f, type: 3}
   rarity: Common
   priceGold: 100
   duration: 3
-  amount: 10
+  amount: 60
   multiplier: 1
   shufflePercent: 0.25
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: time_plus_name
+  descriptionKey: time_plus_desc
+  descriptionFallback: 

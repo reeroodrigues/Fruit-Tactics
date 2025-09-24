@@ -129,7 +129,7 @@ public class ShopPanelController : MonoBehaviour
         if (featured != null)
         {
             var fv = Instantiate(featuredPrefab, featuredParent);
-            fv.Setup(featured.Id, featured.displayName, featured.icon, featured.priceGold, profile, isNew: false, rarity: featured.rarity);
+            fv.SetupFromSO(featured, profile, isNew: false);
             _spawned.Add(fv);
             list.RemoveAt(0);
         }
@@ -137,7 +137,7 @@ public class ShopPanelController : MonoBehaviour
         foreach (var so in list)
         {
             var v = Instantiate(itemPrefab, gridParent);
-            v.Setup(so.Id, so.displayName, so.icon, so.priceGold, profile, isNew: false, rarity: so.rarity);
+            v.SetupFromSO(so, profile, isNew: false);
             _spawned.Add(v);
         }
     }

@@ -898,6 +898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 9182830376633436118}
   title: {fileID: 1633695583006669831}
+  descriptionText: {fileID: 1633695583006669831}
   priceText: {fileID: 0}
   rarityText: {fileID: 5495343885908798843}
   buyButton: {fileID: 8345924725337453210}

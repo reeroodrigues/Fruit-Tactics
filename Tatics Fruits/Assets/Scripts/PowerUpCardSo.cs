@@ -5,7 +5,7 @@ public class PowerUpCardSO : ScriptableObject
 {
     [Header("Identidade")]
     public PowerUpEffect effect;            // define o ID lógico
-    public string displayName;              // ex.: "Relógio+"
+    public string displayName;              // fallback do título
     public Sprite icon;
     public string rarity = "Common";        // "Common", "Uncommon", "Rare", "Epic"
     public int priceGold = 100;
@@ -35,10 +35,14 @@ public class PowerUpCardSO : ScriptableObject
     [Tooltip("Usos para efeitos 'de um uso' (wildcard, undo_miss, streak_guard).")]
     [Min(0)] public int uses = 1;
 
+    [Header("Localização (opcional)")]
+    public string nameKey;                  // ex.: "pu.time_plus.name"
+    public string descriptionKey;           // ex.: "pu.time_plus.desc"
+    [TextArea] public string descriptionFallback; // ex.: "Adiciona +{0}s ao cronômetro."
+
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        // Sugestões rápidas de defaults por efeito
         switch (effect)
         {
             case PowerUpEffect.time_plus:
@@ -63,12 +67,6 @@ public class PowerUpCardSO : ScriptableObject
             case PowerUpEffect.shuffle_soft:
                 if (shufflePercent <= 0f) shufflePercent = 0.25f;
                 break;
-            case PowerUpEffect.shuffle_full:
-                // sem params
-                break;
-            case PowerUpEffect.row_clear:
-                // sem params (remove 1 par, embaralha linha)
-                break;
             case PowerUpEffect.time_on_match:
                 if (duration <= 0) duration = 15f;
                 if (extraSecondsPerMatch <= 0) extraSecondsPerMatch = 2;
@@ -77,7 +75,7 @@ public class PowerUpCardSO : ScriptableObject
                 if (extraSecondsPerMatch <= 0) extraSecondsPerMatch = 1;
                 break;
             case PowerUpEffect.last_chance:
-                if (amount <= 0) amount = 5; // +5s quando 0s
+                if (amount <= 0) amount = 5;
                 break;
             case PowerUpEffect.gold_rush:
                 if (bonusGoldPerPair <= 0) bonusGoldPerPair = 1;
@@ -85,4 +83,44 @@ public class PowerUpCardSO : ScriptableObject
         }
     }
 #endif
+
+    // ---------- Helpers de Localização ----------
+
+    public string GetLocalizedName()
+    {
+        if (Localizer.Instance != null && !string.IsNullOrEmpty(nameKey))
+            return Localizer.Instance.Tr(nameKey, displayName);
+        return displayName;
+    }
+
+    public string GetLocalizedDescription()
+    {
+        object[] args = GetFormatArgs();
+        if (Localizer.Instance != null && !string.IsNullOrEmpty(descriptionKey))
+            return Localizer.Instance.TrFormat(descriptionKey, descriptionFallback, args);
+        // fallback sem Localizer
+        string fmt = string.IsNullOrEmpty(descriptionFallback) ? displayName : descriptionFallback;
+        try { return string.Format(fmt, args); } catch { return fmt; }
+    }
+
+    private object[] GetFormatArgs()
+    {
+        switch (effect)
+        {
+            case PowerUpEffect.time_plus:     return new object[] { amount };
+            case PowerUpEffect.time_freeze:   return new object[] { Mathf.RoundToInt(duration) };
+            case PowerUpEffect.wildcard:      return new object[] { uses };
+            case PowerUpEffect.undo_miss:     return new object[] { uses };
+            case PowerUpEffect.combo_boost:   return new object[] { multiplier, Mathf.RoundToInt(duration) };
+            case PowerUpEffect.streak_guard:  return new object[] { uses };
+            case PowerUpEffect.shuffle_soft:  return new object[] { Mathf.RoundToInt(shufflePercent * 100f) };
+            case PowerUpEffect.shuffle_full:  return System.Array.Empty<object>();
+            case PowerUpEffect.row_clear:     return System.Array.Empty<object>();
+            case PowerUpEffect.time_on_match: return new object[] { extraSecondsPerMatch, Mathf.RoundToInt(duration) };
+            case PowerUpEffect.chain_extend:  return new object[] { extraSecondsPerMatch };
+            case PowerUpEffect.last_chance:   return new object[] { amount };
+            case PowerUpEffect.gold_rush:     return new object[] { bonusGoldPerPair };
+        }
+        return System.Array.Empty<object>();
+    }
 }

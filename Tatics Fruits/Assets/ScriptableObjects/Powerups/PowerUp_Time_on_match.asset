@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Time_on_match
   m_EditorClassIdentifier: 
   effect: 9
-  displayName: "Por 15 segundos, cada par certo te d\xE1 +2 segundos extras"
+  displayName: 
   icon: {fileID: -7096069830600803683, guid: df4762a26cb1e884380ac44189454abe, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 2
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: time_match_name
+  descriptionKey: time_match_desc
+  descriptionFallback: 

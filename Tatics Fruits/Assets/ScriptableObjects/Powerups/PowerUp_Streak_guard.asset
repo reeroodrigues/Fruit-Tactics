@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Streak_guard
   m_EditorClassIdentifier: 
   effect: 5
-  displayName: "O pr\xF3ximo erro n\xE3o quebra a sequ\xEAncia"
+  displayName: 
   icon: {fileID: 859760811568117912, guid: 406ee38a867b17040a6f4129e5f84804, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: streak_guard_name
+  descriptionKey: streak_guard_desc
+  descriptionFallback: 

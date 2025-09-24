@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Shuffle_full
   m_EditorClassIdentifier: 
   effect: 7
-  displayName: "Altera todas as cartas da sua m\xE3o, sem retirar tempo"
+  displayName: 
   icon: {fileID: -2445066206911571027, guid: 25178fa1bac0c2a43818f504d9ed233c, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: shuffle_full_name
+  descriptionKey: shuffle_full_desc
+  descriptionFallback: 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Combo_boost
   m_EditorClassIdentifier: 
   effect: 4
-  displayName: 'Combo x2: Multiplicador de acertos por 10 segundos'
+  displayName: 
   icon: {fileID: 5698231773030314545, guid: ba00d1bd3ca397444ab159d4df5501ef, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: combo_boost_name
+  descriptionKey: combo_boost_desc
+  descriptionFallback: 

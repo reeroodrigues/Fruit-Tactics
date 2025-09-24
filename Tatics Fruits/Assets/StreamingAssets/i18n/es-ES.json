@@ -22,5 +22,16 @@
   "collect_button": "Coletar",
   "claimed_collect_button" : "Coletado",
   "purchase": "Comprado",
-  "special_daily_bonus": "¡Bono especial cada 7 días!"
+  "special_daily_bonus": "¡Bono especial cada 7 días!",
+  "time_plus_name": "Relógio+",
+  "time_plus_desc": "Adiciona +{0}s ao cronômetro.",
+  "combo_boost_name": "Combo x{0}",
+  "combo_boost_desc": "Multiplicador x{0} por {1}s.",
+  "time_freeze_name": "Congelar Tempo",
+  "time_freeze_desc": "Pausa o timer por {0}s (você continua jogando).",
+  "wildcard_name": "Coringa",
+  "wildcard_desc": "A próxima carta aberta combina com qualquer fruta.",
+  "mission.win_level_1": "Vença o nível {0}",
+  "mission.win_level_2": "Vença o nível {0}",
+  "mission.win_level":   "Vença o nível {0}"
 }

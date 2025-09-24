@@ -8,18 +8,20 @@ public class ShopItemView : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private Image icon;
+
+    // Título do card (nome do powerup)
     [SerializeField] private TextMeshProUGUI title;
 
-    // Texto de preço FORA do botão (opcional). Se você mostra o preço DENTRO do botão,
-    // deixe nulo ou aponte para um TMP diferente do label do botão.
+    // Descrição do powerup (localizada)
+    [SerializeField] private TextMeshProUGUI descriptionText;
+
+    // Preço fora do botão (opcional)
     [SerializeField] private TextMeshProUGUI priceText;
 
     [SerializeField] private TextMeshProUGUI rarityText;
 
     [SerializeField] private Button buyButton;
     [SerializeField] private Image  buyButtonGraphic;
-
-    // TMP que fica DENTRO do botão "Comprar"
     [SerializeField] private TextMeshProUGUI buyLabel;
 
     [SerializeField] private GameObject ownedOverlay;
@@ -27,14 +29,8 @@ public class ShopItemView : MonoBehaviour
 
     [Header("Behavior")]
     [SerializeField] private bool disableButtonWhenCantAfford = false;
-
-    // Mostra o preço dentro do botão
     [SerializeField] private bool showPriceInsideButton = true;
-
-    // NOVO: quando verdadeiro, o botão mostra SOMENTE o valor (ex.: "100")
     [SerializeField] private bool showOnlyPriceInButton = true;
-
-    // Se quiser complementar com a palavra "Gold"
     [SerializeField] private bool showGoldWordInButton = false;
 
     [Header("Localization Keys")]
@@ -42,7 +38,6 @@ public class ShopItemView : MonoBehaviour
     [SerializeField] private string ownedTextKey = "shop.owned";
     [SerializeField] private string goldTextKey  = "currency.gold";
 
-    // Injete sua função de tradução em algum bootstrap: ShopItemView.Translate = Localizer.Instance.Tr;
     public static Func<string, string> Translate = key => key;
 
     [Header("FX")]
@@ -51,13 +46,13 @@ public class ShopItemView : MonoBehaviour
     [SerializeField] private int   cantAffordShakeVibrato  = 18;
     [SerializeField] private Color cantAffordFlashColor    = new Color(1f, 0.25f, 0.25f, 1f);
     [SerializeField] private float cantAffordFlashDuration = 0.20f;
-
     [SerializeField] private float purchasePunchDuration   = 0.15f;
     [SerializeField] private float purchasePunchScale      = 0.12f;
 
     private string _cardId;
     private int _price;
     private PlayerProfileController _profile;
+    private PowerUpCardSO _so; // referência para re-localizar quando trocar idioma
 
     private Color _btnOriginalColor = Color.white;
     private Tween _activeTween;
@@ -66,7 +61,6 @@ public class ShopItemView : MonoBehaviour
 
     private void Awake()
     {
-        // Se não foi atribuído no Inspector, tenta achar no botão
         if (!buyLabel && buyButton)
             buyLabel = buyButton.GetComponentInChildren<TextMeshProUGUI>(true);
 
@@ -76,17 +70,43 @@ public class ShopItemView : MonoBehaviour
         if (buyButtonGraphic)
             _btnOriginalColor = buyButtonGraphic.color;
 
-        // Garante que o targetGraphic do Button é a imagem de fundo (não o TMP)
         if (buyButton && buyButtonGraphic && buyButton.targetGraphic != buyButtonGraphic)
             buyButton.targetGraphic = buyButtonGraphic;
     }
 
+    // ---------- NOVO: Setup direto do ScriptableObject ----------
+    public void SetupFromSO(PowerUpCardSO so, PlayerProfileController profile, bool isNew = false)
+    {
+        _so = so;
+        Setup(so.Id, so.GetLocalizedName(), so.icon, so.priceGold, profile, isNew, so.rarity);
+        if (descriptionText) descriptionText.text = so.GetLocalizedDescription();
+
+        // re-localiza quando trocar língua
+        if (Localizer.Instance != null)
+        {
+            Localizer.Instance.OnLanguageChanged -= RelocalizeFromSO;
+            Localizer.Instance.OnLanguageChanged += RelocalizeFromSO;
+        }
+    }
+
+    private void RelocalizeFromSO()
+    {
+        if (_so == null) return;
+        if (title) title.text = _so.GetLocalizedName();
+        if (descriptionText) descriptionText.text = _so.GetLocalizedDescription();
+
+        // também re-renderiza o label do botão (palavra Gold pode mudar)
+        RefreshState();
+    }
+
+    // ---------- Setup antigo (continua funcionando) ----------
     public void Setup(string cardId, string displayName, Sprite sprite, int priceGold,
                       PlayerProfileController profile, bool isNew = false, string rarity = null)
     {
         _cardId  = cardId;
         _price   = priceGold;
         _profile = profile;
+        _so      = null; // não veio SO – sem re-localização de descrição automática
 
         if (icon)  icon.sprite = sprite;
         if (title) title.text  = displayName;
@@ -101,6 +121,12 @@ public class ShopItemView : MonoBehaviour
             buyButton.onClick.AddListener(OnBuyClick);
         }
 
+        if (Localizer.Instance != null)
+        {
+            Localizer.Instance.OnLanguageChanged -= RelocalizeFromSO;
+            Localizer.Instance.OnLanguageChanged += RelocalizeFromSO;
+        }
+
         _profile.OnGoldChanged -= HandleGoldChanged;
         _profile.OnGoldChanged += HandleGoldChanged;
 
@@ -111,6 +137,9 @@ public class ShopItemView : MonoBehaviour
 
     private void OnDisable()
     {
+        if (Localizer.Instance != null)
+            Localizer.Instance.OnLanguageChanged -= RelocalizeFromSO;
+
         if (buyButton)        buyButton.transform.DOKill();
         if (buyButtonGraphic) buyButtonGraphic.DOKill();
         _activeTween?.Kill();
@@ -133,11 +162,9 @@ public class ShopItemView : MonoBehaviour
         if (ownedOverlay) ownedOverlay.SetActive(owned);
 
         bool hasMoney = _profile.CanAfford(_price);
-
         bool interactable = !owned && (!disableButtonWhenCantAfford || hasMoney);
         if (buyButton) buyButton.interactable = interactable;
 
-        // Label dentro do botão
         if (buyLabel)
         {
             buyLabel.gameObject.SetActive(true);
@@ -154,30 +181,20 @@ public class ShopItemView : MonoBehaviour
             }
             else if (showPriceInsideButton)
             {
-                if (showOnlyPriceInButton)
-                {
-                    // SOMENTE o valor (com ou sem "Gold")
-                    buyLabel.text = showGoldWordInButton ? $"{_price} {goldWord}" : $"{_price}";
-                }
-                else
-                {
-                    // Texto + preço (modo antigo)
-                    buyLabel.text = $"{buyWord}\n{_price} {goldWord}";
-                }
+                buyLabel.text = showOnlyPriceInButton
+                    ? (showGoldWordInButton ? $"{_price} {goldWord}" : $"{_price}")
+                    : $"{buyWord}\n{_price} {goldWord}";
             }
             else
             {
-                // Sem preço no botão, apenas o texto "Comprar"
                 buyLabel.text = buyWord;
             }
         }
 
-        // Se houver um priceText separado, só esconda se NÃO for o mesmo label do botão
         if (priceText && priceText != buyLabel)
             priceText.gameObject.SetActive(!showPriceInsideButton);
 
         if (title) title.alpha = owned ? 0.6f : 1f;
-
         if (buyButtonGraphic) buyButtonGraphic.color = _btnOriginalColor;
         if (buyButton)        buyButton.transform.localScale = Vector3.one;
     }

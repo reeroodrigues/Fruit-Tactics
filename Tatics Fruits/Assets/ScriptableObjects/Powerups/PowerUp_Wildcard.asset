@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Wildcard
   m_EditorClassIdentifier: 
   effect: 2
-  displayName: "A pr\xF3xima carta aberta combina com qualquer fruta"
+  displayName: 
   icon: {fileID: -3407322345673727196, guid: a754ee7a4c7c63a4684d73c1af363506, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 0
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: wildcard_name
+  descriptionKey: wildcard_desc
+  descriptionFallback: 

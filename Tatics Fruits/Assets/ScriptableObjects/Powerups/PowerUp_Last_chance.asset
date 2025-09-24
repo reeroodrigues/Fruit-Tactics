@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Last_chance
   m_EditorClassIdentifier: 
   effect: 11
-  displayName: Ao chegar em 0 segundos, ganha +5 segundos
+  displayName: 
   icon: {fileID: -3381202833618747000, guid: b113f3bb6744a5146a04f47685850eb0, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 2
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: last_chance_name
+  descriptionKey: last_chance_desc
+  descriptionFallback: 

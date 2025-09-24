@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PowerUp_Chain_extend
   m_EditorClassIdentifier: 
   effect: 10
-  displayName: Enquanto acertar pares seguidamente, +1 segundo por par
+  displayName: 
   icon: {fileID: 8002816312907435977, guid: 050badd081e9e9c499ffc928b6794b90, type: 3}
   rarity: Common
   priceGold: 100
@@ -24,3 +24,6 @@ MonoBehaviour:
   extraSecondsPerMatch: 2
   bonusGoldPerPair: 0
   uses: 1
+  nameKey: chain_extend_name
+  descriptionKey: chain_extend_desc
+  descriptionFallback: 
