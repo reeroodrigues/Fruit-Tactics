@@ -10,6 +10,7 @@ public class DailyLoginDayItemView : MonoBehaviour
     [SerializeField] private Button claimButton;
     [SerializeField] private CanvasGroup dimGroup;    // alpha = 0.4 quando claimed
     [SerializeField] private GameObject glow;         // highlight quando claimable
+    [SerializeField] private RectTransform coinSpawnPoint;
 
     private DailyMissionsController _ctrl;
     private int _index;
@@ -84,7 +85,7 @@ public class DailyLoginDayItemView : MonoBehaviour
         if (glow)     glow.SetActive(info.Claimable);
         if (claimButton) claimButton.interactable = info.Claimable && !_claiming;
     }
-
+    
     private void OnClaimClicked()
     {
         if (_claiming) return;
@@ -95,6 +96,9 @@ public class DailyLoginDayItemView : MonoBehaviour
 
         if (ok)
         {
+            var spawn = coinSpawnPoint ? coinSpawnPoint : (RectTransform)transform;
+            CoinCollectFx.Instance?.PlayFromUI(spawn, _info.Reward);
+
             _info.Claimed = true;
             _info.Claimable = false;
             Refresh(_info);

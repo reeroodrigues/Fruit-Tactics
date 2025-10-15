@@ -1452,6 +1452,7 @@ MonoBehaviour:
   progressBar: {fileID: 5299254999913001270}
   progressText: {fileID: 7343585350374112736}
   rewardText: {fileID: 7797233785863293465}
+  coinSpawnPoint: {fileID: 2121705012897655261}
   claimButton: {fileID: 4032892315387103351}
   claimStamp: {fileID: 3933228117153763429}
   hideProgressWhenCompleted: 1

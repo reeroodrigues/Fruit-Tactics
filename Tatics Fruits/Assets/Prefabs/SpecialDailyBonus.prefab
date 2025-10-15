@@ -211,6 +211,7 @@ MonoBehaviour:
   claimButton: {fileID: 5746120718049206941}
   dimGroup: {fileID: 0}
   glow: {fileID: 466979619267311739}
+  coinSpawnPoint: {fileID: 426184835300636801}
 --- !u!1 &1443312475364956686
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class DailyMissionItemView : MonoBehaviour
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
     [SerializeField] private TextMeshProUGUI rewardText;
+    [SerializeField] private RectTransform coinSpawnPoint;
 
     [Header("Claim UI")]
     [SerializeField] private Button claimButton;
@@ -96,17 +97,6 @@ public class DailyMissionItemView : MonoBehaviour
         
         if (claimStamp) claimStamp.SetActive(_state.claimed);
     }
-
-    private void OnClickClaim()
-    {
-        if (_ctrl == null) return;
-
-        if (_ctrl.TryClaimMission(_state.missionId))
-        {
-            _state.claimed = true;
-            Refresh();
-        }
-    }
     
 
     private void SetDescriptionLocalized()
@@ -155,5 +145,20 @@ public class DailyMissionItemView : MonoBehaviour
             ? Localizer.Instance.Tr("prize_text", "Gold")
             : "Gold";
         rewardText.text = $"+{_state.rewardGold} {goldWord}";
+    }
+    
+    private void OnClickClaim()
+    {
+        if (_ctrl == null) return;
+
+        if (_ctrl.TryClaimMission(_state.missionId))
+        {
+            // toca o FX visual (já ganhamos o gold no controller)
+            var spawn = coinSpawnPoint ? coinSpawnPoint : (RectTransform)transform;
+            CoinCollectFx.Instance?.PlayFromUI(spawn, _state.rewardGold);
+
+            _state.claimed = true;
+            Refresh();
+        }
     }
 }

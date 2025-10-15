@@ -34,10 +34,10 @@ MonoBehaviour:
   dpiManager:
     overrides: []
   optimizedScreens:
-  - name: Landscape
+  - name: Accessibility Mode
     checkOrientation:
       expectedOrientation: 1
-      isActive: 1
+      isActive: 0
     checkScreenSize:
       measureType: 1
       unitType: 0
@@ -53,8 +53,8 @@ MonoBehaviour:
       expectedDeviceInfo: 0
       isActive: 0
     checkScreenTag:
-      screenTag: 
-      isActive: 0
+      screenTag: Accessibility_Mode
+      isActive: 1
     optimizedScreenInfo:
       resolution: {x: 1920, y: 1080}
       dpi: 96
