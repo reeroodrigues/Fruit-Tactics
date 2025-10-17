@@ -7,7 +7,7 @@ public class MainMenuController : MonoBehaviour
 {
     [Header("Buttons")]
     [SerializeField] private Button playButton;
-    [SerializeField] private Button rankingButton;
+    //[SerializeField] private Button rankingButton;
     [SerializeField] private Button storeButton;
     [SerializeField] private Button dailyMissionsButton;
     [SerializeField] private Button settingsButton;
@@ -54,11 +54,11 @@ public class MainMenuController : MonoBehaviour
             .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
         
         playButton.onClick.AddListener(() => SceneManager.LoadScene("Gameplay Scene"));
-        rankingButton.onClick.AddListener(() =>
-        {
-            if (!rankingPanel) return;
-            rankingPanel.SetActive(true);
-        });
+        // rankingButton.onClick.AddListener(() =>
+        // {
+        //     if (!rankingPanel) return;
+        //     rankingPanel.SetActive(true);
+        // });
 
         storeButton.onClick.AddListener(OpenStorePanel);
         dailyMissionsButton.onClick.AddListener(OpenDailyPanel);
