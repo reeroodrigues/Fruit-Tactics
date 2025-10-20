@@ -8,17 +8,16 @@ public class DailyLoginDayItemView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayLabel;
     [SerializeField] private TextMeshProUGUI rewardText;
     [SerializeField] private Button claimButton;
-    [SerializeField] private CanvasGroup dimGroup;    // alpha = 0.4 quando claimed
-    [SerializeField] private GameObject glow;         // highlight quando claimable
+    [SerializeField] private CanvasGroup dimGroup;
+    [SerializeField] private GameObject glow;
     [SerializeField] private RectTransform coinSpawnPoint;
 
     private DailyMissionsController _ctrl;
     private int _index;
-    private bool _claiming; // anti double-click
+    private bool _claiming;
 
-    private DailyMissionsController.DailyLoginDayInfo _info; // último snapshot
-
-    // <- bloqueia o LocalizedText desse label (ele não sabe lidar com {0})
+    private DailyMissionsController.DailyLoginDayInfo _info;
+    
     private LocalizedText _dayLocalized;
 
     private void EnsureDayLabelOwnership()
@@ -26,7 +25,7 @@ public class DailyLoginDayItemView : MonoBehaviour
         if (!dayLabel) return;
         if (_dayLocalized == null)
             _dayLocalized = dayLabel.GetComponent<LocalizedText>();
-        if (_dayLocalized) _dayLocalized.enabled = false; // impede que escreva "Dia {0}"
+        if (_dayLocalized) _dayLocalized.enabled = false;
     }
 
     private void SetDayLabel()
@@ -49,7 +48,7 @@ public class DailyLoginDayItemView : MonoBehaviour
         SetDayLabel();
 
         if (rewardText)
-            rewardText.text = $"+{info.Reward} {Localizer.Instance.Tr("prize_text", "Gold")}";
+            rewardText.text = $"+{info.Reward}";
 
         ApplyState(info);
 
@@ -75,7 +74,7 @@ public class DailyLoginDayItemView : MonoBehaviour
     {
         _info = info;
         if (rewardText)
-            rewardText.text = $"+{info.Reward} {Localizer.Instance.Tr("prize_text","Gold")}";
+            rewardText.text = $"+{info.Reward}";
         ApplyState(info);
     }
 

@@ -140,11 +140,7 @@ public class DailyMissionItemView : MonoBehaviour
 
     private void SetRewardLocalized()
     {
-        if (!rewardText) return;
-        string goldWord = (Localizer.Instance != null)
-            ? Localizer.Instance.Tr("prize_text", "Gold")
-            : "Gold";
-        rewardText.text = $"+{_state.rewardGold} {goldWord}";
+        rewardText.text = $"+{_state.rewardGold}";
     }
     
     private void OnClickClaim()
@@ -153,7 +149,6 @@ public class DailyMissionItemView : MonoBehaviour
 
         if (_ctrl.TryClaimMission(_state.missionId))
         {
-            // toca o FX visual (já ganhamos o gold no controller)
             var spawn = coinSpawnPoint ? coinSpawnPoint : (RectTransform)transform;
             CoinCollectFx.Instance?.PlayFromUI(spawn, _state.rewardGold);
 
