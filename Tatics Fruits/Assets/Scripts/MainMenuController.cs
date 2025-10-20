@@ -30,8 +30,8 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject rankingPanel;
 
     [Header("Panels")]
-    [SerializeField] private ShopPanelController shopPanel;                 // << usar Show/Hide do painel
-    [SerializeField] private DailyMissionsPanelTabs dailyMissionsPanel;     // << usar Show/Hide do painel
+    [SerializeField] private ShopPanelController shopPanel;
+    [SerializeField] private DailyMissionsPanelTabs dailyMissionsPanel;
 
     [Header("Animação de tilt")]
     [SerializeField] private float initialDelay = 1.5f;
@@ -42,13 +42,10 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private float iconsStagger = 0.07f;
 
     private Sequence _titleSeq;
-
-    // guard simples para evitar spam ao alternar
     private bool _switching;
 
     private void Start()
     {
-        // Pop do título
         titleTransform.localScale = Vector3.zero;
         _titleSeq = DOTween.Sequence()
             .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
@@ -142,14 +139,11 @@ public class MainMenuController : MonoBehaviour
         }
     }
 
-    // ===== Open/Close helpers com troca rápida segura =====
-
     private void OpenStorePanel()
     {
         if (_switching) return;
         _switching = true;
-
-        // Fecha o outro painel (sem esperar animação)
+        
         if (dailyMissionsPanel && dailyMissionsPanel.gameObject.activeInHierarchy)
             dailyMissionsPanel.Hide();
 
