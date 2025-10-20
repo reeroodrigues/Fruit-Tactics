@@ -20,9 +20,11 @@ public class ShopPanelController : MonoBehaviour
     [SerializeField] private ShopItemView itemPrefab;
     [SerializeField] private Transform featuredParent;
     [SerializeField] private ShopItemView featuredPrefab;
-    
+
+    [Header("Scroll")]
     [SerializeField] private ScrollRect scrollRect;
-    [SerializeField] private Button arrowButton;
+    [SerializeField] private Button downArrowButton;
+    [SerializeField] private Button upArrowButton;
 
     [Header("Anim")]
     [SerializeField] private CanvasGroup panelCanvasGroup;
@@ -34,20 +36,21 @@ public class ShopPanelController : MonoBehaviour
     [Header("Options")]
     [SerializeField] private bool showFeatured = true;
     [SerializeField] private bool sortByPriceAsc = true;
-    
+
     [Header("Arrow Options")]
     [SerializeField] private float arrowAppearDelay = 3f;
     [SerializeField] private float arrowScrollStep = 0.35f;
     [SerializeField] private float arrowScrollDuration = 0.35f;
     [SerializeField] private float arrowNudgeDistance = 12f;
     [SerializeField] private float arrowNudgeDuration = 0.6f;
+    [SerializeField] private float bottomThreshold = 0.01f;
 
     private readonly List<ShopItemView> _spawned = new();
     private bool _animating;
     private Action<int> _goldChangedHandler;
-    
-    private RectTransform _arrowRt;
-    private Vector2 _arrowStartAnchoredPos;
+
+    private RectTransform _downRt, _upRt;
+    private Vector2 _downStartPos, _upStartPos;
 
     private void Awake()
     {
@@ -61,10 +64,14 @@ public class ShopPanelController : MonoBehaviour
             panelCanvasGroup.blocksRaycasts = false;
         }
         if (window) window.localScale = Vector3.one * 0.96f;
-        
-        if (arrowButton) arrowButton.gameObject.SetActive(false);
-        _arrowRt = arrowButton ? arrowButton.transform as RectTransform : null;
-        if (_arrowRt) _arrowStartAnchoredPos = _arrowRt.anchoredPosition;
+
+        if (downArrowButton) downArrowButton.gameObject.SetActive(false);
+        if (upArrowButton)   upArrowButton.gameObject.SetActive(false);
+
+        _downRt = downArrowButton ? downArrowButton.transform as RectTransform : null;
+        _upRt   = upArrowButton   ? upArrowButton.transform as RectTransform   : null;
+        if (_downRt) _downStartPos = _downRt.anchoredPosition;
+        if (_upRt)   _upStartPos   = _upRt.anchoredPosition;
 
         gameObject.SetActive(false);
         _animating = false;
@@ -86,10 +93,15 @@ public class ShopPanelController : MonoBehaviour
         _goldChangedHandler = OnGoldChanged;
         if (profile != null) profile.OnGoldChanged += _goldChangedHandler;
         
-        if (arrowButton)
+        if (downArrowButton)
         {
-            arrowButton.onClick.RemoveListener(OnArrowClick);
-            arrowButton.onClick.AddListener(OnArrowClick);
+            downArrowButton.onClick.RemoveListener(OnDownArrowClick);
+            downArrowButton.onClick.AddListener(OnDownArrowClick);
+        }
+        if (upArrowButton)
+        {
+            upArrowButton.onClick.RemoveListener(OnUpArrowClick);
+            upArrowButton.onClick.AddListener(OnUpArrowClick);
         }
         if (scrollRect)
         {
@@ -97,8 +109,10 @@ public class ShopPanelController : MonoBehaviour
             scrollRect.onValueChanged.AddListener(OnScrollChanged);
         }
         
-        DOTween.Kill(this, complete: false);
-        DOVirtual.DelayedCall(arrowAppearDelay, TryShowArrow, ignoreTimeScale: true).SetTarget(this);
+        DOTween.Kill(this, complete:false);
+        DOVirtual.DelayedCall(arrowAppearDelay, TryShowDownArrow, ignoreTimeScale:true).SetTarget(this);
+        
+        HideUpArrow();
     }
 
     private void OnDisable()
@@ -111,8 +125,9 @@ public class ShopPanelController : MonoBehaviour
 
         if (closeButton) closeButton.onClick.RemoveListener(Hide);
 
-        if (arrowButton) arrowButton.onClick.RemoveListener(OnArrowClick);
-        if (scrollRect)  scrollRect.onValueChanged.RemoveListener(OnScrollChanged);
+        if (downArrowButton) downArrowButton.onClick.RemoveListener(OnDownArrowClick);
+        if (upArrowButton)   upArrowButton.onClick.RemoveListener(OnUpArrowClick);
+        if (scrollRect)      scrollRect.onValueChanged.RemoveListener(OnScrollChanged);
 
         foreach (var v in _spawned) if (v) Destroy(v.gameObject);
         _spawned.Clear();
@@ -130,18 +145,21 @@ public class ShopPanelController : MonoBehaviour
             panelCanvasGroup.interactable = false;
             panelCanvasGroup.blocksRaycasts = false;
         }
-        if (_arrowRt) _arrowRt.anchoredPosition = _arrowStartAnchoredPos;
-        if (arrowButton) arrowButton.gameObject.SetActive(false);
 
+        ResetArrowsVisual();
         _animating = false;
     }
 
-    private void OnGoldChanged(int _) => RefreshGold();
-
-    private void RefreshGold()
+    private void ResetArrowsVisual()
     {
-        if (goldCounter) goldCounter.text = $"{profile.Data.Gold}";
+        if (_downRt) _downRt.anchoredPosition = _downStartPos;
+        if (_upRt)   _upRt.anchoredPosition   = _upStartPos;
+        if (downArrowButton) downArrowButton.gameObject.SetActive(false);
+        if (upArrowButton)   upArrowButton.gameObject.SetActive(false);
     }
+
+    private void OnGoldChanged(int _) => RefreshGold();
+    private void RefreshGold() { if (goldCounter) goldCounter.text = $"{profile.Data.Gold}"; }
 
     private IEnumerable<PowerUpCardSO> Enumerate()
     {
@@ -174,7 +192,7 @@ public class ShopPanelController : MonoBehaviour
             v.SetupFromSO(so, profile, isNew: false);
             _spawned.Add(v);
         }
-        
+
         if (scrollRect) scrollRect.verticalNormalizedPosition = 1f;
     }
 
@@ -235,61 +253,119 @@ public class ShopPanelController : MonoBehaviour
             });
     }
 
-    private void TryShowArrow()
+    private void TryShowDownArrow()
     {
-        if (!arrowButton || !scrollRect) return;
+        if (!downArrowButton || !scrollRect) return;
         
-        bool atBottom = scrollRect.verticalNormalizedPosition <= 0.01f;
-        if (!atBottom)
+        bool atBottom = scrollRect.verticalNormalizedPosition <= bottomThreshold;
+        if (!atBottom) ShowDownArrow();
+    }
+
+    private void ShowDownArrow()
+    {
+        if (!downArrowButton) return;
+
+        if (!downArrowButton.gameObject.activeSelf)
+            downArrowButton.gameObject.SetActive(true);
+        
+        if (_downRt)
         {
-            if (!arrowButton.gameObject.activeSelf)
-                arrowButton.gameObject.SetActive(true);
-            
-            if (_arrowRt)
-            {
-                _arrowRt.DOKill();
-                _arrowRt.anchoredPosition = _arrowStartAnchoredPos;
-                _arrowRt.DOAnchorPos(_arrowStartAnchoredPos - new Vector2(0f, arrowNudgeDistance), arrowNudgeDuration)
-                        .SetLoops(-1, LoopType.Yoyo)
-                        .SetEase(Ease.InOutSine)
-                        .SetTarget(this);
-            }
+            _downRt.DOKill();
+            _downRt.anchoredPosition = _downStartPos;
+            _downRt.DOAnchorPos(_downStartPos - new Vector2(0f, arrowNudgeDistance), arrowNudgeDuration)
+                   .SetLoops(-1, LoopType.Yoyo)
+                   .SetEase(Ease.InOutSine)
+                   .SetTarget(this);
         }
     }
 
-    private void OnArrowClick()
+    private void HideDownArrow()
+    {
+        if (!downArrowButton) return;
+        if (_downRt) _downRt.DOKill();
+        if (_downRt) _downRt.anchoredPosition = _downStartPos;
+        downArrowButton.gameObject.SetActive(false);
+    }
+
+    private void ShowUpArrow()
+    {
+        if (!upArrowButton) return;
+
+        if (!upArrowButton.gameObject.activeSelf)
+            upArrowButton.gameObject.SetActive(true);
+        
+        if (_upRt)
+        {
+            _upRt.DOKill();
+            _upRt.anchoredPosition = _upStartPos;
+            _upRt.DOAnchorPos(_upStartPos + new Vector2(0f, arrowNudgeDistance), arrowNudgeDuration)
+                 .SetLoops(-1, LoopType.Yoyo)
+                 .SetEase(Ease.InOutSine)
+                 .SetTarget(this);
+        }
+    }
+
+    private void HideUpArrow()
+    {
+        if (!upArrowButton) return;
+        if (_upRt) _upRt.DOKill();
+        if (_upRt) _upRt.anchoredPosition = _upStartPos;
+        upArrowButton.gameObject.SetActive(false);
+    }
+
+    private void OnDownArrowClick()
     {
         if (!scrollRect) return;
 
-        float current = scrollRect.verticalNormalizedPosition; 
-        float target = Mathf.Max(0f, current - arrowScrollStep);
+        float current = scrollRect.verticalNormalizedPosition;
+        float target  = Mathf.Max(0f, current - arrowScrollStep);
 
         DOTween.Kill(scrollRect);
         scrollRect.DOVerticalNormalizedPos(target, arrowScrollDuration)
                   .SetEase(Ease.OutCubic);
         
-        DOVirtual.DelayedCall(arrowScrollDuration * 0.9f, () =>
+        DOVirtual.DelayedCall(arrowScrollDuration * 0.95f, () =>
         {
-            if (scrollRect.verticalNormalizedPosition <= 0.01f)
-                HideArrow();
+            bool atBottom = scrollRect.verticalNormalizedPosition <= bottomThreshold;
+            if (atBottom)
+            {
+                HideDownArrow();
+                ShowUpArrow();
+            }
+        }).SetTarget(this);
+    }
+
+    private void OnUpArrowClick()
+    {
+        if (!scrollRect) return;
+
+        DOTween.Kill(scrollRect);
+        scrollRect.DOVerticalNormalizedPos(1f, arrowScrollDuration)
+                  .SetEase(Ease.OutCubic);
+        
+        DOVirtual.DelayedCall(arrowScrollDuration * 0.95f, () =>
+        {
+            HideUpArrow();
+            ShowDownArrow();
         }).SetTarget(this);
     }
 
     private void OnScrollChanged(Vector2 _)
     {
-        if (!arrowButton || !scrollRect) return;
-        
-        bool atBottom = scrollRect.verticalNormalizedPosition <= 0.01f;
-        if (atBottom) HideArrow();
-        else if (!arrowButton.gameObject.activeSelf) TryShowArrow();
-    }
+        if (!scrollRect) return;
 
-    private void HideArrow()
-    {
-        if (!arrowButton) return;
+        bool atBottom = scrollRect.verticalNormalizedPosition <= bottomThreshold;
 
-        DOTween.Kill(this);
-        if (_arrowRt) _arrowRt.anchoredPosition = _arrowStartAnchoredPos;
-        arrowButton.gameObject.SetActive(false);
+        if (atBottom)
+        {
+            HideDownArrow();
+            ShowUpArrow();
+        }
+        else
+        {
+            HideUpArrow();
+            if (downArrowButton && !downArrowButton.gameObject.activeSelf)
+                ShowDownArrow();
+        }
     }
 }
