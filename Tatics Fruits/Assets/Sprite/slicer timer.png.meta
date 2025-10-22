@@ -1,0 +1,2717 @@
+fileFormatVersion: 2
+guid: b2bfd40af92a7b24da623cd1838e499d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7604252877576407328
+    second: slicer timer_0
+  - first:
+      213: -8654776651538806674
+    second: slicer timer_1
+  - first:
+      213: -6753101893828108891
+    second: slicer timer_2
+  - first:
+      213: -2380560510945988106
+    second: slicer timer_3
+  - first:
+      213: 5609400655995855441
+    second: slicer timer_4
+  - first:
+      213: 7286411893017304284
+    second: slicer timer_5
+  - first:
+      213: -1754616574546905863
+    second: slicer timer_6
+  - first:
+      213: 6339599500506757856
+    second: slicer timer_7
+  - first:
+      213: -6923273468626867780
+    second: slicer timer_8
+  - first:
+      213: 5655294295793856098
+    second: slicer timer_9
+  - first:
+      213: 3084823602914327783
+    second: slicer timer_10
+  - first:
+      213: -2836382721554642287
+    second: slicer timer_11
+  - first:
+      213: 4088908998445836598
+    second: slicer timer_12
+  - first:
+      213: -4750699380208226224
+    second: slicer timer_13
+  - first:
+      213: -7885722699172713333
+    second: slicer timer_14
+  - first:
+      213: -1966144992295939663
+    second: slicer timer_15
+  - first:
+      213: -6778424465745972406
+    second: slicer timer_16
+  - first:
+      213: 2126117416543498706
+    second: slicer timer_17
+  - first:
+      213: -5834267296101790667
+    second: slicer timer_18
+  - first:
+      213: 2393282682302089913
+    second: slicer timer_19
+  - first:
+      213: 6704516868605122502
+    second: slicer timer_20
+  - first:
+      213: 3699444120260985011
+    second: slicer timer_21
+  - first:
+      213: 2735962851674243246
+    second: slicer timer_22
+  - first:
+      213: 2941607013549169414
+    second: slicer timer_23
+  - first:
+      213: 5176379825503824167
+    second: slicer timer_24
+  - first:
+      213: -1444952800263334278
+    second: slicer timer_25
+  - first:
+      213: 4677408250332177654
+    second: slicer timer_26
+  - first:
+      213: -8895428609482577091
+    second: slicer timer_27
+  - first:
+      213: -6427315820642300826
+    second: slicer timer_28
+  - first:
+      213: -1232779409809576167
+    second: slicer timer_29
+  - first:
+      213: -5763240491493123215
+    second: slicer timer_30
+  - first:
+      213: 5953651335539870615
+    second: slicer timer_31
+  - first:
+      213: 6528334630011527212
+    second: slicer timer_32
+  - first:
+      213: 384615025123946496
+    second: slicer timer_33
+  - first:
+      213: 6276127173496970648
+    second: slicer timer_34
+  - first:
+      213: 5858848084269838174
+    second: slicer timer_35
+  - first:
+      213: 513925497633696722
+    second: slicer timer_36
+  - first:
+      213: 4238746182828005198
+    second: slicer timer_37
+  - first:
+      213: 3357251451581495298
+    second: slicer timer_38
+  - first:
+      213: 219643775930858252
+    second: slicer timer_39
+  - first:
+      213: -669356095910592129
+    second: slicer timer_40
+  - first:
+      213: -7183543374975858405
+    second: slicer timer_41
+  - first:
+      213: -3260503108789861077
+    second: slicer timer_42
+  - first:
+      213: 4327973789155952442
+    second: slicer timer_43
+  - first:
+      213: -7621480842258984259
+    second: slicer timer_44
+  - first:
+      213: 5864662722265522202
+    second: slicer timer_45
+  - first:
+      213: 4233699970029394948
+    second: slicer timer_46
+  - first:
+      213: -1726002657945193015
+    second: slicer timer_47
+  - first:
+      213: -3333622198470827445
+    second: slicer timer_48
+  - first:
+      213: 5597759269704982155
+    second: slicer timer_49
+  - first:
+      213: -275164330671590393
+    second: slicer timer_50
+  - first:
+      213: -1970825808504811990
+    second: slicer timer_51
+  - first:
+      213: 2989151461900589147
+    second: slicer timer_52
+  - first:
+      213: 1697286272976337750
+    second: slicer timer_53
+  - first:
+      213: 2155741169583821780
+    second: slicer timer_54
+  - first:
+      213: -5394440732180388738
+    second: slicer timer_55
+  - first:
+      213: -69085794008573899
+    second: slicer timer_56
+  - first:
+      213: 8172684843731245923
+    second: slicer timer_57
+  - first:
+      213: -7628325830246030050
+    second: slicer timer_58
+  - first:
+      213: -8208740123488247560
+    second: slicer timer_59
+  - first:
+      213: -298575575606777433
+    second: slicer timer_60
+  - first:
+      213: -4365360726162570071
+    second: slicer timer_61
+  - first:
+      213: -3914703515489408086
+    second: slicer timer_62
+  - first:
+      213: 8836824278720717771
+    second: slicer timer_63
+  - first:
+      213: 1325067243048575035
+    second: slicer timer_64
+  - first:
+      213: 4442190150522798530
+    second: slicer timer_65
+  - first:
+      213: -2087407840226890476
+    second: slicer timer_66
+  - first:
+      213: -7765718815107050204
+    second: slicer timer_67
+  - first:
+      213: -6478381234482569250
+    second: slicer timer_68
+  - first:
+      213: 8332655761636994833
+    second: slicer timer_69
+  - first:
+      213: 1976725706464821170
+    second: slicer timer_70
+  - first:
+      213: 4496891247083520372
+    second: slicer timer_71
+  - first:
+      213: -6405034739299776806
+    second: slicer timer_72
+  - first:
+      213: 5997069520196187948
+    second: slicer timer_73
+  - first:
+      213: 6879138348531130430
+    second: slicer timer_74
+  - first:
+      213: -4451248736661074515
+    second: slicer timer_75
+  - first:
+      213: -5876784608752191218
+    second: slicer timer_76
+  - first:
+      213: -4982932216296514230
+    second: slicer timer_77
+  - first:
+      213: 4009237341392898960
+    second: slicer timer_78
+  - first:
+      213: -6638608990116300973
+    second: slicer timer_79
+  - first:
+      213: -1901954202749216958
+    second: slicer timer_80
+  - first:
+      213: -6138017246247033566
+    second: slicer timer_81
+  - first:
+      213: 2241607900404287917
+    second: slicer timer_82
+  - first:
+      213: 136437430810132569
+    second: slicer timer_83
+  - first:
+      213: -3268055109886146793
+    second: slicer timer_84
+  - first:
+      213: 4675371520714092229
+    second: slicer timer_85
+  - first:
+      213: 390856085682531044
+    second: slicer timer_86
+  - first:
+      213: 4022135839039929009
+    second: slicer timer_87
+  - first:
+      213: 3568509104732915485
+    second: slicer timer_88
+  - first:
+      213: 5244441913792956456
+    second: slicer timer_89
+  - first:
+      213: -8439241760181964785
+    second: slicer timer_90
+  - first:
+      213: -2063402438660838227
+    second: slicer timer_91
+  - first:
+      213: -7580695107898202210
+    second: slicer timer_92
+  - first:
+      213: -1749484039301060148
+    second: slicer timer_93
+  - first:
+      213: 2959817031916681155
+    second: slicer timer_94
+  - first:
+      213: 3146487910182407751
+    second: slicer timer_95
+  - first:
+      213: -8905702116677340008
+    second: slicer timer_96
+  - first:
+      213: -7565404065147585258
+    second: slicer timer_97
+  - first:
+      213: 4807838036793405668
+    second: slicer timer_98
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: slicer timer_0
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 1380
+        width: 34
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e6f0d10c44487690800000000000000
+      internalID: -7604252877576407328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_1
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 1393
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e684faa8d7e04e780800000000000000
+      internalID: -8654776651538806674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_2
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 1363
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ad9b566b992842a0800000000000000
+      internalID: -6753101893828108891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_3
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 1363
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f1fdbaf3dc86fed0800000000000000
+      internalID: -2380560510945988106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_4
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 1360
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 152e97f3d2898dd40800000000000000
+      internalID: 5609400655995855441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_5
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 1358
+        width: 38
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdc5a7af2098e1560800000000000000
+      internalID: 7286411893017304284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_6
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 1371
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f47e15958956a7e0800000000000000
+      internalID: -1754616574546905863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_7
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 1351
+        width: 21
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eaf2f53828caf750800000000000000
+      internalID: 6339599500506757856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_8
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1361
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb9eb9b16779bef90800000000000000
+      internalID: -6923273468626867780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_9
+      rect:
+        serializedVersion: 2
+        x: 562
+        y: 1357
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26ee511f234ab7e40800000000000000
+      internalID: 5655294295793856098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_10
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 1357
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ecf27609be7fca20800000000000000
+      internalID: 3084823602914327783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_11
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 1351
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19a0eaa41f423a8d0800000000000000
+      internalID: -2836382721554642287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_12
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 1349
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6392343f119beb830800000000000000
+      internalID: 4088908998445836598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_13
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 1344
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05035008510221eb0800000000000000
+      internalID: -4750699380208226224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_14
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1351
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8c63964cf8409290800000000000000
+      internalID: -7885722699172713333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_15
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 1349
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b1994deb89d6b4e0800000000000000
+      internalID: -1966144992295939663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_16
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 1337
+        width: 31
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a43f46eacd23ee1a0800000000000000
+      internalID: -6778424465745972406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_17
+      rect:
+        serializedVersion: 2
+        x: 315
+        y: 1326
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d1b8d3968c718d10800000000000000
+      internalID: 2126117416543498706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_18
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 1332
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53c8c233ec4880fa0800000000000000
+      internalID: -5834267296101790667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_19
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 1339
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bac5bd5be5a63120800000000000000
+      internalID: 2393282682302089913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_20
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 1326
+        width: 23
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c792d7e19a3b0d50800000000000000
+      internalID: 6704516868605122502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 253
+        width: 1024
+        height: 1064
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0409ea3d0175330800000000000000
+      internalID: 3699444120260985011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_22
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 1317
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea045b4c7b718f520800000000000000
+      internalID: 2735962851674243246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_23
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 1317
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b55675effa2d820800000000000000
+      internalID: 2941607013549169414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_24
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 1301
+        width: 30
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72967a1960236d740800000000000000
+      internalID: 5176379825503824167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_25
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 245
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a761917751f72fbe0800000000000000
+      internalID: -1444952800263334278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_26
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 246
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f4e78e850e79e040800000000000000
+      internalID: 4677408250332177654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_27
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 246
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3ba1f64fc61d8480800000000000000
+      internalID: -8895428609482577091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_28
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 246
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66c0e5380569dc6a0800000000000000
+      internalID: -6427315820642300826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_29
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 243
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91f62e788a944eee0800000000000000
+      internalID: -1232779409809576167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_30
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 245
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b9765de4bd400b0800000000000000
+      internalID: -5763240491493123215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_31
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 245
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79b426b885e9f9250800000000000000
+      internalID: 5953651335539870615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_32
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 236
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c20e7b4e1cd499a50800000000000000
+      internalID: 6528334630011527212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_33
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 243
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0007acbd35d665500800000000000000
+      internalID: 384615025123946496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_34
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 243
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89d96757968491750800000000000000
+      internalID: 6276127173496970648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_35
+      rect:
+        serializedVersion: 2
+        x: 588
+        y: 251
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5fa1e78a4fce4150800000000000000
+      internalID: 5858848084269838174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_36
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 251
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dbe8776484d12700800000000000000
+      internalID: 513925497633696722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_37
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 247
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e479188023d03da30800000000000000
+      internalID: 4238746182828005198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_38
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 247
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 208fd21686a579e20800000000000000
+      internalID: 3357251451581495298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_39
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 249
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0bfb79b9d45c0300800000000000000
+      internalID: 219643775930858252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_40
+      rect:
+        serializedVersion: 2
+        x: 747
+        y: 245
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f71c10b5d28f5b6f0800000000000000
+      internalID: -669356095910592129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_41
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 247
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1904f94c5dee4c90800000000000000
+      internalID: -7183543374975858405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_42
+      rect:
+        serializedVersion: 2
+        x: 310
+        y: 236
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b25068b82bd50c2d0800000000000000
+      internalID: -3260503108789861077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_43
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 240
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3787db0b3d001c30800000000000000
+      internalID: 4327973789155952442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_44
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 239
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db255b6ed8f0b3690800000000000000
+      internalID: -7621480842258984259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_45
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 237
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a10ac107ca7736150800000000000000
+      internalID: 5864662722265522202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_46
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 237
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40c1f2f01bf11ca30800000000000000
+      internalID: 4233699970029394948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_47
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 222
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c5fbc33ab10c08e0800000000000000
+      internalID: -1726002657945193015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_48
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 232
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b422ac4d5489cb1d0800000000000000
+      internalID: -3333622198470827445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_49
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 236
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8e5ae8c56c3fad40800000000000000
+      internalID: 5597759269704982155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_50
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 234
+        width: 24
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7043677cf7b6e2cf0800000000000000
+      internalID: -275164330671590393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_51
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 234
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2e06e97e5836a4e0800000000000000
+      internalID: -1970825808504811990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_52
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 239
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b589c6ada699b7920800000000000000
+      internalID: 2989151461900589147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_53
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 242
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65bb6e66fd8fd8710800000000000000
+      internalID: 1697286272976337750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_54
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 236
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d39ab01c2bbaed10800000000000000
+      internalID: 2155741169583821780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_55
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 231
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e746d7c2cb81325b0800000000000000
+      internalID: -5394440732180388738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_56
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 240
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 538d71d16de8a0ff0800000000000000
+      internalID: -69085794008573899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_57
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 236
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36bd1db80953b6170800000000000000
+      internalID: 8172684843731245923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_58
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 237
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e15af31f21eb22690800000000000000
+      internalID: -7628325830246030050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_59
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 234
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f0acf57952b41e80800000000000000
+      internalID: -8208740123488247560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_60
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 226
+        width: 20
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a9a95d881f3bdbf0800000000000000
+      internalID: -298575575606777433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_61
+      rect:
+        serializedVersion: 2
+        x: 745
+        y: 232
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a483a85c8f1b63c0800000000000000
+      internalID: -4365360726162570071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_62
+      rect:
+        serializedVersion: 2
+        x: 326
+        y: 221
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aabe746c4ed2ca9c0800000000000000
+      internalID: -3914703515489408086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_63
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 224
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc322bbacd4b2aa70800000000000000
+      internalID: 8836824278720717771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_64
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 231
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b30aa6513a5936210800000000000000
+      internalID: 1325067243048575035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_65
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 220
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c186aaf764d5ad30800000000000000
+      internalID: 4442190150522798530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_66
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 222
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41d29edf0a90803e0800000000000000
+      internalID: -2087407840226890476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_67
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 224
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4251af7d1ef9a3490800000000000000
+      internalID: -7765718815107050204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_68
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 226
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf1c17579a2816a0800000000000000
+      internalID: -6478381234482569250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_69
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 222
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11f2cf3544a83a370800000000000000
+      internalID: 8332655761636994833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_70
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 229
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bff7309e8dbe6b10800000000000000
+      internalID: 1976725706464821170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_71
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 222
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4710aff73ca286e30800000000000000
+      internalID: 4496891247083520372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_72
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 228
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6000607debc17a0800000000000000
+      internalID: -6405034739299776806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_73
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 231
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c27bd9c64fed93350800000000000000
+      internalID: 5997069520196187948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_74
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 215
+        width: 13
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3027f871eb977f50800000000000000
+      internalID: 6879138348531130430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_75
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 219
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dad09649bdcf932c0800000000000000
+      internalID: -4451248736661074515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_76
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 228
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e09b7dde887717ea0800000000000000
+      internalID: -5876784608752191218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_77
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 216
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4ddbcbcc8119dab0800000000000000
+      internalID: -4982932216296514230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_78
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 216
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09b84f1ce1ca3a730800000000000000
+      internalID: 4009237341392898960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_79
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 207
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 357376ddb4ceed3a0800000000000000
+      internalID: -6638608990116300973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_80
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 208
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2475216cab6ea95e0800000000000000
+      internalID: -1901954202749216958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_81
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 215
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 225693cc5d161daa0800000000000000
+      internalID: -6138017246247033566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_82
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 204
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da98e45428acb1f10800000000000000
+      internalID: 2241607900404287917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_83
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 217
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9504185de19b4e100800000000000000
+      internalID: 136437430810132569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_84
+      rect:
+        serializedVersion: 2
+        x: 575
+        y: 220
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71706d4413985a2d0800000000000000
+      internalID: -3268055109886146793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_85
+      rect:
+        serializedVersion: 2
+        x: 586
+        y: 207
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce242d70a142e040800000000000000
+      internalID: 4675371520714092229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_86
+      rect:
+        serializedVersion: 2
+        x: 589
+        y: 220
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ea28610a899c6500800000000000000
+      internalID: 390856085682531044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_87
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 210
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bab7544c3f71d730800000000000000
+      internalID: 4022135839039929009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_88
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 220
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d174a5dbf14e58130800000000000000
+      internalID: 3568509104732915485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_89
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 215
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8288cc4622008c840800000000000000
+      internalID: 5244441913792956456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_90
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 210
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0036b6055ac1ea80800000000000000
+      internalID: -8439241760181964785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_91
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 203
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dac22f61a625d53e0800000000000000
+      internalID: -2063402438660838227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_92
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 210
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e97af2fa6f5fbc690800000000000000
+      internalID: -7580695107898202210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_93
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 205
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc9ae31198598b7e0800000000000000
+      internalID: -1749484039301060148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_94
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 208
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c77b83a8e1631920800000000000000
+      internalID: 2959817031916681155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_95
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 208
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74ecb7065129aab20800000000000000
+      internalID: 3146487910182407751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_96
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 205
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 894b00cfb17986480800000000000000
+      internalID: -8905702116677340008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_97
+      rect:
+        serializedVersion: 2
+        x: 567
+        y: 207
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61df4920619420790800000000000000
+      internalID: -7565404065147585258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slicer timer_98
+      rect:
+        serializedVersion: 2
+        x: 604
+        y: 207
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e0bea0b83fd8b240800000000000000
+      internalID: 4807838036793405668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      slicer timer_0: -7604252877576407328
+      slicer timer_1: -8654776651538806674
+      slicer timer_10: 3084823602914327783
+      slicer timer_11: -2836382721554642287
+      slicer timer_12: 4088908998445836598
+      slicer timer_13: -4750699380208226224
+      slicer timer_14: -7885722699172713333
+      slicer timer_15: -1966144992295939663
+      slicer timer_16: -6778424465745972406
+      slicer timer_17: 2126117416543498706
+      slicer timer_18: -5834267296101790667
+      slicer timer_19: 2393282682302089913
+      slicer timer_2: -6753101893828108891
+      slicer timer_20: 6704516868605122502
+      slicer timer_21: 3699444120260985011
+      slicer timer_22: 2735962851674243246
+      slicer timer_23: 2941607013549169414
+      slicer timer_24: 5176379825503824167
+      slicer timer_25: -1444952800263334278
+      slicer timer_26: 4677408250332177654
+      slicer timer_27: -8895428609482577091
+      slicer timer_28: -6427315820642300826
+      slicer timer_29: -1232779409809576167
+      slicer timer_3: -2380560510945988106
+      slicer timer_30: -5763240491493123215
+      slicer timer_31: 5953651335539870615
+      slicer timer_32: 6528334630011527212
+      slicer timer_33: 384615025123946496
+      slicer timer_34: 6276127173496970648
+      slicer timer_35: 5858848084269838174
+      slicer timer_36: 513925497633696722
+      slicer timer_37: 4238746182828005198
+      slicer timer_38: 3357251451581495298
+      slicer timer_39: 219643775930858252
+      slicer timer_4: 5609400655995855441
+      slicer timer_40: -669356095910592129
+      slicer timer_41: -7183543374975858405
+      slicer timer_42: -3260503108789861077
+      slicer timer_43: 4327973789155952442
+      slicer timer_44: -7621480842258984259
+      slicer timer_45: 5864662722265522202
+      slicer timer_46: 4233699970029394948
+      slicer timer_47: -1726002657945193015
+      slicer timer_48: -3333622198470827445
+      slicer timer_49: 5597759269704982155
+      slicer timer_5: 7286411893017304284
+      slicer timer_50: -275164330671590393
+      slicer timer_51: -1970825808504811990
+      slicer timer_52: 2989151461900589147
+      slicer timer_53: 1697286272976337750
+      slicer timer_54: 2155741169583821780
+      slicer timer_55: -5394440732180388738
+      slicer timer_56: -69085794008573899
+      slicer timer_57: 8172684843731245923
+      slicer timer_58: -7628325830246030050
+      slicer timer_59: -8208740123488247560
+      slicer timer_6: -1754616574546905863
+      slicer timer_60: -298575575606777433
+      slicer timer_61: -4365360726162570071
+      slicer timer_62: -3914703515489408086
+      slicer timer_63: 8836824278720717771
+      slicer timer_64: 1325067243048575035
+      slicer timer_65: 4442190150522798530
+      slicer timer_66: -2087407840226890476
+      slicer timer_67: -7765718815107050204
+      slicer timer_68: -6478381234482569250
+      slicer timer_69: 8332655761636994833
+      slicer timer_7: 6339599500506757856
+      slicer timer_70: 1976725706464821170
+      slicer timer_71: 4496891247083520372
+      slicer timer_72: -6405034739299776806
+      slicer timer_73: 5997069520196187948
+      slicer timer_74: 6879138348531130430
+      slicer timer_75: -4451248736661074515
+      slicer timer_76: -5876784608752191218
+      slicer timer_77: -4982932216296514230
+      slicer timer_78: 4009237341392898960
+      slicer timer_79: -6638608990116300973
+      slicer timer_8: -6923273468626867780
+      slicer timer_80: -1901954202749216958
+      slicer timer_81: -6138017246247033566
+      slicer timer_82: 2241607900404287917
+      slicer timer_83: 136437430810132569
+      slicer timer_84: -3268055109886146793
+      slicer timer_85: 4675371520714092229
+      slicer timer_86: 390856085682531044
+      slicer timer_87: 4022135839039929009
+      slicer timer_88: 3568509104732915485
+      slicer timer_89: 5244441913792956456
+      slicer timer_9: 5655294295793856098
+      slicer timer_90: -8439241760181964785
+      slicer timer_91: -2063402438660838227
+      slicer timer_92: -7580695107898202210
+      slicer timer_93: -1749484039301060148
+      slicer timer_94: 2959817031916681155
+      slicer timer_95: 3146487910182407751
+      slicer timer_96: -8905702116677340008
+      slicer timer_97: -7565404065147585258
+      slicer timer_98: 4807838036793405668
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
