@@ -37,12 +37,12 @@ public class CardFace : MonoBehaviour
         _hovering = _target.GetComponent<Card>().hovering && _target.GetComponent<Card>().cardState != Card.CardState.Played;
         
         transform.position = Vector3.Lerp(transform.position, _target.transform.position, Time.deltaTime * _movementSpeed);
-        _visual.transform.position = Vector3.Lerp(_visual.transform.position, (_hovering || _target.GetComponent<Card>().cardManager._selectedCard == _target) 
+        _visual.transform.position = Vector3.Lerp(_visual.transform.position, (_hovering || _target.GetComponent<Card>().cardManager.selectedCard == _target) 
             ? _target.transform.position + _offset 
             : _target.transform.position, 
             Time.deltaTime * _movementSpeed);
 
-        if (_target.GetComponent<Card>().cardManager._selectedCard == _target)
+        if (_target.GetComponent<Card>().cardManager.selectedCard == _target)
         {
             transform.SetAsLastSibling();
         }

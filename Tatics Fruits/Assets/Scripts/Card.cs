@@ -39,7 +39,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (cardManager == null)
             cardManager = FindObjectOfType<CardManager>();
 
-        cardManager._cards.Add(gameObject);
+        cardManager.cards.Add(gameObject);
         canDrag = true;
 
         cardNumber = cardTypeSo.setAmount == 0
@@ -55,7 +55,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             return;
 
         cardState = CardState.IsDragging;
-        cardManager._selectedCard = gameObject;
+        cardManager.selectedCard = gameObject;
 
         cardManager.GetComponent<AudioSource>().Play();
         GetComponent<Image>().raycastTarget = false;
@@ -74,7 +74,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnEndDrag(PointerEventData eventData)
     {
         cardState = CardState.Idle;
-        cardManager._selectedCard = null;
+        cardManager.selectedCard = null;
 
         if (cardTypeSo.isPowerCard)
         {
@@ -128,9 +128,9 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     private void HandleDropArea()
     {
-        if (cardManager._hoveringMenu != null)
+        if (cardManager.hoveringMenu != null)
         {
-            var cardHolder = cardManager._hoveringMenu.GetComponent<CardHolder>();
+            var cardHolder = cardManager.hoveringMenu.GetComponent<CardHolder>();
 
             if (cardHolder != null && cardHolder.holderType == CardHolder.HolderType.Discard)
             {
@@ -140,8 +140,8 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             else
             {
                 var target = transform.parent;
-                transform.position = cardManager._hoveringMenu.transform.position;
-                transform.SetParent(cardManager._hoveringMenu.transform);
+                transform.position = cardManager.hoveringMenu.transform.position;
+                transform.SetParent(cardManager.hoveringMenu.transform);
                 Destroy(target.gameObject);
             }
         }
@@ -163,7 +163,7 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        cardManager._selectedCard = gameObject;
+        cardManager.selectedCard = gameObject;
 
         if (_cardFace != null)
         {

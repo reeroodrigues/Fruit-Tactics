@@ -5,12 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private GameObject _preRoundPrefab;
-    [SerializeField] private Transform _uiContainer;
-    [SerializeField] private Sprite _starsSprite;
+    [SerializeField] private GameObject preRoundPrefab;
+    [SerializeField] private Transform uiContainer;
+    [SerializeField] private Sprite starsSprite;
 
     private GameObject _preRoundInstance;
 
+    [Obsolete("Obsolete")]
     private void Start()
     {
         var phase = GameSession._phaseNumber > 0 ? GameSession._phaseNumber : 1;
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour
         return objectives[UnityEngine.Random.Range(0, objectives.Length)];
     }
 
+    [Obsolete("Obsolete")]
     public void StartNewPhase()
     {
         GameSession._phaseNumber++;
@@ -55,6 +57,7 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    [Obsolete("Obsolete")]
     private void ShowPreRoundPanel(int phaseNumber)
     {
         var points = GameSession._targetScore > 0 ? GameSession._targetScore : 100;
@@ -65,7 +68,7 @@ public class GameController : MonoBehaviour
 
         if (_preRoundInstance == null)
         {
-            _preRoundInstance = Instantiate(_preRoundPrefab, _uiContainer);
+            _preRoundInstance = Instantiate(preRoundPrefab, uiContainer);
         }
         else
         {
@@ -75,7 +78,7 @@ public class GameController : MonoBehaviour
         _preRoundInstance.GetComponent<PreRoundPanelController>().SetupPreRound(
             phaseNumber,
             objectiveDescription,
-            _starsSprite,
+            starsSprite,
             points,
             time
         );

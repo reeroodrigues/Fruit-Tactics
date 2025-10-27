@@ -20,13 +20,13 @@ namespace DefaultNamespace
             DiscardAllCards();
             
             Debug.Log("Houve o click!");
-            _cardManager.AddCard(_cardManager._startingAmount);
+            _cardManager.AddCard(_cardManager.startingAmount);
             ReduceTimer();
         }
 
         private void DiscardAllCards()
         {
-            foreach (var card in _cardManager._cards)
+            foreach (var card in _cardManager.cards)
             {
                 if (card != null)
                 {
@@ -34,7 +34,7 @@ namespace DefaultNamespace
                     Debug.Log("Carta destruída: " + card.name);
                 }
             }
-            _cardManager._cards.Clear();
+            _cardManager.cards.Clear();
             Debug.Log("Cartas descartadas!");
         }
 

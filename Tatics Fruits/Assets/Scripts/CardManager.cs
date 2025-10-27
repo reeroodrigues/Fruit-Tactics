@@ -1,45 +1,44 @@
 using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CardManager : MonoBehaviour
 {
-    [HideInInspector] public GameObject _selectedCard;
-    [HideInInspector] public GameObject _hoveringMenu;
-    [HideInInspector] public CardTypeSo _cardType;
+    [HideInInspector] public GameObject selectedCard;
+    [HideInInspector] public GameObject hoveringMenu;
+    [HideInInspector] public CardTypeSo cardType;
     [HideInInspector] public bool swapAllFree = false;
 
     [Header("Scripts/GameObjects")]
-    public GameObject _cardParent;
-    public HorizontalLayoutGroup _defaultCardsLayoutGroup;
-    public CardHolder _defaultPlayArea;
-    public GameObject _singleCardsParent;
-    public GameObject _cardFace;
-    public Canvas _canvas;
-    public Timer _timer;
-    public Button _swapAllButton;
+    public GameObject cardParent;
+    public GridLayoutGroup defaultCardsLayoutGroup;
+    public CardHolder defaultPlayArea;
+    public GameObject singleCardsParent;
+    public GameObject cardFaces;
+    public Canvas canva;
+    public Timer timer;
+    public Button swapAllButton;
     
     private bool _isRoundOver = false;
 
     [Header("Settings")]
-    [Range(0,12)] public int _maxCards = 6;
-    [Range(0,12)] public int _startingAmount = 6;
+    [Range(0,12)] public int maxCards = 6;
+    [Range(0,12)] public int startingAmount = 6;
 
     [Header("Lists")]
-    public List<CardTypeSo> _cardTypes = new List<CardTypeSo>();
-    public List<GameObject> _cards = new List<GameObject>();
+    public List<CardTypeSo> cardTypes = new List<CardTypeSo>();
+    public List<GameObject> cards = new List<GameObject>();
 
     private void Start()
     {
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.OnRoundEnd += HandleRoundEnd;
+            timer.OnRoundEnd += HandleRoundEnd;
         }
 
-        if (_startingAmount > 0)
-            AddCard(_startingAmount);
+        if (startingAmount > 0)
+            AddCard(startingAmount);
     }
     
     private void Update()
@@ -61,26 +60,26 @@ public class CardManager : MonoBehaviour
 
     private void HandleCardMovements()
     {
-        if (_selectedCard == null || _selectedCard.Equals(null)) return;
+        if (selectedCard == null || selectedCard.Equals(null)) return;
 
-        for (int i = 0; i < _cards.Count; i++)
+        for (int i = 0; i < cards.Count; i++)
         {
-            if (_cards[i] == null || _cards[i].Equals(null)) continue;
+            if (cards[i] == null || cards[i].Equals(null)) continue;
 
-            if (_selectedCard.transform.position.x > _cards[i].transform.position.x)
+            if (selectedCard.transform.position.x > cards[i].transform.position.x)
             {
-                if (_selectedCard.transform.parent != null && _selectedCard.transform.parent.GetSiblingIndex() < _cards[i].transform.parent.GetSiblingIndex())
+                if (selectedCard.transform.parent != null && selectedCard.transform.parent.GetSiblingIndex() < cards[i].transform.parent.GetSiblingIndex())
                 {
-                    SwapCards(_selectedCard, _cards[i]);
+                    SwapCards(selectedCard, cards[i]);
                     break;
                 }
             }
 
-            if (_selectedCard.transform.position.x < _cards[i].transform.position.x)
+            if (selectedCard.transform.position.x < cards[i].transform.position.x)
             {
-                if (_selectedCard.transform.parent != null && _selectedCard.transform.parent.GetSiblingIndex() > _cards[i].transform.parent.GetSiblingIndex())
+                if (selectedCard.transform.parent != null && selectedCard.transform.parent.GetSiblingIndex() > cards[i].transform.parent.GetSiblingIndex())
                 {
-                    SwapCards(_selectedCard, _cards[i]);
+                    SwapCards(selectedCard, cards[i]);
                     break;
                 }
             }
@@ -91,24 +90,24 @@ public class CardManager : MonoBehaviour
     {
         if (_isRoundOver) return;
 
-        if (_selectedCard == null)
+        if (selectedCard == null)
             return;
 
-        if (_defaultPlayArea.available)
+        if (defaultPlayArea.available)
         {
-            var target = _selectedCard.transform.parent;
-            _selectedCard.transform.position = _defaultPlayArea.transform.position;
-            _selectedCard.transform.SetParent(_defaultPlayArea.transform);
+            var target = selectedCard.transform.parent;
+            selectedCard.transform.position = defaultPlayArea.transform.position;
+            selectedCard.transform.SetParent(defaultPlayArea.transform);
             
-            var canvas = _selectedCard.GetComponent<Canvas>();
+            var canvas = selectedCard.GetComponent<Canvas>();
             if (canvas == null)
-                canvas = _selectedCard.AddComponent<Canvas>();
+                canvas = selectedCard.AddComponent<Canvas>();
             
             canvas.overrideSorting = true;
             canvas.sortingOrder = GetNextSortingOrder();
 
             Destroy(target.gameObject);
-            _selectedCard = null;
+            selectedCard = null;
         }
     }
 
@@ -142,13 +141,13 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < amount; i++)
         {
-            if (_defaultCardsLayoutGroup.transform.childCount < _maxCards)
+            if (defaultCardsLayoutGroup.transform.childCount < maxCards)
             {
-                var card = Instantiate(_cardParent, _defaultCardsLayoutGroup.transform);
-                var randomCard = Random.Range(0, _cardTypes.Count);
+                var card = Instantiate(cardParent, defaultCardsLayoutGroup.transform);
+                var randomCard = Random.Range(0, cardTypes.Count);
 
-                card.GetComponentInChildren<Card>().cardTypeSo = _cardTypes[randomCard];
-                var cardFace = Instantiate(_cardFace, GameObject.Find("CardVisuals").transform);
+                card.GetComponentInChildren<Card>().cardTypeSo = cardTypes[randomCard];
+                var cardFace = Instantiate(cardFaces, GameObject.Find("CardVisuals").transform);
 
                 cardFace.GetComponent<CardFace>()._target = card.GetComponentInChildren<Card>().gameObject;
             }

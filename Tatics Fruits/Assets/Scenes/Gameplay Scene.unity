@@ -285,16 +285,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ab72c5c9c6b4d35af9afb9a3cc3507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
+  cardManager: {fileID: 1473103881}
   available: 0
   completed: 0
   hasToHaveSameNumberOrColor: 0
   maxAmount: 0
   amountToComplete: 0
   holderType: 0
-  scoreManager: {fileID: 0}
-  scoreText: {fileID: 0}
-  timer: {fileID: 0}
+  scoreManager: {fileID: 1708266481}
+  scoreText: {fileID: 1381425713}
+  timer: {fileID: 9022809906991244057}
 --- !u!210 &83359195
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -709,8 +709,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 242047028}
-  - component: {fileID: 242047029}
   - component: {fileID: 242047030}
+  - component: {fileID: 242047031}
   m_Layer: 5
   m_Name: CardsLayoutGroup
   m_TagString: Untagged
@@ -734,35 +734,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: 0.0025024414}
-  m_SizeDelta: {x: 638.56, y: 538.68}
+  m_AnchoredPosition: {x: -0.000045776, y: 0.0025024414}
+  m_SizeDelta: {x: 565.16, y: 538.68}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &242047029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242047027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: -300
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 4
-  m_Spacing: 25
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &242047030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,16 +749,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ab72c5c9c6b4d35af9afb9a3cc3507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardManager: {fileID: 0}
+  cardManager: {fileID: 1473103881}
   available: 0
   completed: 0
   hasToHaveSameNumberOrColor: 0
   maxAmount: 0
   amountToComplete: 0
   holderType: 0
-  scoreManager: {fileID: 0}
-  scoreText: {fileID: 0}
-  timer: {fileID: 0}
+  scoreManager: {fileID: 1708266481}
+  scoreText: {fileID: 1381425713}
+  timer: {fileID: 9022809906991244057}
+--- !u!114 &242047031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242047027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 100, y: 100}
+  m_Constraint: 2
+  m_ConstraintCount: 2
 --- !u!1 &264147627
 GameObject:
   m_ObjectHideFlags: 0
@@ -2581,9 +2579,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cdae3e11fea49e39324a3d3bce00ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _preRoundPrefab: {fileID: 373463654744968627, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}
-  _uiContainer: {fileID: 2082077804}
-  _starsSprite: {fileID: -768593662, guid: a9cce450baf222a4886fd9ce1f437213, type: 3}
+  preRoundPrefab: {fileID: 373463654744968627, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}
+  uiContainer: {fileID: 2082077804}
+  starsSprite: {fileID: 5754163482525733906, guid: a7ab94ec152b1d8428cdb0ee8bbf6d90, type: 3}
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,21 +2632,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eacb3ac6d5104442ab0ce608bffa2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _selectedCard: {fileID: 0}
-  _hoveringMenu: {fileID: 0}
-  _cardType: {fileID: 0}
+  selectedCard: {fileID: 0}
+  hoveringMenu: {fileID: 0}
+  cardType: {fileID: 0}
   swapAllFree: 0
-  _cardParent: {fileID: 4717338773919566542, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
-  _defaultCardsLayoutGroup: {fileID: 242047029}
-  _defaultPlayArea: {fileID: 83359194}
-  _singleCardsParent: {fileID: 0}
-  _cardFace: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
-  _canvas: {fileID: 2082077803}
-  _timer: {fileID: 0}
-  _swapAllButton: {fileID: 456065598}
-  _maxCards: 6
-  _startingAmount: 6
-  _cardTypes:
+  cardParent: {fileID: 4717338773919566542, guid: b104642678c9f470e8ef5662fe9fc572, type: 3}
+  defaultCardsLayoutGroup: {fileID: 242047031}
+  defaultPlayArea: {fileID: 242047030}
+  singleCardsParent: {fileID: 0}
+  cardFaces: {fileID: 3242283365137852372, guid: 949fdcd0def347046b89b1dd8226fff8, type: 3}
+  canva: {fileID: 2082077803}
+  timer: {fileID: 9022809906991244057}
+  swapAllButton: {fileID: 456065598}
+  maxCards: 6
+  startingAmount: 6
+  cardTypes:
   - {fileID: 11400000, guid: 812db7d2293c447c8b7884b6ec89a81a, type: 2}
   - {fileID: 11400000, guid: 05123841ee56f44fead512a82761ab6d, type: 2}
   - {fileID: 11400000, guid: cd99ff58d8d854f1c9f75a4d7bc3282d, type: 2}
@@ -2664,18 +2662,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
-  - {fileID: 11400000, guid: 0b470fc8d1fcb4c43adb0cb94a86301b, type: 2}
-  - {fileID: 11400000, guid: 516a09e3ed4158d4a87ae82f9d2baf93, type: 2}
-  - {fileID: 11400000, guid: b465db8bc0d56414a942fe55f6a00d32, type: 2}
-  - {fileID: 11400000, guid: 0c3e9bc9340c45d45b6646ace4eb361d, type: 2}
-  - {fileID: 11400000, guid: 2bc8780e6354ef2449c31a67d3ddcfe1, type: 2}
-  - {fileID: 11400000, guid: e0192e2e875fadc45a494809b59335ae, type: 2}
-  - {fileID: 11400000, guid: a87d222d5b1a3384994d9c9ef2d20642, type: 2}
-  - {fileID: 11400000, guid: d805dcc322f8cc54792e81bb27e82fb4, type: 2}
-  - {fileID: 11400000, guid: d55ae22be08194f44b79dc5d51e953e0, type: 2}
-  - {fileID: 11400000, guid: aa4da343bc8f45845bb6ce4e17b21493, type: 2}
-  - {fileID: 11400000, guid: f590445e17dd8c744a876a6f378142c8, type: 2}
-  _cards: []
+  cards: []
 --- !u!82 &1473103882
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4411,20 +4398,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8609317532638126058}
   m_CullTransparentMesh: 1
---- !u!114 &3017625662542854139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7196847098783615773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da3f4ff9954558145a9da5e8cf8426d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImage: {fileID: 6021250427181753296}
-  scrollSpeed: {x: 0.1, y: 0.1}
 --- !u!1 &3212726917366375875
 GameObject:
   m_ObjectHideFlags: 0
@@ -5021,7 +4994,6 @@ GameObject:
   - component: {fileID: 2061864009630882204}
   - component: {fileID: 7248365160975751937}
   - component: {fileID: 6021250427181753296}
-  - component: {fileID: 3017625662542854139}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged

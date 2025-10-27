@@ -34,9 +34,9 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         foreach (Transform child in transform.GetComponentInChildren<Transform>())
         {
-            if (cardManager._cards.Contains(child.gameObject))
+            if (cardManager.cards.Contains(child.gameObject))
             {
-                cardManager._cards.Remove(child.gameObject);
+                cardManager.cards.Remove(child.gameObject);
             }
 
             if (child.GetComponent<Card>())
@@ -132,17 +132,17 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             {
                 if (hasToHaveSameNumberOrColor)
                 {
-                    if (cardManager._selectedCard != null && transform.childCount > 0)
+                    if (cardManager.selectedCard != null && transform.childCount > 0)
                     {
                         var lastChild = transform.GetChild(transform.childCount - 1);
                         if (lastChild != null)
                         {
                             var lastCard = lastChild.GetComponent<Card>();
 
-                            if (lastCard != null && cardManager._selectedCard.GetComponent<Card>() != null)
+                            if (lastCard != null && cardManager.selectedCard.GetComponent<Card>() != null)
                             {
-                                if (cardManager._selectedCard.GetComponent<Card>().cardNumber == lastCard.cardNumber ||
-                                    cardManager._selectedCard.GetComponent<Card>().cardTypeSo.cardIcon == lastCard.cardTypeSo.cardIcon)
+                                if (cardManager.selectedCard.GetComponent<Card>().cardNumber == lastCard.cardNumber ||
+                                    cardManager.selectedCard.GetComponent<Card>().cardTypeSo.cardIcon == lastCard.cardTypeSo.cardIcon)
                                 {
                                     available = transform.childCount < maxAmount;
                                 }
@@ -195,12 +195,12 @@ public class CardHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (available)
-            cardManager._hoveringMenu = gameObject;
+            cardManager.hoveringMenu = gameObject;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (available)
-            cardManager._hoveringMenu = null;
+            cardManager.hoveringMenu = null;
     }
 }

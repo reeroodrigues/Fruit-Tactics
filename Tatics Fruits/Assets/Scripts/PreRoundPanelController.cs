@@ -1,3 +1,4 @@
+using System;
 using DefaultNamespace;
 using TMPro;
 using UnityEngine;
@@ -6,39 +7,41 @@ using UnityEngine.UI;
 
 public class PreRoundPanelController : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _objectiveText;
-    [SerializeField] private Image _starsImage;
-    [SerializeField] private Button _backToMenuButton;
-    [SerializeField] private Button _startPhaseButton;
-    [SerializeField] private Button _changeObjectiveButton;
-    [SerializeField] private ObjectiveProvider _objectiveProvider;
-    [SerializeField] private Timer _timer;
+    [SerializeField] private TextMeshProUGUI objectiveText;
+    [SerializeField] private Image starsImage;
+    [SerializeField] private Button backToMenuButton;
+    [SerializeField] private Button startPhaseButton;
+    [SerializeField] private Button changeObjectiveButton;
+    [SerializeField] private ObjectiveProvider objectiveProvider;
+    [SerializeField] private Timer timer;
     
     private int _currentTargetScore;
     private int _currentTotalTime;
     
+    [Obsolete("Obsolete")]
     private void Start()
     {
-        _backToMenuButton.onClick.AddListener(BackToMenu);
-        _startPhaseButton.onClick.AddListener(StartPhase);
-        _changeObjectiveButton.onClick.AddListener(ChangeObjective);
+        backToMenuButton.onClick.AddListener(BackToMenu);
+        startPhaseButton.onClick.AddListener(StartPhase);
+        changeObjectiveButton.onClick.AddListener(ChangeObjective);
     }
 
+    [Obsolete("Obsolete")]
     public void SetupPreRound(int phaseNumber, string objectiveDescription, Sprite starsSprite, int targetScore, int totalTime)
     {
-        _objectiveText.text = objectiveDescription;
-        _starsImage.sprite = starsSprite;
+        objectiveText.text = objectiveDescription;
+        starsImage.sprite = starsSprite;
         _currentTargetScore = targetScore;
         _currentTotalTime = totalTime;
 
-        if (_timer == null)
+        if (timer == null)
         {
-            _timer = FindObjectOfType<Timer>();
+            timer = FindObjectOfType<Timer>();
         }
 
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.SetTotalTime(totalTime);
+            timer.SetTotalTime(totalTime);
         }
 
         var scoreManager = FindObjectOfType<ScoreManager>();
@@ -53,39 +56,41 @@ public class PreRoundPanelController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    [Obsolete("Obsolete")]
     private void StartPhase()
     {
         gameObject.SetActive(false);
     
-        if (_timer == null)
+        if (timer == null)
         {
-            _timer = FindObjectOfType<Timer>();
+            timer = FindObjectOfType<Timer>();
         }
 
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.StartTimer();
+            timer.StartTimer();
         }
     }
     
+    [Obsolete("Obsolete")]
     private void ChangeObjective()
     {
-        if (_objectiveProvider == null)
+        if (objectiveProvider == null)
         {
             return;
         }
 
-        var newObjective = _objectiveProvider.GetRandomObjectives();
+        var newObjective = objectiveProvider.GetRandomObjectives();
         _currentTargetScore = newObjective._points;
         _currentTotalTime = newObjective._time;
 
-        _objectiveText.text = $"Score {_currentTargetScore} points in {_currentTotalTime} seconds.";
+        objectiveText.text = $"Score {_currentTargetScore} points in {_currentTotalTime} seconds.";
 
-        if (_timer == null)
-            _timer = FindObjectOfType<Timer>();
+        if (timer == null)
+            timer = FindObjectOfType<Timer>();
 
-        if (_timer != null)
-            _timer.SetTotalTime(_currentTotalTime);
+        if (timer != null)
+            timer.SetTotalTime(_currentTotalTime);
         
         var scoreManager = FindObjectOfType<ScoreManager>();
         if (scoreManager != null)
