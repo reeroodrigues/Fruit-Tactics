@@ -929,18 +929,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 382697f7f5cb44c198be08fbb777d44b, type: 2}
   - {fileID: 11400000, guid: 6c771f17baa0346169ed64c12aeff9a0, type: 2}
   - {fileID: 11400000, guid: d9922d631cab242e1b13a3ea5e0c2251, type: 2}
-  - {fileID: 11400000, guid: 0b470fc8d1fcb4c43adb0cb94a86301b, type: 2}
-  - {fileID: 11400000, guid: b465db8bc0d56414a942fe55f6a00d32, type: 2}
-  - {fileID: 11400000, guid: 516a09e3ed4158d4a87ae82f9d2baf93, type: 2}
-  - {fileID: 11400000, guid: 0c3e9bc9340c45d45b6646ace4eb361d, type: 2}
-  - {fileID: 11400000, guid: 2bc8780e6354ef2449c31a67d3ddcfe1, type: 2}
-  - {fileID: 11400000, guid: e0192e2e875fadc45a494809b59335ae, type: 2}
-  - {fileID: 11400000, guid: a87d222d5b1a3384994d9c9ef2d20642, type: 2}
-  - {fileID: 11400000, guid: d805dcc322f8cc54792e81bb27e82fb4, type: 2}
-  - {fileID: 11400000, guid: d55ae22be08194f44b79dc5d51e953e0, type: 2}
-  - {fileID: 11400000, guid: aa4da343bc8f45845bb6ce4e17b21493, type: 2}
-  - {fileID: 11400000, guid: f590445e17dd8c744a876a6f378142c8, type: 2}
-  timer: {fileID: 0}
+  timer: {fileID: 9022809906991244057}
   cardManager: {fileID: 1473103881}
 --- !u!222 &344111149
 CanvasRenderer:
