@@ -132,22 +132,37 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             var cardHolder = cardManager.hoveringMenu.GetComponent<CardHolder>();
 
-            if (cardHolder != null && cardHolder.holderType == CardHolder.HolderType.Discard)
+            if (cardHolder != null)
             {
-                transform.SetParent(cardHolder.transform);
-                transform.localPosition = Vector3.zero;
+                if (cardHolder.holderType == CardHolder.HolderType.Play && cardHolder.available)
+                {
+                    transform.SetParent(cardHolder.transform);
+                    transform.localPosition = Vector3.zero;
+                    cardState = CardState.Played;
+                    canDrag = false;
+
+                    cardManager.selectedCard = null;
+                    cardManager.GetComponent<AudioSource>().Play();
+                    GetComponent<Image>().raycastTarget = true;
+                    return;
+                }
+
+                if (cardHolder.holderType == CardHolder.HolderType.Discard)
+                {
+                    transform.SetParent(cardHolder.transform);
+                    transform.localPosition = Vector3.zero;
+                    cardManager.selectedCard = null;
+                    cardManager.GetComponent<AudioSource>().Play();
+                    GetComponent<Image>().raycastTarget = true;
+                    return;
+                }
             }
-            else
-            {
-                var target = transform.parent;
-                transform.position = cardManager.hoveringMenu.transform.position;
-                transform.SetParent(cardManager.hoveringMenu.transform);
-                Destroy(target.gameObject);
-            }
+            
+            ResetCardPosition();
         }
         else
         {
-            transform.localPosition = Vector2.zero;
+            ResetCardPosition();
         }
     }
 
