@@ -87,8 +87,8 @@ public class SettingsMenu : MonoBehaviour
         audioToggle.isOn = _settings.musicOn;
         sfxToggle.isOn   = _settings.sfxOn;
         
-        ApplyMusicSetting(_settings.musicOn);
-        ApplySfxSetting(_settings.sfxOn);
+        SetMusicMute(_settings.musicOn);
+        SetSfxMute(_settings.sfxOn);
         
         RefreshToggleVisuals();
         
@@ -247,7 +247,7 @@ public class SettingsMenu : MonoBehaviour
         _settings.musicOn = isOn;
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
-        ApplyMusicSetting(isOn);
+        SetMusicMute(isOn);
     }
     
     private void OnSfxToggleChanged(bool isOn)
@@ -255,7 +255,7 @@ public class SettingsMenu : MonoBehaviour
         _settings.sfxOn = isOn;
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
-        ApplySfxSetting(isOn);
+        SetSfxMute(isOn);
     }
 
     private void RefreshToggleVisuals()
@@ -294,19 +294,15 @@ public class SettingsMenu : MonoBehaviour
     }
     
     
-    private void ApplyMusicSetting(bool isOn)
+    private void SetMusicMute(bool isOn)
     {
-        // AudioController.SetMusicMuted(!isOn);
-        
+        // AudioManager.Instance.SetMusicVolume(isOn ? 1f : 0f);
         Debug.Log($"Preferência de Música SALVA e APLICADA: {(isOn ? "ON" : "OFF")}");
     }
     
-    private void ApplySfxSetting(bool isOn)
+    private void SetSfxMute(bool isOn)
     {
-        // AudioController.SetSfxMuted(!isOn);
-        
-        // Outra opção: AudioListener.volume = isOn ? 1f : 0f;
-        
+        // AudioManager.Instance.SetSfxVolume(isOn ? 1f : 0f);
         Debug.Log($"Preferência de SFX SALVA e APLICADA: {(isOn ? "ON" : "OFF")}");
     }
 }

@@ -24,11 +24,14 @@ public class ToggleSettingsGameplay : MonoBehaviour
     
     private CanvasGroup _settingsCanvasGroup;
     private Coroutine _currentToggleCoroutine;
+    private GameSettingsModel _settings;
     
     private Vector3 _targetPosition; 
 
     private void Start()
     {
+        _settings = SettingsRepository.Get(); 
+
         _settingsCanvasGroup = settingsMenu.GetComponent<CanvasGroup>();
         if (_settingsCanvasGroup == null)
         {
@@ -49,18 +52,36 @@ public class ToggleSettingsGameplay : MonoBehaviour
 
         if (musicToggle != null)
         {
-            musicToggle.onValueChanged.AddListener(SetMusicMute);
+            musicToggle.isOn = _settings.musicOn;
+            SetMusicMute(_settings.musicOn); 
+            musicToggle.onValueChanged.AddListener(OnMusicToggleChanged);
         }
 
         if (sfxToggle != null)
         {
-            sfxToggle.onValueChanged.AddListener(SetSfxMute);
+            sfxToggle.isOn = _settings.sfxOn;
+            SetSfxMute(_settings.sfxOn); 
+            sfxToggle.onValueChanged.AddListener(OnSfxToggleChanged);
         }
 
         if (timer == null)
         {
             timer = FindAnyObjectByType<Timer>();
         }
+    }
+
+    private void OnMusicToggleChanged(bool isOn)
+    {
+        _settings.musicOn = isOn;
+        SettingsRepository.Save(_settings);
+        SetMusicMute(isOn);
+    }
+
+    private void OnSfxToggleChanged(bool isOn)
+    {
+        _settings.sfxOn = isOn;
+        SettingsRepository.Save(_settings);
+        SetSfxMute(isOn);
     }
 
     public void ToggleSettingsMenu()
@@ -74,7 +95,7 @@ public class ToggleSettingsGameplay : MonoBehaviour
 
         if (timer != null)
         {
-            timer.IsPaused = isPaused;
+            timer.IsPaused = isPaused; 
         }
         
         Time.timeScale = isPaused ? 0f : 1f;
@@ -135,14 +156,16 @@ public class ToggleSettingsGameplay : MonoBehaviour
         }
     }
     
-    private void SetMusicMute(bool isMuted)
+    private void SetMusicMute(bool isOn)
     {
-        Debug.Log("Musica mute: " + isMuted);
+        // AudioManager.Instance.SetMusicVolume(isOn ? 1f : 0f);
+        Debug.Log("Musica: " + (isOn ? "ON" : "OFF"));
     }
     
-    private void SetSfxMute(bool isMuted)
+    private void SetSfxMute(bool isOn)
     {
-        Debug.Log("SFX mute: " + isMuted);
+        // AudioManager.Instance.SetSfxVolume(isOn ? 1f : 0f);
+        Debug.Log("SFX: " + (isOn ? "ON" : "OFF"));
     }
 
     public void ReturnToMainMenu()

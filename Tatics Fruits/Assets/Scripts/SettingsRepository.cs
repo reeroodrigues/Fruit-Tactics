@@ -2,23 +2,19 @@ using System.IO;
 
 public static class SettingsRepository
 {
-    private const string FileName = "settings.json";
-    private static GameSettingsModel _cache;
-
+    private const string FileName = "game_settings.json";
+    
     public static GameSettingsModel Get()
     {
-        if (_cache != null)
-            return _cache;
-
-        if (!JsonDataService.TryLoad(FileName, out _cache))
-            _cache = new GameSettingsModel();
-        return _cache;
+        if (JsonDataService.TryLoad<GameSettingsModel>(FileName, out var loaded))
+        {
+            return loaded ?? new GameSettingsModel();
+        }
+        return new GameSettingsModel();
     }
 
-    public static void Save(GameSettingsModel model = null)
+    public static void Save(GameSettingsModel settings)
     {
-        if (model != null)
-            _cache = model;
-        JsonDataService.Save(FileName, _cache ?? new GameSettingsModel());
+        JsonDataService.Save(FileName, settings);
     }
 }
