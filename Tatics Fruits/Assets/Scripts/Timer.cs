@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
@@ -19,49 +17,46 @@ public class Timer : MonoBehaviour
 
     private bool _isPulsing = false;
     private bool _isRunning = false;
-    private bool _isPaused;
-
-    public Timer(bool isPaused)
-    {
-        _isPaused = isPaused;
-    }
+    public bool IsPaused { get; set; } = false;
 
     public void SetTotalTime(float time)
     {
         totalTime = time;
         remainingTime = totalTime;
         UpdateTimerText();
-        
-        {
-            Debug.Log("Aguardando clique do botão Start...");
-        };
     }
 
     public void StartTimer()
     {
         _isRunning = true;
-        Debug.Log("Timer iniciado!");
     }
 
     private void Update()
     {
-        if (!_isRunning || _isPaused) return;
-
+        if (!_isRunning || IsPaused) return;
+        
         if (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
+            
+            if (remainingTime < 0)
+            {
+                remainingTime = 0;
+            }
+            
             timerImage.fillAmount = remainingTime / totalTime;
             UpdateTimerText();
-
+            
             if (remainingTime <= 10 && !_isPulsing)
             {
                 StartPulsingEffect();
             }
-        }
-        else
-        {
-            StopTimer();
-            EndRound();
+            
+            if (remainingTime <= 0)
+            {
+                StopTimer();
+                EndRound();
+            }
         }
     }
 
@@ -94,7 +89,7 @@ public class Timer : MonoBehaviour
         }
     
         addedTimeText.transform.DOLocalMoveY(50f, 1f).SetRelative().SetEase(Ease.OutQuad);
-        textComponent.DOFade(0, 1f).OnComplete(() => Destroy(addedTimeText));
+        textComponent.DOFade(0, 1f).OnComplete(() => Destroy(addedTimeText.gameObject));
     }
 
     private void UpdateTimerText()
@@ -143,14 +138,13 @@ public class Timer : MonoBehaviour
 
     private IEnumerator FreezeCoroutine(float duration)
     {
-        _isPaused = true;
+        IsPaused = true;
         yield return new WaitForSecondsRealtime(duration);
-        _isPaused = false;
+        IsPaused = false;
     }
     
     private void EndRound()
     {
-        Debug.Log("Round Ended!");
         OnRoundEnd?.Invoke();
     }
 }

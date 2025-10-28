@@ -11,10 +11,10 @@ public class ScoreManager : MonoBehaviour
     private HighScore _highScore;
 
     [Header("UI Elements")]
-    [SerializeField] private TextMeshProUGUI _scoreText;
-    [SerializeField] private Slider _progressBar;
-    [SerializeField] private GameObject[] _stars;
-    [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Slider progressBar;
+    [SerializeField] private GameObject[] stars;
+    [SerializeField] private TextMeshProUGUI levelText;
 
     [Header("Level Settings")]
     private readonly int[] _starThresholds = { 25, 50, 100 };
@@ -24,21 +24,22 @@ public class ScoreManager : MonoBehaviour
     private int _targetScore;
 
     [Header("Level Completed Panels")]
-    [SerializeField] private GameObject _victoryPanelPrefab;
-    [SerializeField] private GameObject _defeatPanelPrefab;
-    [SerializeField] private Transform _uiCanvas;
-    [SerializeField] private Timer _timer;
-    [SerializeField] private GameController _gameController;
+    [SerializeField] private GameObject victoryPanelPrefab;
+    [SerializeField] private GameObject defeatPanelPrefab;
+    [SerializeField] private Transform uiCanvas;
+    [SerializeField] private Timer timer;
+    [SerializeField] private GameController gameController;
 
     [Header("Score Animation")]
-    [SerializeField] private float _scaleAmount = 1.3f;
-    [SerializeField] private float _scaleDuration = 0.2f;
+    [SerializeField] private float scaleAmount = 1.3f;
+    [SerializeField] private float scaleDuration = 0.2f;
 
     private GameObject _currentPanel;
     private bool _hasEnded = false;
 
     public event Action OnLevelCompleted;
 
+    [Obsolete("Obsolete")]
     private void Start()
     {
         _highScore = FindObjectOfType<HighScore>();
@@ -48,7 +49,6 @@ public class ScoreManager : MonoBehaviour
         if (_targetScore == 0)
         {
             _targetScore = 100;
-            Debug.LogWarning("Target Score não definido, atribuindo 100 por padrão.");
         }
 
         UpdateScoreUI();
@@ -57,9 +57,9 @@ public class ScoreManager : MonoBehaviour
 
         OnLevelCompleted += HandleEndOfRound;
 
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.OnRoundEnd += HandleEndOfRound;
+            timer.OnRoundEnd += HandleEndOfRound;
         }
     }
 
@@ -89,7 +89,7 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreUI();
         UpdateProgress();
 
-        _scoreText.transform.DOScale(1.3f, 0.2f)
+        scoreText.transform.DOScale(1.3f, 0.2f)
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
         
@@ -97,43 +97,46 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreUI()
     {
-        if (_scoreText != null)
-            _scoreText.text = _score.ToString();
+        if (scoreText != null)
+            scoreText.text = _score.ToString();
     }
 
     private void AnimateScore()
     {
-        if (_scoreText == null) return;
+        if (scoreText == null) return;
 
-        _scoreText.transform.DOScale(_scaleAmount, _scaleDuration)
+        scoreText.transform.DOScale(scaleAmount, scaleDuration)
             .SetEase(Ease.OutBack)
-            .OnComplete(() => _scoreText.transform.DOScale(1f, _scaleDuration));
+            .OnComplete(() => scoreText.transform.DOScale(1f, scaleDuration));
     }
 
     private void UpdateProgress()
     {
-        if (_progressBar == null || _targetScore == 0) return;
+        if (progressBar == null || _targetScore == 0) return;
 
         float fillAmount = Mathf.Clamp((float)_score / _targetScore, 0f, 1f);
-        _progressBar.DOValue(fillAmount, 0.5f);
+        progressBar.DOValue(fillAmount, 0.5f);
         ActivateStars(_score);
     }
 
     private void ActivateStars(int score)
     {
-        for (int i = 0; i < _stars.Length; i++)
+        for (int i = 0; i < stars.Length; i++)
         {
             if (i < _starThresholds.Length && score >= _starThresholds[i])
             {
-                if (!_stars[i].activeSelf)
+                if (!stars[i].activeSelf)
                 {
-                    _stars[i].SetActive(true);
-                    AnimateStar(_stars[i]);
+                    stars[i].SetActive(true);
+                    
+                    stars[i].transform.localScale = Vector3.zero;
+                    
+                    AnimateStar(stars[i]);
                 }
             }
             else
             {
-                _stars[i].SetActive(false);
+                stars[i].SetActive(false);
             }
         }
     }
@@ -160,9 +163,9 @@ public class ScoreManager : MonoBehaviour
         _hasEnded = true;
         SaveHighScore();
 
-        if (_timer != null)
+        if (timer != null)
         {
-            _timer.StopTimer();
+            timer.StopTimer();
         }
 
         var victory = _score >= _targetScore;
@@ -172,18 +175,18 @@ public class ScoreManager : MonoBehaviour
 
     private void ShowLevelCompletedPanel(bool success)
     {
-        if (_uiCanvas == null) return;
+        if (uiCanvas == null) return;
 
         if (_currentPanel != null)
         {
             Destroy(_currentPanel);
         }
 
-        var panelPrefab = success ? _victoryPanelPrefab : _defeatPanelPrefab;
+        var panelPrefab = success ? victoryPanelPrefab : defeatPanelPrefab;
 
         if (panelPrefab == null) return;
 
-        _currentPanel = Instantiate(panelPrefab, _uiCanvas);
+        _currentPanel = Instantiate(panelPrefab, uiCanvas);
         _currentPanel.SetActive(true);
 
         var panelController = _currentPanel.GetComponent<LevelCompletedPanel>();
@@ -192,7 +195,7 @@ public class ScoreManager : MonoBehaviour
             var starsEarned = CalculateEarnedStars();
             panelController.Setup(success, success ? starsEarned : 0);
 
-            panelController.SetGameController(_gameController);
+            panelController.SetGameController(gameController);
             panelController.SetScoreManager(this);
         }
     }
@@ -214,8 +217,8 @@ public class ScoreManager : MonoBehaviour
         
         _scoreToNextLevel += Mathf.RoundToInt(_scoreToNextLevel * 0.5f);
 
-        if (_progressBar != null)
-            _progressBar.value = 0f;
+        if (progressBar != null)
+            progressBar.value = 0f;
 
         UpdateLevelUI();
         AnimateLevelUp();
@@ -223,29 +226,24 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateLevelUI()
     {
-        if (_levelText != null)
-            _levelText.text = "Level " + _currentLevel;
+        if (levelText != null)
+            levelText.text = "Level " + _currentLevel;
     }
 
     private void AnimateLevelUp()
     {
-        _levelText.transform.DOScale(1.5f, 0.3f)
+        levelText.transform.DOScale(1.5f, 0.3f)
             .SetLoops(2, LoopType.Yoyo)
             .SetEase(Ease.InOutBounce);
     }
 
     private void AnimateStar(GameObject star)
     {
-        var image = star.GetComponent<Image>();
-        if (image == null) return;
+        star.transform.DOScale(1.5f, 0.2f).SetEase(Ease.OutBack)
+            .OnComplete(() => { star.transform.DOScale(1f, 0.1f); });
 
-        star.transform.DORotate(new Vector3(0, 0, 15), 0.3f)
-            .SetLoops(2, LoopType.Yoyo)
-            .SetEase(Ease.InOutSine);
-
-        image.DOFade(1f, 0.2f)
-            .From(0.5f)
-            .SetLoops(2, LoopType.Yoyo);
+        star.transform.DORotate(new Vector3(0, 0, -360), 0.5f, RotateMode.FastBeyond360)
+            .SetEase(Ease.OutQuad);
     }
 
     public void AdvancedToNextLevelExternally()

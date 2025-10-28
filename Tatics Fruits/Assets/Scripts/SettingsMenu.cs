@@ -86,6 +86,10 @@ public class SettingsMenu : MonoBehaviour
         
         audioToggle.isOn = _settings.musicOn;
         sfxToggle.isOn   = _settings.sfxOn;
+        
+        ApplyMusicSetting(_settings.musicOn);
+        ApplySfxSetting(_settings.sfxOn);
+        
         RefreshToggleVisuals();
         
         Localizer.Instance.SetLanguage(_settings.language, save:false);
@@ -121,6 +125,7 @@ public class SettingsMenu : MonoBehaviour
         IsOpen = false;
         SetMainButtonsInteractable(true);
     }
+    
 
     private void HookButtonWithFeedback(Button btn, string debugMsg)
     {
@@ -236,18 +241,21 @@ public class SettingsMenu : MonoBehaviour
             if (b) b.interactable = value;
     }
 
+    
     private void OnAudioToggleChanged(bool isOn)
     {
         _settings.musicOn = isOn;
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
+        ApplyMusicSetting(isOn);
     }
-
+    
     private void OnSfxToggleChanged(bool isOn)
     {
         _settings.sfxOn = isOn;
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
+        ApplySfxSetting(isOn);
     }
 
     private void RefreshToggleVisuals()
@@ -283,5 +291,22 @@ public class SettingsMenu : MonoBehaviour
         c.a = isSelected ? 1f : unselectedAlpha;
         img.color = c;
         btn.interactable = !isSelected;
+    }
+    
+    
+    private void ApplyMusicSetting(bool isOn)
+    {
+        // AudioController.SetMusicMuted(!isOn);
+        
+        Debug.Log($"Preferência de Música SALVA e APLICADA: {(isOn ? "ON" : "OFF")}");
+    }
+    
+    private void ApplySfxSetting(bool isOn)
+    {
+        // AudioController.SetSfxMuted(!isOn);
+        
+        // Outra opção: AudioListener.volume = isOn ? 1f : 0f;
+        
+        Debug.Log($"Preferência de SFX SALVA e APLICADA: {(isOn ? "ON" : "OFF")}");
     }
 }

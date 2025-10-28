@@ -1,16 +1,17 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AndroidQuitHandler : MonoBehaviour
 {
     private static AndroidQuitHandler _instance;
+    public string mainMenuSceneName = "MainMenu";
 
     private void Awake()
     {
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -20,12 +21,27 @@ public class AndroidQuitHandler : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Botar voltar pressionando - Encerrando o jogo");
-            Application.Quit();
+            if (SceneManager.GetActiveScene().name == mainMenuSceneName)
+            {
+                QuitGame();
+            }
+            else
+            {
+                SceneManager.LoadScene(mainMenuSceneName);
+                
+                Time.timeScale = 1f; 
+            }
         }
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
 }
