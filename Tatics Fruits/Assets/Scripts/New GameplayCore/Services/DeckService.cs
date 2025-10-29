@@ -26,13 +26,11 @@ namespace New_GameplayCore.Services
 
             if (config == null)
             {
-                Debug.LogError("[DeckService] Build chamado com DeckConfigSO nulo!");
                 return;
             }
 
             if (config.Entries == null || config.Entries.Length == 0)
             {
-                Debug.LogWarning("[DeckService] DeckConfigSO sem entradas! Nada para construir.");
                 return;
             }
 
@@ -40,7 +38,6 @@ namespace New_GameplayCore.Services
             {
                 if (e.type == null)
                 {
-                    Debug.LogWarning("[DeckService] Entrada do deck inválida ou sem tipo definido.");
                     continue;
                 }
 
