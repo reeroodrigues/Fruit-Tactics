@@ -24,19 +24,39 @@ namespace New_GameplayCore.Services
             _discard.Clear();
             TotalInitialCount = 0;
 
+            if (config == null)
+            {
+                Debug.LogError("[DeckService] Build chamado com DeckConfigSO nulo!");
+                return;
+            }
+
+            if (config.Entries == null || config.Entries.Length == 0)
+            {
+                Debug.LogWarning("[DeckService] DeckConfigSO sem entradas! Nada para construir.");
+                return;
+            }
+
             foreach (var e in config.Entries)
             {
+                if (e.type == null)
+                {
+                    Debug.LogWarning("[DeckService] Entrada do deck inválida ou sem tipo definido.");
+                    continue;
+                }
+
                 for (int i = 0; i < e.quantity; i++)
                 {
                     string id = Guid.NewGuid().ToString();
                     _deck.Add(new CardInstance(id, e.type, e.type.baseValue));
                 }
+
                 TotalInitialCount += Mathf.Max(0, e.quantity);
             }
 
             Shuffle(_deck);
             Notify();
         }
+
 
         public bool TryDraw(out CardInstance card)
         {

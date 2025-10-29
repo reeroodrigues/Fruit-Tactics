@@ -15,6 +15,8 @@ namespace New_GameplayCore.Views
         [SerializeField] private PreRoundView preRoundView;
         [SerializeField] private Transform uiRoot;
         [SerializeField] private VictoryView victoryPrefab;
+        [SerializeField] private DefeatView defeatPrefab;
+
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
@@ -62,25 +64,41 @@ namespace New_GameplayCore.Views
 
         private void HandleLevelEnded(EndCause cause)
         {
-            if(cause != EndCause.TargetReached)
+            if (cause == EndCause.TargetReached)
+            {
+                // (já feito) Victory
+                var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores);
+                presenter.OnNextLevel += () => { /* TODO: próxima fase */ };
+                presenter.OnReplay    += () => { /* TODO: rejogar */    };
+
+                var model = default(VictoryModel);
+                presenter.OnModelReady += m => model = m;
+                presenter.Build();
+
+                var view = Instantiate(victoryPrefab, uiRoot);
+                view.Bind(presenter, model);
                 return;
-                
-            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores);
-            presenter.OnNextLevel += () =>
+            }
+
+            if (cause == EndCause.TimeUp)
             {
-                //TODO: Load next phase
-            };
-            presenter.OnReplay += () =>
-            {
-                //TODO: Replay phase
-            };
-            
-            var model = default(VictoryModel);
-            presenter.OnModelReady += m => model = m;
-            presenter.Build();
-            
-            var view = Instantiate(victoryPrefab, uiRoot);
-            view.Bind(presenter, model);
+                var presenter = new DefeatPresenter(levelConfig, _score, _time, _highscores);
+                presenter.OnReplay += () =>
+                {
+                    // TODO: reload da fase atual
+                };
+                presenter.OnMenu += () =>
+                {
+                    // TODO: ir para menu de fases
+                };
+
+                var model = default(DefeatModel);
+                presenter.OnModelReady += m => model = m;
+                presenter.Build();
+
+                var view = Instantiate(defeatPrefab, uiRoot);
+                view.Bind(presenter, model);
+            }
         }
 
         private void Start()
