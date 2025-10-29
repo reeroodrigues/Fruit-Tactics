@@ -8,11 +8,11 @@ namespace New_GameplayCore.GameState
         public DefaultNamespace.New_GameplayCore.GameState Current { get; private set; } = DefaultNamespace.New_GameplayCore.GameState.Boot;
         public event Action<DefaultNamespace.New_GameplayCore.GameState> OnStateChanged;
 
-        public void SetState(DefaultNamespace.New_GameplayCore.GameState next)
+        public void SetState(DefaultNamespace.New_GameplayCore.GameState state)
         {
-            if (Current == next) return;
-            Current = next;
-            OnStateChanged?.Invoke(next);
+            if (Current == state) return;
+            Current = state;
+            OnStateChanged?.Invoke(state);
         }
 
         public event Action<DefaultNamespace.New_GameplayCore.GameState> OnStateChange;

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using New_GameplayCore;
+using New_GameplayCore.Views;
 
 public class DeckCounterView : MonoBehaviour
 {

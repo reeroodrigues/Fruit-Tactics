@@ -13,7 +13,7 @@ namespace New_GameplayCore.Controllers
         private readonly IHandService _hand;
         private readonly IRuleEngine _rule;
         private readonly ISwapService _swap;
-        private readonly LevelConfigSO _cfg;
+        private LevelConfigSO _cfg;
 
         private CardInstance? _selectedCard = null;
 
@@ -33,11 +33,19 @@ namespace New_GameplayCore.Controllers
                 }
             };
         }
-        
+
+        public bool IsPlaying { get; }
+        public event Action OnEnterPreRound;
+        public event Action OnExitPreRound;
+
         public void StartLevel(LevelConfigSO cfg, DeckConfigSO deckCfg)
         {
-            _deck.Build(deckCfg, new System.Random());
-            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Playing);
+            _cfg = cfg;
+            var rng = cfg.useFixedSeed ? new Random(cfg.fixedSeed) : new Random();
+            _deck.Build(deckCfg, rng);
+            
+            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.PreRound);
+            OnEnterPreRound?.Invoke();
             
             var cards = new List<CardInstance>();
             _deck.DrawMany(cfg.handSize, cards);
@@ -64,6 +72,28 @@ namespace New_GameplayCore.Controllers
             }
 
             _selectedCard = null;
+        }
+
+        public void BeginPlayFromPreRound(PreRoundModel model)
+        {
+            var rng = model.UseFixedSeed ? new Random(model.EffectiveSeed) : new Random();
+
+            _time.TryPay(_time.TimeLeftSeconds);
+            _time.Add(_cfg.initialTimeSeconds);
+
+            var buf = new List<CardInstance>();
+            _deck.DrawMany(_cfg.handSize, buf);
+            _hand.ClearTo(new List<CardInstance>());
+            _hand.AddMany(buf);
+            
+            OnExitPreRound?.Invoke();
+            
+            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Playing);
+        }
+
+        public void BackToLevelSelect()
+        {
+            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Boot);
         }
 
         public bool TryDrawOne()

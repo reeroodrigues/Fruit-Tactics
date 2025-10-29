@@ -2,11 +2,11 @@ using System;
 
 namespace DefaultNamespace.New_GameplayCore
 {
-    public enum GameState {Boot, Loading, Countdown, Playing, Pause, Results}
+    public enum GameState {Boot, PreRound, Countdown, Playing, Results}
     public interface IGameStateMachine
     {
         GameState Current { get; }
-        void SetState(GameState next);
+        void SetState(GameState state);
         event Action<GameState> OnStateChange;
     }
 }

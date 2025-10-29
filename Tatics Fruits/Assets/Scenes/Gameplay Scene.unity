@@ -2679,6 +2679,8 @@ MonoBehaviour:
   deckConfig: {fileID: 11400000, guid: 435c975f91d38754d91c78fe88911d33, type: 2}
   hudView: {fileID: 2082077805}
   handView: {fileID: 1473103883}
+  preRoundView: {fileID: 7977498750825521673, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}
+  uiRoot: {fileID: 2082077804}
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0

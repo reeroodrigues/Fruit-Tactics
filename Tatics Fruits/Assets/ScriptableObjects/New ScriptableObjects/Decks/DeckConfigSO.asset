@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: DeckConfigSO
   m_EditorClassIdentifier: Assembly-CSharp:New_GameplayCore:DeckConfigSO
-  entries:
+  Entries:
   - type: {fileID: 11400000, guid: 15a1a8963dd67bc4a9cbd71e27e2a09d, type: 2}
     quantity: 4
   - type: {fileID: 11400000, guid: 3fba7968d8440e84e98c819617ae7638, type: 2}
@@ -25,6 +25,8 @@ MonoBehaviour:
     quantity: 4
   - type: {fileID: 11400000, guid: 74d6b68786be9c04490b1422cec403f4, type: 2}
     quantity: 4
+  - type: {fileID: 11400000, guid: 2adf8ef6b401221428df52a522cea932, type: 2}
+    quantity: 4
   - type: {fileID: 11400000, guid: d25d6ee8920885843b60191c168788af, type: 2}
     quantity: 4
   - type: {fileID: 11400000, guid: 5f480bbd6a39baf4c9244a315a41386f, type: 2}
@@ -35,9 +37,9 @@ MonoBehaviour:
     quantity: 4
   - type: {fileID: 11400000, guid: e59756997e398264abb0bfc9160cc08a, type: 2}
     quantity: 4
-  - type: {fileID: 11400000, guid: e59756997e398264abb0bfc9160cc08a, type: 2}
+  - type: {fileID: 11400000, guid: 8482252c6eb268848991af4bd8b6257e, type: 2}
     quantity: 4
   - type: {fileID: 11400000, guid: 26bf6f77d8e684e44aa6898ce8f857a2, type: 2}
     quantity: 4
-  - type: {fileID: 11400000, guid: 26bf6f77d8e684e44aa6898ce8f857a2, type: 2}
+  - type: {fileID: 11400000, guid: c8a0914077f70584993f9352a963a900, type: 2}
     quantity: 4

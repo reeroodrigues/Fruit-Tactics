@@ -24,7 +24,7 @@ namespace New_GameplayCore.Services
             _discard.Clear();
             TotalInitialCount = 0;
 
-            foreach (var e in config.entries)
+            foreach (var e in config.Entries)
             {
                 for (int i = 0; i < e.quantity; i++)
                 {
