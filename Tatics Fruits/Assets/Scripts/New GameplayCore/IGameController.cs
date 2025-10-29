@@ -1,12 +1,14 @@
 using System;
+using DefaultNamespace.New_GameplayCore;
 
 namespace New_GameplayCore
 {
     public interface IGameController
     {
         bool IsPlaying { get; }
-        event System.Action OnEnterPreRound;
-        event System.Action OnExitPreRound;
+        event Action OnEnterPreRound;
+        event Action OnExitPreRound;
+        event Action<EndCause> OnLevelEnded;
         void StartLevel(LevelConfigSO cfg, DeckConfigSO deckCfg);
         void UpdateTick(float deltaTime);
         void OnCardSelected(CardInstance card);
@@ -14,7 +16,5 @@ namespace New_GameplayCore
         void BackToLevelSelect();
         void OnSwapAllRequested();
         void OnSwapRandomRequested();
-        event Action OnLevelEnded;
-
     }
 }

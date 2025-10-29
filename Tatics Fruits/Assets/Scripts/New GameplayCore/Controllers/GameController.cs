@@ -14,22 +14,33 @@ namespace New_GameplayCore.Controllers
         private readonly IRuleEngine _rule;
         private readonly ISwapService _swap;
         private LevelConfigSO _cfg;
+        private readonly IScoreService _score;
 
         private CardInstance? _selectedCard = null;
 
-        public event Action OnLevelEnded;
+        public event Action<EndCause> OnLevelEnded;
 
         public GameController(IGameStateMachine fsm, ITimeManager time, IDeckService deck, 
-            IHandService hand, IRuleEngine rule, ISwapService swap, LevelConfigSO cfg)
+            IHandService hand, IRuleEngine rule, ISwapService swap, LevelConfigSO cfg, ScoreService score)
         {
-            _fsm = fsm; _time = time; _deck = deck; _hand = hand; _rule = rule; _swap = swap; _cfg = cfg;
+            _fsm = fsm; _time = time; _deck = deck; _hand = hand; _rule = rule; _swap = swap;
+            _cfg = cfg; _score =  score ?? throw new ArgumentNullException(nameof(score));
 
             _time.OnTimeChanged += t =>
             {
                 if (t <= 0 && _fsm.Current == DefaultNamespace.New_GameplayCore.GameState.Playing)
                 {
                     _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Results);
-                    OnLevelEnded?.Invoke();
+                    OnLevelEnded?.Invoke(EndCause.TimeUp);
+                }
+            };
+            
+            _score.OnScoreChanged += (total, delta) =>
+            {
+                if (_fsm.Current == DefaultNamespace.New_GameplayCore.GameState.Playing && total >= _cfg.targetScore)
+                {
+                    _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Results);
+                    OnLevelEnded?.Invoke(EndCause.TargetReached);
                 }
             };
         }

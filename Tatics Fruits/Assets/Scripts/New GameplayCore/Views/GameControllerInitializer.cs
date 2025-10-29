@@ -1,4 +1,5 @@
 using System;
+using DefaultNamespace.New_GameplayCore;
 using New_GameplayCore.GameState;
 using New_GameplayCore.Services;
 using UnityEngine;
@@ -13,11 +14,14 @@ namespace New_GameplayCore.Views
         [SerializeField] private HandView handView;
         [SerializeField] private PreRoundView preRoundView;
         [SerializeField] private Transform uiRoot;
+        [SerializeField] private VictoryView victoryPrefab;
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
         public bool IsReady { get; private set; }
-        public event System.Action OnReady;
+        public event Action OnReady;
+        public event Action<EndCause> OnLevelEnd;
+
         public IHandService Hand => _hand;
         public IDeckService Deck => _deck;
         public LevelConfigSO LevelConfig => levelConfig;
@@ -47,12 +51,36 @@ namespace New_GameplayCore.Views
             _hand  = new HandService(levelConfig.handSize);
             _swap  = new SwapService(_hand, _deck, _time, levelConfig);
             _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
-            _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig);
+            _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
             _highscores = new JsonHighScoreService();
 
             IsReady = true;
             OnReady?.Invoke();
             _controller.OnEnterPreRound += HandleEnterPreRound;
+            _controller.OnLevelEnded += HandleLevelEnded;
+        }
+
+        private void HandleLevelEnded(EndCause cause)
+        {
+            if(cause != EndCause.TargetReached)
+                return;
+                
+            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores);
+            presenter.OnNextLevel += () =>
+            {
+                //TODO: Load next phase
+            };
+            presenter.OnReplay += () =>
+            {
+                //TODO: Replay phase
+            };
+            
+            var model = default(VictoryModel);
+            presenter.OnModelReady += m => model = m;
+            presenter.Build();
+            
+            var view = Instantiate(victoryPrefab, uiRoot);
+            view.Bind(presenter, model);
         }
 
         private void Start()
@@ -71,6 +99,9 @@ namespace New_GameplayCore.Views
         {
             if (_controller != null)
                 _controller.OnEnterPreRound -= HandleEnterPreRound;
+            
+            if (_controller != null)
+                _controller.OnLevelEnded -= HandleLevelEnded;
         }
 
         private void HandleEnterPreRound()

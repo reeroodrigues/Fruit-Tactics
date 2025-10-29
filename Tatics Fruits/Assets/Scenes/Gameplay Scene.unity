@@ -2681,6 +2681,7 @@ MonoBehaviour:
   handView: {fileID: 1473103883}
   preRoundView: {fileID: 7977498750825521673, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}
   uiRoot: {fileID: 2082077804}
+  victoryPrefab: {fileID: 3153231347081057741, guid: bde8a11508c4dd541b4f33479aaebcc5, type: 3}
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0
