@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using DefaultNamespace.New_GameplayCore;
+using New_GameplayCore.Services;
+
+namespace New_GameplayCore.Controllers
+{
+    public class GameController : IGameController
+    {
+        private readonly IGameStateMachine _fsm;
+        private readonly ITimeManager _time;
+        private readonly IDeckService _deck;
+        private readonly IHandService _hand;
+        private readonly IRuleEngine _rule;
+        private readonly ISwapService _swap;
+        private readonly LevelConfigSO _cfg;
+
+        private CardInstance? _selectedCard = null;
+
+        public event Action OnLevelEnded;
+
+        public GameController(IGameStateMachine fsm, ITimeManager time, IDeckService deck, 
+            IHandService hand, IRuleEngine rule, ISwapService swap, LevelConfigSO cfg)
+        {
+            _fsm = fsm; _time = time; _deck = deck; _hand = hand; _rule = rule; _swap = swap; _cfg = cfg;
+
+            _time.OnTimeChanged += t =>
+            {
+                if (t <= 0 && _fsm.Current == DefaultNamespace.New_GameplayCore.GameState.Playing)
+                {
+                    _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Results);
+                    OnLevelEnded?.Invoke();
+                }
+            };
+        }
+        
+        public void StartLevel(LevelConfigSO cfg, DeckConfigSO deckCfg)
+        {
+            _deck.Build(deckCfg, new System.Random());
+            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Playing);
+            
+            var cards = new List<CardInstance>();
+            _deck.DrawMany(cfg.handSize, cards);
+            _hand.AddMany(cards);
+        }
+
+        public void UpdateTick(float deltaTime)
+        {
+            if (_fsm.Current != DefaultNamespace.New_GameplayCore.GameState.Playing) return;
+            (_time as TimeManager)?.Tick(deltaTime);
+        }
+
+        public void OnCardSelected(CardInstance card)
+        {
+            
+            if (_selectedCard == null)
+            {
+                _selectedCard = card;
+                return;
+            }
+
+            if (_rule.TryMakePair(_selectedCard.Value, card, out var result))
+            {
+            }
+
+            _selectedCard = null;
+        }
+
+        public bool TryDrawOne()
+        {
+            
+            if(!(_hand as HandService).HasSpace)
+                return false;
+
+            if (!_deck.TryDraw(out var card))
+            {
+                if (_cfg.allowEmptyDeckRefill && _deck.TryRefillFromDiscard())
+                {
+                    if(!_deck.TryDraw(out card))
+                        return false;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return _hand.TryAdd(card);
+        }
+
+        public void OnSwapAllRequested() { _swap.TrySwapAll(); }
+        public void OnSwapRandomRequested() { _swap.TrySwapRandom(); }
+    }
+}
