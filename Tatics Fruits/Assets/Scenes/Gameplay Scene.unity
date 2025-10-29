@@ -2354,14 +2354,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GridLayoutGroup
   m_Padding:
     m_Left: 0
-    m_Right: 0
+    m_Right: -48
     m_Top: 0
-    m_Bottom: 0
+    m_Bottom: -97
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 100, y: 100}
+  m_CellSize: {x: 50, y: 50}
+  m_Spacing: {x: 115.57, y: 200}
   m_Constraint: 2
   m_ConstraintCount: 2
 --- !u!1 &1381425711
