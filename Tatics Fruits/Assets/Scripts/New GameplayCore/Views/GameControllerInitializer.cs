@@ -44,7 +44,7 @@ public class GameControllerInitializer : MonoBehaviour
         _swap  = new SwapService(_hand, _deck, _time, levelConfig);
         _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
         _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig);
-        _highscores = new PlayerPrefsHighScoreService();
+        _highscores = new JsonHighScoreService();
 
         IsReady = true;
         OnReady?.Invoke();
