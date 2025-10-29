@@ -75,6 +75,7 @@ namespace New_GameplayCore
         
             drag.AcceptDrop(dropContent);
             PlayDropFlip(view.transform);
+            PlayScaleUp(view.transform);
             _staged.Add((view, drag, data));
         
             _controller.OnCardSelected(first.data);
@@ -91,6 +92,14 @@ namespace New_GameplayCore
             t.DOKill();
             t.localRotation = Quaternion.identity;
             t.DOLocalRotate(new Vector3(0f, 0f, 45f), 0.30f);
+        }
+        
+        private void PlayScaleUp(Transform card)
+        {
+            if (!card) return;
+
+            card.DOKill();
+            card.DOScale(1.3f, 0.25f).SetEase(Ease.OutElastic);
         }
 
         private void MoveToPile(CardView view)
@@ -113,7 +122,8 @@ namespace New_GameplayCore
             view.transform.DOKill();
             view.transform.DOLocalMove(targetPos, pileAnimDuration).SetEase(Ease.OutQuad);
             view.transform.DOLocalRotate(new Vector3(0, 0, rotZ), pileAnimDuration).SetEase(Ease.OutQuad);
-            view.transform.DOScale(pileScale, pileAnimDuration);
+            view.transform.DOScale(pileScale, 0.25f).SetEase(Ease.OutQuad);
+
         
             view.transform.SetAsLastSibling();
             _pileCount++;
