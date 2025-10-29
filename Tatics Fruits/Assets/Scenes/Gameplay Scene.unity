@@ -373,6 +373,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayAreaDropZone
   dropContent: {fileID: 1312208917}
+  matchedPile: {fileID: 1312208917}
+  pileStep: {x: 12, y: -8}
+  pileFanAngle: 8
+  pileScale: 0.9
+  pileAnimDuration: 0.2
   bootstrap: {fileID: 1419642189}
 --- !u!1 &123366805
 GameObject:

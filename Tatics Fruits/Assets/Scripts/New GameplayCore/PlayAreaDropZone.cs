@@ -1,78 +1,122 @@
 using System.Collections.Generic;
+using DG.Tweening;
+using New_GameplayCore.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using New_GameplayCore;
-using New_GameplayCore.Views;
 
-public class PlayAreaDropZone : MonoBehaviour, IDropHandler
+namespace New_GameplayCore
 {
-    [Header("Slots de exibição (opcional)")]
-    [SerializeField] private Transform dropContent;
-
-    [Header("Referências de lógica")]
-    [SerializeField] private GameControllerInitializer bootstrap;
-
-    private IRuleEngine _rules;
-    private IGameController _controller;
-    private IHandService _hand;
-    
-    private readonly List<(CardView view, CardDragHandler drag, CardInstance data)> _staged = new(2);
-
-    void Start()
+    public class PlayAreaDropZone : MonoBehaviour, IDropHandler
     {
-        _rules = bootstrap.RuleEngine;
-        _controller = bootstrap.Controller;
-        _hand = bootstrap.Hand;
-        if (dropContent == null) dropContent = transform;
-    }
+        [Header("Slots")]
+        [SerializeField] private Transform dropContent;
+        [SerializeField] private Transform matchedPile;
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        var go = eventData.pointerDrag;
-        if (go == null) return;
+        [Header("Pile layout")]
+        [SerializeField] private Vector2 pileStep = new Vector2(12f, -8f);
+        [SerializeField] private float pileFanAngle = 8f;
+        [SerializeField] private float pileScale = 0.9f;
+        [SerializeField] private float pileAnimDuration = 0.2f;
 
-        var drag = go.GetComponent<CardDragHandler>();
-        var view = go.GetComponent<CardView>();
-        if (drag == null || view == null) return;
+        [Header("Refs")]
+        [SerializeField] private GameControllerInitializer bootstrap;
 
-        var data = view.GetCardData();
-        
-        if (_staged.Count >= 2)
+        private IRuleEngine _rules;
+        private IGameController _controller;
+        private IHandService _hand;
+
+        private readonly List<(CardView view, CardDragHandler drag, CardInstance data)> _staged = new(2);
+        private int _pileCount = 0;
+
+        void Start()
         {
-            drag.ReturnToOrigin();
-            return;
+            _rules = bootstrap.RuleEngine;
+            _controller = bootstrap.Controller;
+            _hand = bootstrap.Hand;
+
+            if (!dropContent) dropContent = transform;
+            if (!matchedPile) matchedPile = transform;
         }
-        
-        if (_staged.Count == 0)
+
+        public void OnDrop(PointerEventData eventData)
         {
-            _hand.TryRemove(data);
-            
+            var go = eventData.pointerDrag;
+            if (go == null) return;
+
+            var drag = go.GetComponent<CardDragHandler>();
+            var view = go.GetComponent<CardView>();
+            if (drag == null || view == null) return;
+
+            var data = view.GetCardData();
+        
+            if (_staged.Count >= 2)
+            {
+                drag.ReturnToOrigin();
+                return;
+            }
+        
+            if (_staged.Count == 0)
+            {
+                _hand.TryRemove(data);
+                drag.AcceptDrop(dropContent);
+                PlayDropFlip(view.transform);
+                _staged.Add((view, drag, data));
+                return;
+            }
+        
+            var first = _staged[0];
+            var isPair = _rules.IsValidPair(first.data, data);
+
+            if (!isPair)
+            {
+                drag.ReturnToOrigin();
+                return;
+            }
+        
             drag.AcceptDrop(dropContent);
+            PlayDropFlip(view.transform);
             _staged.Add((view, drag, data));
-            return;
-        }
         
-        var first = _staged[0];
-        bool isPair = _rules.IsValidPair(first.data, data);
+            _controller.OnCardSelected(first.data);
+            _controller.OnCardSelected(data);
+        
+            MoveToPile(first.view);
+            MoveToPile(view);
+        
+            _staged.Clear();
+        }
 
-        if (!isPair)
+        private void PlayDropFlip(Transform t)
         {
-            drag.ReturnToOrigin();
-            return;
+            t.DOKill();
+            t.localRotation = Quaternion.identity;
+            t.DOLocalRotate(new Vector3(0f, 0f, 45f), 0.30f);
         }
+
+        private void MoveToPile(CardView view)
+        {
+            if (!view) return;
         
-        drag.AcceptDrop(dropContent);
-        _staged.Add((view, drag, data));
+            var drag = view.GetComponent<CardDragHandler>();
+            if (drag) drag.enabled = false;
+
+            var cg = view.GetComponent<CanvasGroup>();
+            if (!cg) cg = view.gameObject.AddComponent<CanvasGroup>();
+            cg.blocksRaycasts = false;
+            cg.interactable = false;
         
-        _controller.OnCardSelected(first.data);
-        _controller.OnCardSelected(data);
+            view.transform.SetParent(matchedPile, worldPositionStays: false);
         
-        if (first.view) 
-            Destroy(first.view.gameObject);
+            var targetPos = new Vector3(pileStep.x * _pileCount, pileStep.y * _pileCount, 0f);
+            var rotZ = Random.Range(-pileFanAngle, pileFanAngle);
         
-        if (view)
-            Destroy(view.gameObject);
+            view.transform.DOKill();
+            view.transform.DOLocalMove(targetPos, pileAnimDuration).SetEase(Ease.OutQuad);
+            view.transform.DOLocalRotate(new Vector3(0, 0, rotZ), pileAnimDuration).SetEase(Ease.OutQuad);
+            view.transform.DOScale(pileScale, pileAnimDuration);
         
-        _staged.Clear();
+            view.transform.SetAsLastSibling();
+            _pileCount++;
+        }
     }
 }
