@@ -228,6 +228,8 @@ MonoBehaviour:
   star1: {fileID: 748133763917965968}
   star2: {fileID: 7014472475933016216}
   star3: {fileID: 6745130484996466470}
+  starOn: {fileID: 5754163482525733906, guid: a7ab94ec152b1d8428cdb0ee8bbf6d90, type: 3}
+  starOff: {fileID: -1560252160693202648, guid: c46642d395d97df46b879005ea481d1b, type: 3}
   nextButton: {fileID: 7379843493010111690}
   replayButton: {fileID: 4397723719048635565}
   menuButton: {fileID: 4528030208632875428}
@@ -414,7 +416,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -610,7 +612,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1303,7 +1305,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}

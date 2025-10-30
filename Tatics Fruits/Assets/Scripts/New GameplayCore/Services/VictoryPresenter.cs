@@ -30,23 +30,23 @@ namespace New_GameplayCore.Services
             var newRecord = _hs.TryReportScore(id, total);
 
             var stars = 0;
-            var pct = Mathf.Clamp01(total / (float)_cfg.targetScore);
-            if (pct >= _cfg.star1Threshold) 
-                stars = 1;
+            var pct = Mathf.Clamp01(_score.Total / (float)_cfg.targetScore);
+            if (pct >= _cfg.star1Threshold) stars = 1;
+            if (pct >= _cfg.star2Threshold) stars = 2;
+            if (pct >= _cfg.star3Threshold) stars = 3;
             
-            if (pct >= _cfg.star2Threshold) 
-                stars = 2;
-            
-            if (pct >= _cfg.star3Threshold) 
+            if (_score.Total >= _cfg.targetScore)
                 stars = 3;
+            
             OnModelReady?.Invoke(new VictoryModel
             {
-                LevelId = id,
-                TotalScore = total,
-                BestBefore = bestBefore,
-                NewRecord = newRecord,
-                TargetScore = _cfg.targetScore,
-                TimeLeftSeconds = _time.TimeLeftSeconds
+                starsEarned = stars,
+                levelId = id,
+                totalScore = total,
+                bestBefore = bestBefore,
+                newRecord = newRecord,
+                targetScore = _cfg.targetScore,
+                timeLeftSeconds = _time.TimeLeftSeconds
             });
         }
         

@@ -25,8 +25,8 @@ namespace New_GameplayCore.Views
         {
             _presenter = presenter;
 
-            if (titleText)  titleText.text = "Tempo esgotado";
-            if (scoreText)  scoreText.text = $"{model.totalScore} / {model.targetScore}";
+            if (titleText)  titleText.text = "Tempo esgotado! Não foi dessa vez.";
+            if (scoreText)  scoreText.text = $"Você fez: {model.totalScore} pontos.";
             if (recordText) recordText.text = model.newRecord ? "Novo recorde!" : $"Recorde: {model.bestBefore}";
 
             SetStar(star1, model.starsEarned >= 1);

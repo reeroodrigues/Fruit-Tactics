@@ -17,6 +17,8 @@ namespace New_GameplayCore.Views
         [SerializeField] private Image star1;
         [SerializeField] private Image star2;
         [SerializeField] private Image star3;
+        [SerializeField] private Sprite starOn;
+        [SerializeField] private Sprite starOff;
         
         [Header("Buttons")]
         [SerializeField] private Button nextButton;
@@ -33,14 +35,14 @@ namespace New_GameplayCore.Views
                 titleText.text = "Vitória!";
 
             if (scoreText)
-                scoreText.text = $"{model.TotalScore} / {model.TargetScore}";
+                scoreText.text = $"{model.totalScore} / {model.targetScore}";
             
             if(recordText)
-                recordText.text = model.NewRecord ? "Novo Recorde!" : $"Recorde: {model.BestBefore}";
+                recordText.text = model.newRecord ? "Novo Recorde!" : $"Recorde: {model.bestBefore}";
 
-            SetStar(star1, model.StarsEarned >= 1);
-            SetStar(star2, model.StarsEarned >= 2);
-            SetStar(star3, model.StarsEarned >= 3);
+            SetStar(star1, model.starsEarned >= 1);
+            SetStar(star2, model.starsEarned >= 2);
+            SetStar(star3, model.starsEarned >= 3);
             
             nextButton.onClick.AddListener(_presenter.ClickNext);
             replayButton.onClick.AddListener(_presenter.ClickReplay);
@@ -48,14 +50,16 @@ namespace New_GameplayCore.Views
             {
                 SceneManager.LoadScene("MainMenu");
             });
+            
+            Show();
         }
 
         private void SetStar(Image img, bool on)
         {
-            if(!img)
-                return;
-            
-            img.enabled = on;
+            if (!img) return;
+            img.enabled = true;
+            img.sprite  = on ? starOn : starOff;
+            img.color   = Color.white;
         }
 
         private void Show()

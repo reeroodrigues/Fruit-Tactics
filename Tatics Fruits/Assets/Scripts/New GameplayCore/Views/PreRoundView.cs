@@ -3,6 +3,7 @@ using System.Collections;
 using New_GameplayCore.Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace New_GameplayCore.Views
@@ -21,7 +22,6 @@ namespace New_GameplayCore.Views
         [Header("Buttons")]
         [SerializeField] private Button mainMenuButton;
         [SerializeField] private Button nextButton;
-        [SerializeField] private Button skipButton;
         
         private IPreRoundPresenter _presenter;
         private PreRoundModel _model;
@@ -39,9 +39,11 @@ namespace New_GameplayCore.Views
 
             SetStar(star1, false);
 
-            if (mainMenuButton) { mainMenuButton.onClick.RemoveAllListeners(); mainMenuButton.onClick.AddListener(OnBack); }
+            if (mainMenuButton) { mainMenuButton.onClick.AddListener(() =>
+            {
+                SceneManager.LoadScene("MainMenu");
+            });}
             if (nextButton)     { nextButton.onClick.RemoveAllListeners();     nextButton.onClick.AddListener(OnStart); }
-            if (skipButton)     { skipButton.onClick.RemoveAllListeners();     skipButton.onClick.AddListener(OnStart); }
             
             gameObject.SetActive(true);
             StartCoroutine(FadeCanvas(0f, 1f, 0.2f));
@@ -50,11 +52,6 @@ namespace New_GameplayCore.Views
         private void OnStart()
         {
             StartCoroutine(CloseThen(_presenter.OnStartClicked));
-        }
-
-        private void OnBack()
-        {
-            StartCoroutine(CloseThen(_presenter.OnBackClicked));
         }
 
         private IEnumerator CloseThen(Action callback)
