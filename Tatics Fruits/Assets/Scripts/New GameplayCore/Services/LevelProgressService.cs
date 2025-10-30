@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace New_GameplayCore.Services
@@ -8,6 +9,7 @@ namespace New_GameplayCore.Services
         private LevelProgressData _data = new();
 
         public int CurrentIndex => _data.currentIndex;
+        public int UnlockedMaxIndex => _data.unlockedMaxIndex;
 
         public void Load()
         {
@@ -18,6 +20,12 @@ namespace New_GameplayCore.Services
         public void Save()
         {
             JsonDataService.Save(FILE, _data);
+        }
+
+        public void SetCurrentIndex(int idx)
+        {
+            _data.currentIndex = Mathf.Max(0, idx);
+            Save();
         }
 
         public LevelConfigSO Current(LevelSetSO set)
@@ -58,5 +66,18 @@ namespace New_GameplayCore.Services
         }
 
         public void Replay() => Save();
+
+        public void MarkNextUnlockedIfEligible(LevelConfigSO cfg, int totalScore, float unlockPct = 0.75f)
+        {
+            if(cfg == null || cfg.targetScore <= 0)
+                return;
+            
+            var pct = totalScore / (float) cfg.targetScore;
+            if (pct >= unlockPct)
+            {
+                _data.unlockedMaxIndex = Math.Max(_data.unlockedMaxIndex, _data.currentIndex +1);
+                Save();
+            }
+        }
     }
 }

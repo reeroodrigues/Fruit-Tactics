@@ -150,6 +150,8 @@ namespace New_GameplayCore.Views
             if (string.IsNullOrEmpty(levelId))
                 levelId = levelConfig.name;
             _profileService.RegisterBestScore(levelId, totalScore);
+            
+            Progress.MarkNextUnlockedIfEligible(levelConfig, _score.Total, 0.75f);
 
             var view = Instantiate(victoryPrefab, uiRoot);
             view.Bind(presenter, model);
@@ -173,6 +175,8 @@ namespace New_GameplayCore.Views
             DefeatModel model = default;
             presenter.OnModelReady += m => model = m;
             presenter.Build();
+            
+            Progress.MarkNextUnlockedIfEligible(levelConfig, _score.Total, 0.75f);
 
             var view = Instantiate(defeatPrefab, uiRoot);
             view.Bind(presenter, model);

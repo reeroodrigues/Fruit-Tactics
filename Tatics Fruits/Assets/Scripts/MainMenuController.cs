@@ -1,4 +1,5 @@
 using DG.Tweening;
+using New_GameplayCore.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -43,14 +44,18 @@ public class MainMenuController : MonoBehaviour
 
     private Sequence _titleSeq;
     private bool _switching;
+    private LevelProgressService _progress;
 
     private void Start()
     {
+        _progress = new LevelProgressService();
+        _progress.Load();
+        
         titleTransform.localScale = Vector3.zero;
         _titleSeq = DOTween.Sequence()
             .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
         
-        playButton.onClick.AddListener(() => SceneManager.LoadScene("Gameplay Scene"));
+        playButton.onClick.AddListener(OnClickPlay);
         // rankingButton.onClick.AddListener(() =>
         // {
         //     if (!rankingPanel) return;
@@ -76,6 +81,16 @@ public class MainMenuController : MonoBehaviour
         });
         
         InvokeRepeating(nameof(NudgeAllOnce), initialDelay, repeatInterval);
+    }
+
+    public void OnClickPlay()
+    {
+        var idx = Mathf.Max(_progress.CurrentIndex, _progress.UnlockedMaxIndex);
+
+        _progress.SetCurrentIndex(idx);
+        _progress.Save();
+        
+        SceneManager.LoadScene("Gameplay Scene");
     }
 
     private void OnDisable()
