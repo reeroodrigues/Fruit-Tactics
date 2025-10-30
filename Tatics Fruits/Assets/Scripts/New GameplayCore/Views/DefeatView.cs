@@ -12,7 +12,6 @@ namespace New_GameplayCore.Views
         [SerializeField] private Image blocker;
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI scoreText;
-        [SerializeField] private TextMeshProUGUI recordText;
         [SerializeField] private Image star1, star2, star3;
 
         [Header("Buttons")]
@@ -27,7 +26,6 @@ namespace New_GameplayCore.Views
 
             if (titleText)  titleText.text = "Tempo esgotado! Não foi dessa vez.";
             if (scoreText)  scoreText.text = $"Você fez: {model.totalScore} pontos.";
-            if (recordText) recordText.text = model.newRecord ? "Novo recorde!" : $"Recorde: {model.bestBefore}";
 
             SetStar(star1, model.starsEarned >= 1);
             SetStar(star2, model.starsEarned >= 2);

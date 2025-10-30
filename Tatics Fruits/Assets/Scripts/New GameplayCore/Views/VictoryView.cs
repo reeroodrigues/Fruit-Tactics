@@ -35,10 +35,10 @@ namespace New_GameplayCore.Views
                 titleText.text = "Vitória!";
 
             if (scoreText)
-                scoreText.text = $"{model.totalScore} / {model.targetScore}";
+                scoreText.text = $"Você fez: {model.totalScore} pontos!";
             
             if(recordText)
-                recordText.text = model.newRecord ? "Novo Recorde!" : $"Recorde: {model.bestBefore}";
+                recordText.text = model.newRecord ? "Novo Recorde!" : $"{model.bestBefore}";
 
             SetStar(star1, model.starsEarned >= 1);
             SetStar(star2, model.starsEarned >= 2);
