@@ -99,8 +99,20 @@ namespace New_GameplayCore.Views
         
         private void HandleLevelEnded(EndCause cause)
         {
-            if (cause != EndCause.TargetReached) return;
+            switch (cause)
+            {
+                case EndCause.TargetReached:
+                    ShowVictory();
+                    break;
 
+                case EndCause.TimeUp:
+                    ShowDefeat();
+                    break;
+            }
+        }
+
+        private void ShowVictory()
+        {
             var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, Progress, levelSet);
 
             VictoryModel model = default;
@@ -109,7 +121,7 @@ namespace New_GameplayCore.Views
 
             var view = Instantiate(victoryPrefab, uiRoot);
             view.Bind(presenter, model);
-            
+
             presenter.OnReplay += () =>
             {
                 Progress.Replay();
@@ -119,6 +131,28 @@ namespace New_GameplayCore.Views
             {
                 Progress.Advance(levelSet);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            };
+        }
+
+        private void ShowDefeat()
+        {
+            var presenter = new DefeatPresenter(levelConfig, _score, _time, _highscores);
+
+            DefeatModel model = default;
+            presenter.OnModelReady += m => model = m;
+            presenter.Build();
+
+            var view = Instantiate(defeatPrefab, uiRoot);
+            view.Bind(presenter, model);
+
+            presenter.OnReplay += () =>
+            {
+                Progress.Replay();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            };
+            presenter.OnMenu += () =>
+            {
+                SceneManager.LoadScene("MainMenu");
             };
         }
 
