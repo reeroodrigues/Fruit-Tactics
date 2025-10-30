@@ -60,5 +60,26 @@ namespace New_GameplayCore.Services
             _data.daily.missions = missions;
             Save();
         }
+
+        public void RegisterBestScore(string levelId, int score)
+        {
+            if(string.IsNullOrEmpty(levelId))
+                return;
+            
+            if(!_data.BestScores.ContainsKey(levelId))
+                _data.BestScores[levelId] = score;
+            else if(score > _data.BestScores[levelId])
+                _data.BestScores[levelId] = score;
+
+            Save();
+        }
+
+        public int GetBestScore(string levelId)
+        {
+            if(string.IsNullOrEmpty(levelId))
+                return 0;
+            
+            return _data.BestScores.TryGetValue(levelId, out int best) ? best : 0;
+        }
     }
 }

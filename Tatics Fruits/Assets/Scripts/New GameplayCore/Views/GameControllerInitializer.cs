@@ -35,6 +35,8 @@ namespace New_GameplayCore.Views
         public IScoreService Score => _score;
         public IHighScoreService Highscores => _highscores;
         public LevelProgressService Progress;
+        public PlayerProfileService Profile => _profileService;
+
 
         private GameStateMachine _fsm;
         private TimeManager _time;
@@ -109,6 +111,12 @@ namespace New_GameplayCore.Views
         
         private void HandleLevelEnded(EndCause cause)
         {
+            var totalScore = _score.Total;
+            var levelId = levelConfig.levelId;
+            if (string.IsNullOrEmpty(levelId))
+                levelId = levelConfig.name;
+
+            _profileService.RegisterBestScore(levelId, totalScore);
             switch (cause)
             {
                 case EndCause.TargetReached:
@@ -138,6 +146,11 @@ namespace New_GameplayCore.Views
             var rewardGold = model.starsEarned * 10;
             _profileService.AddGold(rewardGold);
 
+            var levelId = levelConfig.levelId;
+            if (string.IsNullOrEmpty(levelId))
+                levelId = levelConfig.name;
+            _profileService.RegisterBestScore(levelId, totalScore);
+
             var view = Instantiate(victoryPrefab, uiRoot);
             view.Bind(presenter, model);
 
@@ -155,7 +168,7 @@ namespace New_GameplayCore.Views
 
         private void ShowDefeat()
         {
-            var presenter = new DefeatPresenter(levelConfig, _score, _time, _highscores);
+            var presenter = new DefeatPresenter(levelConfig, _score, _time, _highscores, _profileService);
 
             DefeatModel model = default;
             presenter.OnModelReady += m => model = m;

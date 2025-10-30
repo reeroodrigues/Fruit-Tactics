@@ -10,47 +10,44 @@ namespace New_GameplayCore.Views
         [SerializeField] private TextMeshProUGUI label;
         [SerializeField] private GameControllerInitializer bootstrap;
 
-        private IHighScoreService _hs;
+        private PlayerProfileService _profile;
         private IScoreService _score;
         private string _levelId;
 
         private void Start()
         {
-            _hs = bootstrap.Highscores;
-            _score = bootstrap.Score;
-            _levelId = string.IsNullOrEmpty(bootstrap.LevelConfig.levelId) ? bootstrap.LevelConfig.name : bootstrap.LevelConfig.levelId;
+            _profile = bootstrap.Profile;
+            _score   = bootstrap.Score;
 
-            RefreshLabel();
+            _levelId = string.IsNullOrEmpty(bootstrap.LevelConfig.levelId)
+                ? bootstrap.LevelConfig.name
+                : bootstrap.LevelConfig.levelId;
 
-            _hs.OnHighScoreChanged += OnHighScoreChanged;
+            RefreshLabel(); 
             _score.OnScoreChanged += OnScoreChanged;
         }
 
         private void OnDestroy()
         {
-            if (_hs != null)
-                _hs.OnHighScoreChanged -= OnHighScoreChanged;
-
             if (_score != null)
                 _score.OnScoreChanged -= OnScoreChanged;
         }
 
-        private void OnHighScoreChanged(string levelId, int best)
+        private void OnScoreChanged(int total, int delta)
         {
-            if (levelId == _levelId)
-                RefreshLabel();
-        }
-
-        private void OnScoreChanged(int score, int delta)
-        {
-            
+            var bestSaved = _profile.GetBestScore(_levelId);
+            SetLabel(Mathf.Max(bestSaved, total));
         }
 
         private void RefreshLabel()
         {
-            var best = _hs.GetBest(_levelId);
-            if (label)
-                label.text = best.ToString();
+            SetLabel(_profile.GetBestScore(_levelId));
+        }
+
+        private void SetLabel(int value)
+        {
+            if (!label) return;
+            label.text = value.ToString();
         }
     }
 }

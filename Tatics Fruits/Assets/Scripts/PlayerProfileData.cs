@@ -60,6 +60,7 @@ public class PlayerProfileData
     public string language = "pt_BR";
     
     public DailySystemData daily = new DailySystemData();
+    public Dictionary<string, int> BestScores = new Dictionary<string, int>();
     
     public List<string> ownedCards = new List<string>();
     public List<string> equippedDeck = new List<string>();

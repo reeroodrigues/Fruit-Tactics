@@ -13,8 +13,9 @@ namespace New_GameplayCore.Services
         private readonly LevelSetSO _levelSet;
 
         public Action<VictoryModel> OnModelReady;
-        public event System.Action OnNext;
-        public event System.Action OnReplay;
+        private readonly PlayerProfileService _profileService;
+        public event Action OnNext;
+        public event Action OnReplay;
 
         public VictoryPresenter(
             LevelConfigSO cfg,
@@ -52,7 +53,7 @@ namespace New_GameplayCore.Services
             {
                 totalScore = total,
                 targetScore = target,
-                bestBefore = _hs.GetBest(string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId),
+                bestBefore = _profileService.GetBestScore(_cfg.levelId),
                 newRecord = newRecord,
                 starsEarned = stars,
                 canGoNext = canNext,
