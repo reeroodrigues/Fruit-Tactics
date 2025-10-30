@@ -34,7 +34,7 @@ namespace New_GameplayCore
 
     public interface IDeckService
     {
-        void Build(DeckConfigSO config, System.Random rng);
+        void Build(DeckConfigSo config, System.Random rng);
         bool TryDraw(out CardInstance card);
         int DrawMany(int count, IList<CardInstance> buffer);
         void Discard(CardInstance card);

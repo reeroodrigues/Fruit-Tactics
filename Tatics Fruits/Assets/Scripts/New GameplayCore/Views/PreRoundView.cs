@@ -32,10 +32,10 @@ namespace New_GameplayCore.Views
             _model = model;
 
             if (titleText)
-                titleText.text = string.IsNullOrEmpty(model.DisplayName) ? $"Fase {model.LevelId}" : model.DisplayName;
+                titleText.text = string.IsNullOrEmpty(model.displayName) ? $"Fase {model.levelId}" : model.displayName;
             
             if (objectiveText)
-                objectiveText.text = $"Faça <b>{model.TargetScore}</b> pontos em <b>{model.InitialTimeSec}</b> segundos para ganhar as <b>3</b> estrelas!";
+                objectiveText.text = $"Faça <b>{model.targetScore}</b> pontos em <b>{model.initialTimeSec}</b> segundos para ganhar as <b>3</b> estrelas!";
 
             SetStar(star1, false);
 

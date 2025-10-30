@@ -49,7 +49,7 @@ public class ShopItemView : MonoBehaviour
     private string _cardId;
     private int _price;
     private PlayerProfileController _profile;
-    private PowerUpCardSO _so;
+    //private PowerUpCardSO _so;
 
     private Color _btnOriginalColor = Color.white;
     private Tween _activeTween;
@@ -70,25 +70,12 @@ public class ShopItemView : MonoBehaviour
         if (buyButton && buyButtonGraphic && buyButton.targetGraphic != buyButtonGraphic)
             buyButton.targetGraphic = buyButtonGraphic;
     }
-    
-    public void SetupFromSO(PowerUpCardSO so, PlayerProfileController profile, bool isNew = false)
-    {
-        _so = so;
-        Setup(so.Id, so.GetLocalizedName(), so.icon, so.priceGold, profile, isNew, so.rarity);
-        if (descriptionText) descriptionText.text = so.GetLocalizedDescription();
-        
-        if (Localizer.Instance != null)
-        {
-            Localizer.Instance.OnLanguageChanged -= RelocalizeFromSO;
-            Localizer.Instance.OnLanguageChanged += RelocalizeFromSO;
-        }
-    }
 
     private void RelocalizeFromSO()
     {
-        if (_so == null) return;
-        if (title) title.text = _so.GetLocalizedName();
-        if (descriptionText) descriptionText.text = _so.GetLocalizedDescription();
+        // if (_so == null) return;
+        // if (title) title.text = _so.GetLocalizedName();
+        // if (descriptionText) descriptionText.text = _so.GetLocalizedDescription();
         
         RefreshState();
     }
@@ -99,7 +86,7 @@ public class ShopItemView : MonoBehaviour
         _cardId  = cardId;
         _price   = priceGold;
         _profile = profile;
-        _so      = null;
+        //_so      = null;
 
         if (icon)  icon.sprite = sprite;
         if (title) title.text  = displayName;

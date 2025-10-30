@@ -18,7 +18,7 @@ namespace New_GameplayCore.Services
         public event Action<int, int> OnDeckChanged;
 
         private void Notify() => OnDeckChanged?.Invoke(DeckCount, DiscardCount);
-        public void Build(DeckConfigSO config, System.Random rng)
+        public void Build(DeckConfigSo config, System.Random rng)
         {
             _deck.Clear();
             _discard.Clear();
@@ -29,15 +29,16 @@ namespace New_GameplayCore.Services
                 return;
             }
 
-            if (config.Entries == null || config.Entries.Length == 0)
+            if (config.entries == null || config.entries.Length == 0)
             {
                 return;
             }
 
-            foreach (var e in config.Entries)
+            foreach (var e in config.entries)
             {
                 if (e.type == null)
                 {
+                    Debug.LogError($"[DeckService] Entrada inválida no build! {e}");
                     continue;
                 }
 

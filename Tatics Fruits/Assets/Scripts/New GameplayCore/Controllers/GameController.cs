@@ -49,7 +49,7 @@ namespace New_GameplayCore.Controllers
         public event Action OnEnterPreRound;
         public event Action OnExitPreRound;
 
-        public void StartLevel(LevelConfigSO cfg, DeckConfigSO deckCfg)
+        public void StartLevel(LevelConfigSO cfg, DeckConfigSo deckCfg)
         {
             _cfg = cfg;
             var rng = cfg.useFixedSeed ? new Random(cfg.fixedSeed) : new Random();
@@ -87,7 +87,7 @@ namespace New_GameplayCore.Controllers
 
         public void BeginPlayFromPreRound(PreRoundModel model)
         {
-            var rng = model.UseFixedSeed ? new Random(model.EffectiveSeed) : new Random();
+            var rng = model.useFixedSeed ? new Random(model.effectiveSeed) : new Random();
 
             _time.TryPay(_time.TimeLeftSeconds);
             _time.Add(_cfg.initialTimeSeconds);

@@ -26,7 +26,7 @@ namespace New_GameplayCore.Services
         {
             var total = 0;
             var list = new System.Collections.Generic.List<DeckEntrySummary>();
-            foreach (var e in cfg.deck.Entries)
+            foreach (var e in cfg.deck.entries)
             {
                 list.Add(new DeckEntrySummary { type = e.type, quantity = e.quantity });
                 total += e.quantity;
@@ -41,29 +41,29 @@ namespace New_GameplayCore.Services
 
             _model = new PreRoundModel()
             {
-                LevelId = levelId,
-                DisplayName = string.IsNullOrEmpty(cfg.displayName) ? cfg.name : cfg.displayName,
-                Description = cfg.description,
+                levelId = levelId,
+                displayName = string.IsNullOrEmpty(cfg.displayName) ? cfg.name : cfg.displayName,
+                description = cfg.description,
 
-                TargetScore = cfg.targetScore,
-                Star1Score = s1,
-                Star2Score = s2,
-                Star3Score = s3,
+                targetScore = cfg.targetScore,
+                star1Score = s1,
+                star2Score = s2,
+                star3Score = s3,
 
-                InitialTimeSec = cfg.initialTimeSeconds,
-                HandSize = cfg.handSize,
-                TimeBonusOnPair = cfg.timeBonusOnPair,
-                SwapAllPenalty = cfg.swapAllTimePenalty,
-                SwapRandomPenalty = cfg.swapRandomTimePenalty,
-                AllowRefillFromDiscard = cfg.allowEmptyDeckRefill,
+                initialTimeSec = cfg.initialTimeSeconds,
+                handSize = cfg.handSize,
+                timeBonusOnPair = cfg.timeBonusOnPair,
+                swapAllPenalty = cfg.swapAllTimePenalty,
+                swapRandomPenalty = cfg.swapRandomTimePenalty,
+                allowRefillFromDiscard = cfg.allowEmptyDeckRefill,
 
-                DeckTotalCount = total,
-                Composition = list.ToArray(),
+                deckTotalCount = total,
+                composition = list.ToArray(),
                 
-                BestScore = best,
+                bestScore = best,
                 
-                UseFixedSeed = cfg.useFixedSeed,
-                EffectiveSeed = cfg.useFixedSeed ? cfg.fixedSeed : UnityEngine.Random.Range(int.MinValue, int.MaxValue),
+                useFixedSeed = cfg.useFixedSeed,
+                effectiveSeed = cfg.useFixedSeed ? cfg.fixedSeed : UnityEngine.Random.Range(int.MinValue, int.MaxValue),
             };
             
             OnModelReady?.Invoke(_model);
@@ -84,8 +84,8 @@ namespace New_GameplayCore.Services
 
         public void OnToggleUseFixedSeed(bool value)
         {
-            _model.UseFixedSeed = value;
-            _model.EffectiveSeed = value ? _cfg.fixedSeed : UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            _model.useFixedSeed = value;
+            _model.effectiveSeed = value ? _cfg.fixedSeed : UnityEngine.Random.Range(int.MinValue, int.MaxValue);
             OnModelReady?.Invoke(_model);
         }
     }

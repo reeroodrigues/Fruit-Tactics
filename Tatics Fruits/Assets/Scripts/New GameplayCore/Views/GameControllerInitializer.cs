@@ -9,7 +9,7 @@ namespace New_GameplayCore.Views
     public class GameControllerInitializer : MonoBehaviour
     {
         [SerializeField] private LevelConfigSO levelConfig;
-        [SerializeField] private DeckConfigSO deckConfig;
+        [SerializeField] private DeckConfigSo deckConfig;
         [SerializeField] private HUDView hudView;
         [SerializeField] private HandView handView;
         [SerializeField] private PreRoundView preRoundView;
@@ -66,7 +66,6 @@ namespace New_GameplayCore.Views
         {
             if (cause == EndCause.TargetReached)
             {
-                // (já feito) Victory
                 var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores);
                 presenter.OnNextLevel += () => { /* TODO: próxima fase */ };
                 presenter.OnReplay    += () => { /* TODO: rejogar */    };

@@ -9,7 +9,7 @@ namespace New_GameplayCore
         event Action OnEnterPreRound;
         event Action OnExitPreRound;
         event Action<EndCause> OnLevelEnded;
-        void StartLevel(LevelConfigSO cfg, DeckConfigSO deckCfg);
+        void StartLevel(LevelConfigSO cfg, DeckConfigSo deckCfg);
         void UpdateTick(float deltaTime);
         void OnCardSelected(CardInstance card);
         void BeginPlayFromPreRound(New_GameplayCore.PreRoundModel model);

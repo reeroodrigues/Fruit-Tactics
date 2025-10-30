@@ -3,9 +3,9 @@ namespace New_GameplayCore
     public readonly struct CardInstance
     {
         public readonly string RollId;
-        public readonly CardTypeSOI Type;
+        public readonly CardTypeSo Type;
         public readonly int Value;
-        public CardInstance(string rollId, CardTypeSOI type, int value)
+        public CardInstance(string rollId, CardTypeSo type, int value)
         { RollId = rollId; Type = type; Value = value; }
     }
 

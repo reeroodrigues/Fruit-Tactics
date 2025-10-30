@@ -2681,7 +2681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.GameControllerInitializer
   levelConfig: {fileID: 11400000, guid: 1f5f0d29625dc6f4c81c36044743d4e3, type: 2}
-  deckConfig: {fileID: 11400000, guid: 435c975f91d38754d91c78fe88911d33, type: 2}
+  deckConfig: {fileID: 11400000, guid: 2e74fcf8bbee2644c9ae6030dd455b4c, type: 2}
   hudView: {fileID: 2082077805}
   handView: {fileID: 1473103883}
   preRoundView: {fileID: 7977498750825521673, guid: 94eea9531b51d604d8aa7e13ad6ca056, type: 3}

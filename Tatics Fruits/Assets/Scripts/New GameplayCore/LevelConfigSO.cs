@@ -20,7 +20,7 @@ namespace New_GameplayCore
         public int swapRandomTimePenalty = 2;
         public bool allowEmptyDeckRefill = true;
         
-        public DeckConfigSO deck;
+        public DeckConfigSo deck;
 
         public bool useFixedSeed;
         public int fixedSeed;
