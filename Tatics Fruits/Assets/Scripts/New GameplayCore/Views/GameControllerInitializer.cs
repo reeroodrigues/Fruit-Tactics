@@ -20,6 +20,7 @@ namespace New_GameplayCore.Views
         [SerializeField] private DefeatView defeatPrefab;
         [SerializeField] private LevelSetSO levelSet;
         [SerializeField] private TextMeshProUGUI phaseLabel;
+        [SerializeField] private PlayerProfileService _profileService;
 
 
         public IRuleEngine RuleEngine => _rule;
@@ -52,6 +53,15 @@ namespace New_GameplayCore.Views
         {
             Progress = new LevelProgressService();
             Progress.Load();
+            
+            _profileService = new PlayerProfileService();
+            _profileService.Load();
+
+            var currentIndex = _profileService.Data.currentLevelIndex;
+            Debug.Log($"[PROFILE] Carregando level {currentIndex +1}");
+            
+            if(levelSet && levelSet.levels.Length > 0)
+                levelConfig = levelSet.levels[Mathf.Clamp(currentIndex, 0, levelSet.levels.Length - 1)];
             
             var cfg = Progress.Current(levelSet);
             if (cfg != null) levelConfig = cfg;
@@ -118,6 +128,15 @@ namespace New_GameplayCore.Views
             VictoryModel model = default;
             presenter.OnModelReady += m => model = m;
             presenter.Build();
+            
+            var currentLevel = Progress.CurrentIndex;
+            var totalScore   = _score.Total;
+            
+            var completed = Progress.CanAdvance(levelConfig, totalScore, 0.75f);
+            _profileService.SetLevel(currentLevel, completed);
+            
+            var rewardGold = model.starsEarned * 10;
+            _profileService.AddGold(rewardGold);
 
             var view = Instantiate(victoryPrefab, uiRoot);
             view.Bind(presenter, model);
