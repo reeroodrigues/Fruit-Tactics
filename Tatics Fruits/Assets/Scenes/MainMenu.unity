@@ -3422,7 +3422,6 @@ GameObject:
   - component: {fileID: 490595938}
   - component: {fileID: 490595937}
   - component: {fileID: 490595936}
-  - component: {fileID: 490595939}
   m_Layer: 5
   m_Name: Store
   m_TagString: Untagged
@@ -3500,55 +3499,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490595933}
   m_CullTransparentMesh: 1
---- !u!114 &490595939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 490595933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b74e6d493944d91b8c03c50370e9e9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profile: {fileID: 1537639275}
-  catalog:
-  - {fileID: 11400000, guid: 518bb204f641a0c47a045dd04e3fe685, type: 2}
-  - {fileID: 11400000, guid: 6f2e2928f3d4a444f8a97064b8a047c8, type: 2}
-  - {fileID: 11400000, guid: 628ce0f517c23cb45a9b697388d092db, type: 2}
-  - {fileID: 11400000, guid: 410e1cb924c9e834590c22c04590a6ca, type: 2}
-  - {fileID: 11400000, guid: a28922f92df41fc4db90e7691a6349c5, type: 2}
-  - {fileID: 11400000, guid: 8c1265b40a3f7bf42bd22e7b3dacbd6b, type: 2}
-  - {fileID: 11400000, guid: cad17423c52a49548830f379d358a521, type: 2}
-  - {fileID: 11400000, guid: 5ebb48dbcdf9b3d4f969ead6d4be78a9, type: 2}
-  - {fileID: 11400000, guid: 21fb9f15f5e5ffd40ae6122173a53261, type: 2}
-  - {fileID: 11400000, guid: 242019d39c356224dacbce6ec7d20e40, type: 2}
-  - {fileID: 11400000, guid: 2d63bf0ced87272499a2c8afee6e4613, type: 2}
-  - {fileID: 11400000, guid: 3aa6a7fac773a944691cff3f8272a006, type: 2}
-  title: {fileID: 1843222590}
-  goldCounter: {fileID: 3186289265317484760}
-  closeButton: {fileID: 453605352}
-  gridParent: {fileID: 1789539920}
-  itemPrefab: {fileID: 956839107911045771, guid: 00ecc2fb7b39feb49977d6b976abf10d, type: 3}
-  featuredParent: {fileID: 711025118}
-  featuredPrefab: {fileID: 956839107911045771, guid: 00ecc2fb7b39feb49977d6b976abf10d, type: 3}
-  scrollRect: {fileID: 1790004012}
-  downArrowButton: {fileID: 0}
-  upArrowButton: {fileID: 0}
-  panelCanvasGroup: {fileID: 490595936}
-  window: {fileID: 1306211947}
-  fadeIn: 0.18
-  fadeOut: 0.15
-  scaleIn: 0.22
-  showFeatured: 0
-  sortByPriceAsc: 1
-  arrowAppearDelay: 3
-  arrowScrollStep: 0.35
-  arrowScrollDuration: 0.35
-  arrowNudgeDistance: 12
-  arrowNudgeDuration: 0.6
-  bottomThreshold: 0.01
 --- !u!1 &492029100
 GameObject:
   m_ObjectHideFlags: 0
@@ -13500,14 +13450,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1706589083
-Transform:
+--- !u!224 &1706589083
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706589082}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -13515,6 +13464,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706589084
 MonoBehaviour:
   m_ObjectHideFlags: 0
