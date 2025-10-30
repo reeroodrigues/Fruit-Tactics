@@ -5,15 +5,16 @@ public class TimeManager : ITimeManager
 {
     private int _timeLeft;
     private float _acc;
-
+    public event Action<int> OnTimeDelta;
     public int TimeLeftSeconds => _timeLeft;
     public event Action<int> OnTimeChanged;
-
     public TimeManager(int startSeconds) => _timeLeft = startSeconds;
 
     public void Add(int seconds)
     {
+        if (seconds <= 0) return;
         _timeLeft += seconds;
+        OnTimeDelta?.Invoke(seconds);
         OnTimeChanged?.Invoke(_timeLeft);
     }
 
@@ -23,7 +24,7 @@ public class TimeManager : ITimeManager
     {
         if (!CanPay(seconds)) return false;
         _timeLeft -= seconds;
-        if (_timeLeft < 0) _timeLeft = 0;
+        OnTimeDelta?.Invoke(-seconds);
         OnTimeChanged?.Invoke(_timeLeft);
         return true;
     }

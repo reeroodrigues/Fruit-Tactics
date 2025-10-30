@@ -12,6 +12,8 @@ namespace New_GameplayCore.Views
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private Button swapAllButton;
         [SerializeField] private Button swapOneButton;
+        [SerializeField] private RectTransform timeDeltaAnchor;
+        [SerializeField] private TimeDeltaToast timeDeltaToast;
 
         private ITimeManager _time;
         private IScoreService _score;
@@ -24,6 +26,7 @@ namespace New_GameplayCore.Views
             _swap = swap;
 
             _time.OnTimeChanged += UpdateTimer;
+            _time.OnTimeDelta += ShowTimeDelta;
             _score.OnScoreChanged += UpdateScore;
             
             swapAllButton.onClick.AddListener(OnSwapAll);
@@ -37,9 +40,22 @@ namespace New_GameplayCore.Views
         {
             if (_time != null)
                 _time.OnTimeChanged -= UpdateTimer;
+            
+            if (_time != null)
+                _time.OnTimeDelta -= ShowTimeDelta;
 
             if (_score != null)
                 _score.OnScoreChanged -= UpdateScore;
+        }
+
+        private void ShowTimeDelta(int delta)
+        {
+            if(!timeDeltaToast || !timeDeltaAnchor)
+                return;
+            
+            var toast = Instantiate(timeDeltaToast,timeDeltaAnchor);
+            toast.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            toast.Play(delta);
         }
 
         private void UpdateTimer(int value)

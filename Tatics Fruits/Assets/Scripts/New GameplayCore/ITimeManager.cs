@@ -10,6 +10,7 @@ namespace New_GameplayCore
         bool TryPay(int seconds);
         void Add(int seconds);
         event Action<int> OnTimeChanged;
+        event Action<int> OnTimeDelta;
     }
 
     public interface IScoreService

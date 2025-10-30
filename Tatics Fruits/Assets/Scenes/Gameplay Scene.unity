@@ -379,6 +379,41 @@ MonoBehaviour:
   pileScale: 0.9
   pileAnimDuration: 0.2
   bootstrap: {fileID: 1419642189}
+--- !u!1 &94323880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94323881}
+  m_Layer: 5
+  m_Name: TimeDeltaAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &94323881
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94323880}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3275093408626263536}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1 &123366805
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,6 +3679,8 @@ MonoBehaviour:
   scoreText: {fileID: 1381425713}
   swapAllButton: {fileID: 456065598}
   swapOneButton: {fileID: 1201055234}
+  timeDeltaAnchor: {fileID: 94323881}
+  timeDeltaToast: {fileID: 2981652402924991672, guid: d2c14d4142eca4c4ebc0ff2a3718f809, type: 3}
 --- !u!222 &48806441947852642
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4325,6 +4362,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 94323881}
   - {fileID: 2735010823797010017}
   - {fileID: 1727783152126297765}
   - {fileID: 1298777390}
