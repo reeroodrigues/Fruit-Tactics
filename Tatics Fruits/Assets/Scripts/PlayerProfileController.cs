@@ -45,10 +45,10 @@ public class PlayerProfileController : MonoBehaviour
         else
         {
             Data = loaded ?? new PlayerProfileData();
-            if (Data.OwnedCards == null)    Data.OwnedCards = new System.Collections.Generic.List<string>();
-            if (Data.EquippedDeck == null)  Data.EquippedDeck = new System.Collections.Generic.List<string>();
-            if (Data.Daily == null)         Data.Daily = new DailySystemData();
-            if (Data.Daily.Login == null)   Data.Daily.Login = new DailyLoginData();
+            if (Data.ownedCards == null)    Data.ownedCards = new System.Collections.Generic.List<string>();
+            if (Data.equippedDeck == null)  Data.equippedDeck = new System.Collections.Generic.List<string>();
+            if (Data.daily == null)         Data.daily = new DailySystemData();
+            if (Data.daily.login == null)   Data.daily.login = new DailyLoginData();
         }
 
         IsLoaded = true;
@@ -69,9 +69,9 @@ public class PlayerProfileController : MonoBehaviour
         else
         {
             Data = loaded ?? new PlayerProfileData();
-            if (Data.OwnedCards == null) Data.OwnedCards = new System.Collections.Generic.List<string>();
+            if (Data.ownedCards == null) Data.ownedCards = new System.Collections.Generic.List<string>();
             
-            if (Data.EquippedDeck == null) Data.EquippedDeck = new System.Collections.Generic.List<string>();
+            if (Data.equippedDeck == null) Data.equippedDeck = new System.Collections.Generic.List<string>();
         }
         
         ApplyProfileUI();
@@ -116,39 +116,39 @@ public class PlayerProfileController : MonoBehaviour
 
     private void MigrateFromPlayerPrefsIfNeeded()
     {
-        if (Data.PlayerName == "Jogador")
+        if (Data.playerName == "Jogador")
         {
             var legacyName = PlayerPrefs.GetString("PlayerName", "Jogador");
             if (!string.IsNullOrWhiteSpace(legacyName))
-                Data.PlayerName = legacyName;
+                Data.playerName = legacyName;
         }
 
-        if (Data.AvatarIndex == 0)
+        if (Data.avatarIndex == 0)
         {
             var legacyAvatar = PlayerPrefs.GetInt("AvatarIndex", 0);
-            Data.AvatarIndex = Mathf.Clamp(legacyAvatar, 0, avatars != null && avatars.Length > 0 ? avatars.Length - 1 : 0);
+            Data.avatarIndex = Mathf.Clamp(legacyAvatar, 0, avatars != null && avatars.Length > 0 ? avatars.Length - 1 : 0);
         }
     }
 
     private void ApplyProfileUI()
     {
         if (playerNameText)
-            playerNameText.text = Data.PlayerName;
+            playerNameText.text = Data.playerName;
         
         if (playerNameInput) 
-            playerNameInput.text = Data.PlayerName;
+            playerNameInput.text = Data.playerName;
 
         if (avatars != null && avatars.Length > 0 && avatarImage)
         {
-            var idx = Mathf.Clamp(Data.AvatarIndex, 0, avatars.Length - 1);
+            var idx = Mathf.Clamp(Data.avatarIndex, 0, avatars.Length - 1);
             avatarImage.sprite = avatars[idx];
         }
     }
 
     private void UpdateGoldUI()
     {
-        if (goldText) goldText.text = Data.Gold.ToString();
-        OnGoldChanged?.Invoke(Data.Gold);
+        if (goldText) goldText.text = Data.gold.ToString();
+        OnGoldChanged?.Invoke(Data.gold);
     }
 
     private void Save() => JsonDataService.Save(FileName, Data);
@@ -165,8 +165,8 @@ public class PlayerProfileController : MonoBehaviour
         if (avatars == null || avatars.Length == 0) 
             return;
         
-        Data.AvatarIndex = (Data.AvatarIndex + 1) % avatars.Length;
-        avatarImage.sprite = avatars[Data.AvatarIndex];
+        Data.avatarIndex = (Data.avatarIndex + 1) % avatars.Length;
+        avatarImage.sprite = avatars[Data.avatarIndex];
         Save();
     }
 
@@ -175,8 +175,8 @@ public class PlayerProfileController : MonoBehaviour
         if (avatars == null || avatars.Length == 0) 
             return;
         
-        Data.AvatarIndex = Mathf.Clamp(avatarIndex, 0, avatars.Length - 1);
-        avatarImage.sprite = avatars[Data.AvatarIndex];
+        Data.avatarIndex = Mathf.Clamp(avatarIndex, 0, avatars.Length - 1);
+        avatarImage.sprite = avatars[Data.avatarIndex];
         Save();
         CloseAvatarSelection();
     }
@@ -186,23 +186,23 @@ public class PlayerProfileController : MonoBehaviour
         if (!Regex.IsMatch(name, NameRegex))
         {
             if (playerNameErrorText) playerNameErrorText.text = "Nome inválido! Apenas letras são permitidas.";
-            if (playerNameInput)     playerNameInput.text = Data.PlayerName;
+            if (playerNameInput)     playerNameInput.text = Data.playerName;
         }
         else
         {
             if (playerNameErrorText) playerNameErrorText.text = "";
             if (playerNameText)      playerNameText.text = name;
-            Data.PlayerName = name;
+            Data.playerName = name;
             Save();
         }
     }
 
-    public bool CanAfford(int price) => Data.Gold >= price;
+    public bool CanAfford(int price) => Data.gold >= price;
 
     public void AddGold(int amount)
     {
         if (amount == 0) return;
-        Data.Gold = Mathf.Max(0, Data.Gold + amount);
+        Data.gold = Mathf.Max(0, Data.gold + amount);
         Save();
         UpdateGoldUI();
     }
@@ -210,14 +210,14 @@ public class PlayerProfileController : MonoBehaviour
     public bool TrySpendGold(int amount)
     {
         if (!CanAfford(amount)) return false;
-        Data.Gold -= amount;
+        Data.gold -= amount;
         Save();
         UpdateGoldUI();
         return true;
     }
 
     public bool HasCard(string cardId)
-        => !string.IsNullOrEmpty(cardId) && Data.OwnedCards.Any(id => id == cardId);
+        => !string.IsNullOrEmpty(cardId) && Data.ownedCards.Any(id => id == cardId);
 
     public bool TryPurchaseCard(string cardId, int price)
     {
@@ -225,7 +225,7 @@ public class PlayerProfileController : MonoBehaviour
         if (HasCard(cardId)) return true;
         if (!TrySpendGold(price)) return false;
 
-        Data.OwnedCards.Add(cardId);
+        Data.ownedCards.Add(cardId);
         Save();
         return true;
     }
@@ -234,18 +234,18 @@ public class PlayerProfileController : MonoBehaviour
     {
         if (string.IsNullOrEmpty(cardId)) return false;
         if (!HasCard(cardId)) return false;
-        if (Data.EquippedDeck.Contains(cardId)) return true;
-        if (Data.EquippedDeck.Count >= deckLimit) return false;
+        if (Data.equippedDeck.Contains(cardId)) return true;
+        if (Data.equippedDeck.Count >= deckLimit) return false;
 
-        Data.EquippedDeck.Add(cardId);
+        Data.equippedDeck.Add(cardId);
         Save();
         return true;
     }
 
     public bool UnequipFromDeck(string cardId)
     {
-        if (!Data.EquippedDeck.Contains(cardId)) return false;
-        Data.EquippedDeck.Remove(cardId);
+        if (!Data.equippedDeck.Contains(cardId)) return false;
+        Data.equippedDeck.Remove(cardId);
         Save();
         return true;
     }
@@ -260,7 +260,7 @@ public class PlayerProfileController : MonoBehaviour
         if (amount == 0)
             return;
         
-        Data.Gold = Mathf.Max(0, Data.Gold + amount);
+        Data.gold = Mathf.Max(0, Data.gold + amount);
         SaveProfile();
         UpdateGoldUI();
     }

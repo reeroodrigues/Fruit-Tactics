@@ -36,7 +36,7 @@ public class DailySystemData
     
     public List<DailyMissionState> missions = new List<DailyMissionState>();
     
-    public DailyLoginData Login = new DailyLoginData();
+    public DailyLoginData login = new DailyLoginData();
     
     [Obsolete("Use Daily.Login em vez de lastLoginRewardDayKey.")]
     public string lastLoginRewardDayKey;
@@ -48,11 +48,20 @@ public class DailySystemData
 [Serializable]
 public class PlayerProfileData
 {
-    public string PlayerName = "Jogador";
-    public int AvatarIndex = 0;
-    public int Gold = 0;
-    public List<string> OwnedCards = new List<string>();
-    public List<string> EquippedDeck = new List<string>();
+    public string playerName = "Jogador";
+    public int avatarIndex = 0;
+    public int gold = 0;
+    public int currentLevelIndex = 0;
+    public int highestLevelUnlocked = 0;
+
+    public bool musicOn = true;
+    public bool sfxOn = true;
+    public bool vfxOn = true;
+    public string language = "pt_BR";
     
-    public DailySystemData Daily = new DailySystemData();
+    public DailySystemData daily = new DailySystemData();
+    public Dictionary<string, int> BestScores = new Dictionary<string, int>();
+    
+    public List<string> ownedCards = new List<string>();
+    public List<string> equippedDeck = new List<string>();
 }

@@ -30,6 +30,7 @@ public class CoinCollectFx : MonoBehaviour
     [Header("Target punch")]
     [SerializeField] private float targetPunchScale = 1.15f;
     [SerializeField] private float targetPunchTime = 0.12f;
+    [SerializeField] private float targetPadding = 8f;
 
     private readonly Queue<Image> _pool = new Queue<Image>();
     private RectTransform _poolParent;
@@ -59,14 +60,12 @@ public class CoinCollectFx : MonoBehaviour
 
     public UniTask PlayFromUI(RectTransform from, int totalGold, Action onAllComplete = null)
     {
-        if (!ValidateCommon(totalGold, onAllComplete))
-        {
-            return UniTask.CompletedTask;
-        }
+        if (!ValidateCommon(totalGold, onAllComplete)) return UniTask.CompletedTask;
 
-        var start = WorldToCanvasPos(from);
-        var target = WorldToCanvasPos(targetHud);
-        
+        var start  = WorldToCanvasPos(from);
+        // mire no centro real do retângulo do alvo:
+        var target = CanvasPointAtRectCenter(targetHud);
+
         return PlayInternalAsync(totalGold, start, target, onAllComplete);
     }
     
@@ -106,7 +105,7 @@ public class CoinCollectFx : MonoBehaviour
         onAllComplete?.Invoke();
     }
 
-    private void SpawnOneCoin(Vector2 start, Vector2 target)
+    private void SpawnOneCoin(Vector2 start, Vector2 targetCenter)
     {
         var img = GetFromPool();
         var rt  = (RectTransform)img.transform;
@@ -114,12 +113,19 @@ public class CoinCollectFx : MonoBehaviour
         PrepareRect(rt, (RectTransform)rootCanvas.transform, start);
 
         var mid = RandomSpread(start);
+        // opcional: destino aleatório dentro do retângulo da moeda (fica mais natural):
+        var target = CanvasPointRandomInside(targetHud, targetPadding);
 
         var seq = DOTween.Sequence();
-        seq.Append(rt.DOAnchorPos(mid, travelTime * 0.35f).SetEase(Ease.OutQuad));
-        seq.Join(rt.DOPunchScale(Vector3.one * 0.2f, 0.15f, 1, 0.9f));
+        seq.Append(rt.DOAnchorPos(mid,    travelTime * 0.35f).SetEase(Ease.OutQuad));
+        seq.Join(  rt.DOPunchScale(Vector3.one * 0.2f, 0.15f, 1, 0.9f));
         seq.Append(rt.DOAnchorPos(target, travelTime * 0.65f).SetEase(travelEase));
-        seq.OnComplete(() => ReturnToPool(img));
+        // garanta que “encaixa” no final:
+        seq.OnComplete(() =>
+        {
+            rt.anchoredPosition = target; // snap final
+            ReturnToPool(img);
+        });
     }
 
     private Image GetFromPool()
@@ -188,6 +194,42 @@ public class CoinCollectFx : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvasRT,
             RectTransformUtility.WorldToScreenPoint(worldCam, world),
+            cam,
+            out var localPoint);
+
+        return localPoint;
+    }
+    
+    private Vector2 CanvasPointAtRectCenter(RectTransform rt)
+    {
+        var cam = rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : rootCanvas.worldCamera;
+        var canvasRT = (RectTransform)rootCanvas.transform;
+
+        // centro VISUAL do rect (independente do pivot)
+        Vector3 worldCenter = rt.TransformPoint(rt.rect.center);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRT,
+            RectTransformUtility.WorldToScreenPoint(cam, worldCenter),
+            cam,
+            out var localPoint);
+
+        return localPoint;
+    }
+
+    private Vector2 CanvasPointRandomInside(RectTransform rt, float padding)
+    {
+        var cam = rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : rootCanvas.worldCamera;
+        var canvasRT = (RectTransform)rootCanvas.transform;
+
+        // escolhe um ponto aleatório DENTRO do retângulo da moeda
+        float x = UnityEngine.Random.Range(rt.rect.xMin + padding, rt.rect.xMax - padding);
+        float y = UnityEngine.Random.Range(rt.rect.yMin + padding, rt.rect.yMax - padding);
+        Vector3 world = rt.TransformPoint(new Vector3(x, y, 0f));
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRT,
+            RectTransformUtility.WorldToScreenPoint(cam, world),
             cam,
             out var localPoint);
 

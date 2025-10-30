@@ -40,14 +40,14 @@ public class DailyMissionsController : MonoBehaviour
     private void EnsureLoginInitialized()
     {
         if (profile.Data == null) return;
-        if (profile.Data.Daily == null)
-            profile.Data.Daily = new DailySystemData();
+        if (profile.Data.daily == null)
+            profile.Data.daily = new DailySystemData();
 
-        var l = profile.Data.Daily.Login;
+        var l = profile.Data.daily.login;
         if (l == null)
         {
-            profile.Data.Daily.Login = new DailyLoginData();
-            l = profile.Data.Daily.Login;
+            profile.Data.daily.login = new DailyLoginData();
+            l = profile.Data.daily.login;
         }
 
         if (l.rewards == null || l.rewards.Count != 7)
@@ -61,11 +61,11 @@ public class DailyMissionsController : MonoBehaviour
 
     private void MigrateLegacyLoginIfNeeded()
     {
-        var daily = profile.Data.Daily;
+        var daily = profile.Data.daily;
         if (daily == null) return;
 
-        var l = daily.Login;
-        if (l == null) { EnsureLoginInitialized(); l = daily.Login; }
+        var l = daily.login;
+        if (l == null) { EnsureLoginInitialized(); l = daily.login; }
         
         if (!string.IsNullOrEmpty(daily.lastLoginRewardDayKey) &&
             string.IsNullOrEmpty(l.lastClaimDayKey))
@@ -83,11 +83,11 @@ public class DailyMissionsController : MonoBehaviour
     
     public void EnsureDayGenerated()
     {
-        var daily = profile.Data.Daily;
+        var daily = profile.Data.daily;
         if (daily == null)
         {
-            profile.Data.Daily = new DailySystemData();
-            daily = profile.Data.Daily;
+            profile.Data.daily = new DailySystemData();
+            daily = profile.Data.daily;
         }
 
         if (daily.dayKey == TodayKey && daily.missions != null && daily.missions.Count == missionsPerDay)
@@ -130,7 +130,7 @@ public class DailyMissionsController : MonoBehaviour
     public List<DailyLoginDayInfo> GetLoginDays()
     {
         EnsureLoginInitialized();
-        var l = profile.Data.Daily.Login;
+        var l = profile.Data.daily.login;
 
         var list = new List<DailyLoginDayInfo>(7);
         for (int i = 0; i < 7; i++)
@@ -150,7 +150,7 @@ public class DailyMissionsController : MonoBehaviour
     public bool TryClaimDailyLoginDay(int index)
     {
         EnsureLoginInitialized();
-        var l = profile.Data.Daily.Login;
+        var l = profile.Data.daily.login;
 
         if (index != l.cycleIndex) 
             return false;
@@ -184,25 +184,25 @@ public class DailyMissionsController : MonoBehaviour
     public bool IsDailyLoginAvailable()
     {
         EnsureLoginInitialized();
-        var l = profile.Data.Daily.Login;
+        var l = profile.Data.daily.login;
         return l.lastClaimDayKey != TodayKey && !l.claimed[l.cycleIndex];
     }
 
     public bool TryClaimDailyLogin()
     {
         EnsureLoginInitialized();
-        var l = profile.Data.Daily.Login;
+        var l = profile.Data.daily.login;
         return TryClaimDailyLoginDay(l.cycleIndex);
     }
     
     DailyMissionSo FindDef(string missionId) =>
         missionPool.FirstOrDefault(m => m && m.id == missionId);
 
-    public IReadOnlyList<DailyMissionState> GetMissions() => profile.Data.Daily.missions;
+    public IReadOnlyList<DailyMissionState> GetMissions() => profile.Data.daily.missions;
 
     public bool TryClaimMission(string missionId)
     {
-        var st = profile.Data.Daily.missions.FirstOrDefault(m => m.missionId == missionId);
+        var st = profile.Data.daily.missions.FirstOrDefault(m => m.missionId == missionId);
         if (st == null || !st.completed || st.claimed)
             return false;
 
@@ -222,7 +222,7 @@ public class DailyMissionsController : MonoBehaviour
     
     public void ReportWinLevel(int level)
     {
-        var list = profile.Data.Daily.missions;
+        var list = profile.Data.daily.missions;
         if (list == null) return;
 
         bool changed = false;
@@ -255,14 +255,14 @@ public class DailyMissionsController : MonoBehaviour
 
     public bool HasAnyClaimAvailable()
     {
-        bool anyMission = profile.Data.Daily.missions.Any(m => m.completed && !m.claimed);
+        bool anyMission = profile.Data.daily.missions.Any(m => m.completed && !m.claimed);
         bool login = IsDailyLoginAvailable();
         return anyMission || login;
     }
     
     public bool HasMissionClaimAvailable()
     {
-        var list = profile.Data?.Daily?.missions;
+        var list = profile.Data?.daily?.missions;
         return list != null && list.Any(m => m.completed && !m.claimed);
     }
 

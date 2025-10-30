@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4806015943553624961}
   - component: {fileID: 3842405226939400829}
   - component: {fileID: 8863201718481320770}
+  - component: {fileID: 2981652402924991672}
+  - component: {fileID: 7482790260677028102}
   m_Layer: 5
   m_Name: TimerAddedText
   m_TagString: Untagged
@@ -34,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70.059, y: 51.568}
-  m_SizeDelta: {x: 38.409, y: 38.409}
+  m_AnchoredPosition: {x: 71.488, y: 35.487}
+  m_SizeDelta: {x: 114.263, y: 114.263}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3842405226939400829
 CanvasRenderer:
@@ -74,8 +76,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282969222
-  m_fontColor: {r: 0.5255404, g: 0.9245283, b: 0.28346387, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -136,3 +138,33 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2981652402924991672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041132902706904536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc2a18e911e24e5fbbee0010412ec45a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.TimeDeltaToast
+  label: {fileID: 8863201718481320770}
+  cg: {fileID: 7482790260677028102}
+  rise: 80
+  duration: 1.5
+  plusColors: {r: 0.2, g: 0.9, b: 0.2, a: 1}
+  minusColors: {r: 1, g: 0.3, b: 0.3, a: 1}
+--- !u!225 &7482790260677028102
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041132902706904536}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
