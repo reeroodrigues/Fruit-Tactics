@@ -9,48 +9,58 @@ namespace New_GameplayCore.Services
         private readonly IScoreService _score;
         private readonly ITimeManager  _time;
         private readonly IHighScoreService _hs;
+        private readonly ILevelProgressService _progress;
+        private readonly LevelSetSO _levelSet;
 
         public Action<VictoryModel> OnModelReady;
-        public Action OnNextLevel;
-        public Action OnReplay;
+        public event System.Action OnNext;
+        public event System.Action OnReplay;
 
-        public VictoryPresenter(LevelConfigSO cfg, IScoreService score, ITimeManager time, IHighScoreService hs)
+        public VictoryPresenter(
+            LevelConfigSO cfg,
+            ScoreService score,
+            ITimeManager time,
+            IHighScoreService hs,
+            ILevelProgressService progress,
+            LevelSetSO levelSet)
         {
             _cfg = cfg;
             _score = score;
             _time = time;
             _hs = hs;
+            _progress = progress;
+            _levelSet = levelSet;
         }
 
         public void Build()
         {
-            var id = string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId;
             var total = _score.Total;
-            var bestBefore = _hs.GetBest(id);
-            var newRecord = _hs.TryReportScore(id, total);
-
+            var target = _cfg.targetScore;
+            
+            var pct = Mathf.Clamp01(total/(float)target);
             var stars = 0;
-            var pct = Mathf.Clamp01(_score.Total / (float)_cfg.targetScore);
-            if (pct >= _cfg.star1Threshold) stars = 1;
-            if (pct >= _cfg.star2Threshold) stars = 2;
-            if (pct >= _cfg.star3Threshold) stars = 3;
-            
-            if (_score.Total >= _cfg.targetScore)
-                stars = 3;
-            
+            if(pct >= _cfg.star1Threshold) stars = 1;
+            if(pct >= _cfg.star2Threshold) stars = 2;
+            if(pct >= _cfg.star3Threshold || total >= target) stars = 3;
+
+            var newRecord = _hs.TryReportScore(string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId, total);
+            _progress.RecordResult(_cfg, total, stars);
+
+            var canNext = _progress.CanAdvance(_cfg, total, 0.75f);
+
             OnModelReady?.Invoke(new VictoryModel
             {
-                starsEarned = stars,
-                levelId = id,
                 totalScore = total,
-                bestBefore = bestBefore,
+                targetScore = target,
+                bestBefore = _hs.GetBest(string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId),
                 newRecord = newRecord,
-                targetScore = _cfg.targetScore,
-                timeLeftSeconds = _time.TimeLeftSeconds
+                starsEarned = stars,
+                canGoNext = canNext,
+                levelIndex = _progress.CurrentIndex
             });
         }
         
-        public void ClickNext() => OnNextLevel?.Invoke();
+        public void ClickNext() => OnNext?.Invoke();
         public void ClickReplay() => OnReplay?.Invoke();
     }
 }

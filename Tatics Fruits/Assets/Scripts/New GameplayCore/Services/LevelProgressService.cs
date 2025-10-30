@@ -1,0 +1,62 @@
+using UnityEngine;
+
+namespace New_GameplayCore.Services
+{
+    public class LevelProgressService : ILevelProgressService
+    {
+        private const string FILE = "levels_progress.json";
+        private LevelProgressData _data = new();
+
+        public int CurrentIndex => _data.currentIndex;
+
+        public void Load()
+        {
+            if(!JsonDataService.TryLoad(FILE, out _data))
+                _data = new LevelProgressData();
+        }
+
+        public void Save()
+        {
+            JsonDataService.Save(FILE, _data);
+        }
+
+        public LevelConfigSO Current(LevelSetSO set)
+        {
+            if(set == null || set.levels == null || set.levels.Length == 0)
+                return null;
+            
+            _data.currentIndex = Mathf.Clamp(_data.currentIndex, 0, set.levels.Length -1);
+            return set.levels[_data.currentIndex];
+        }
+
+        public void RecordResult(LevelConfigSO cfg, int totalScore, int stars)
+        {
+            var id = string.IsNullOrEmpty(cfg.levelId) ? cfg.name : cfg.levelId;
+            if(!_data.best.TryGetValue(id, out var prev) || totalScore > prev)
+                _data.best[id] = totalScore;
+            
+            _data.stars[id] = Mathf.Max(_data.stars.ContainsKey(id) ?  _data.stars[id] : 0, Mathf.Clamp(stars, 0,3));
+        }
+
+        public bool CanAdvance(LevelConfigSO cfg, int totalScore, float unlockPct = 0.75f)
+        {
+            if (cfg.targetScore <= 0)
+                return false;
+            
+            var pct = totalScore / (float) cfg.targetScore;
+            return pct >= unlockPct;
+        }
+
+        public void Advance(LevelSetSO set)
+        {
+            if(set == null || set.levels == null)
+                return;
+            
+            _data.currentIndex = Mathf.Min(_data.currentIndex + 1, set.levels.Length -1);
+            _data.unlockedMaxIndex = Mathf.Max(_data.unlockedMaxIndex, _data.currentIndex);
+            Save();
+        }
+
+        public void Replay() => Save();
+    }
+}

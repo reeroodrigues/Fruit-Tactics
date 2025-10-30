@@ -5,10 +5,12 @@ namespace New_GameplayCore.Services
     {
         public string levelId;
         public int totalScore;
-        public int targetScore;
         public int starsEarned;
         public int bestBefore;
-        public bool newRecord;
+        public int targetScore;
         public int timeLeftSeconds;
+        public int levelIndex;
+        public bool newRecord;
+        public bool canGoNext;
     }
 }

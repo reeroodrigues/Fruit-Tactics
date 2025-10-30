@@ -2,7 +2,9 @@ using System;
 using DefaultNamespace.New_GameplayCore;
 using New_GameplayCore.GameState;
 using New_GameplayCore.Services;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace New_GameplayCore.Views
 {
@@ -16,6 +18,8 @@ namespace New_GameplayCore.Views
         [SerializeField] private Transform uiRoot;
         [SerializeField] private VictoryView victoryPrefab;
         [SerializeField] private DefeatView defeatPrefab;
+        [SerializeField] private LevelSetSO levelSet;
+        [SerializeField] private TextMeshProUGUI phaseLabel;
 
 
         public IRuleEngine RuleEngine => _rule;
@@ -29,6 +33,7 @@ namespace New_GameplayCore.Views
         public LevelConfigSO LevelConfig => levelConfig;
         public IScoreService Score => _score;
         public IHighScoreService Highscores => _highscores;
+        public LevelProgressService Progress;
 
         private GameStateMachine _fsm;
         private TimeManager _time;
@@ -45,6 +50,12 @@ namespace New_GameplayCore.Views
 
         private void Awake()
         {
+            Progress = new LevelProgressService();
+            Progress.Load();
+            
+            var cfg = Progress.Current(levelSet);
+            if (cfg != null) levelConfig = cfg;
+            
             _fsm   = new GameStateMachine();
             _time  = new TimeManager(levelConfig.initialTimeSeconds);
             _score = new ScoreService(levelConfig);
@@ -55,53 +66,17 @@ namespace New_GameplayCore.Views
             _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
             _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
             _highscores = new JsonHighScoreService();
-
+            
             IsReady = true;
             OnReady?.Invoke();
             _controller.OnEnterPreRound += HandleEnterPreRound;
             _controller.OnLevelEnded += HandleLevelEnded;
         }
-
-        private void HandleLevelEnded(EndCause cause)
-        {
-            if (cause == EndCause.TargetReached)
-            {
-                var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores);
-                presenter.OnNextLevel += () => { /* TODO: próxima fase */ };
-                presenter.OnReplay    += () => { /* TODO: rejogar */    };
-
-                var model = default(VictoryModel);
-                presenter.OnModelReady += m => model = m;
-                presenter.Build();
-
-                var view = Instantiate(victoryPrefab, uiRoot);
-                view.Bind(presenter, model);
-                return;
-            }
-
-            if (cause == EndCause.TimeUp)
-            {
-                var presenter = new DefeatPresenter(levelConfig, _score, _time, _highscores);
-                presenter.OnReplay += () =>
-                {
-                    // TODO: reload da fase atual
-                };
-                presenter.OnMenu += () =>
-                {
-                    // TODO: ir para menu de fases
-                };
-
-                var model = default(DefeatModel);
-                presenter.OnModelReady += m => model = m;
-                presenter.Build();
-
-                var view = Instantiate(defeatPrefab, uiRoot);
-                view.Bind(presenter, model);
-            }
-        }
-
+        
         private void Start()
         {
+            if(phaseLabel)
+                phaseLabel.text = $"Fase {Progress.CurrentIndex + 1}";
             _controller.StartLevel(levelConfig, deckConfig);
             hudView.Initialize(_time, _score, _swap);
             handView.Initialize(_hand, _controller);
@@ -111,6 +86,7 @@ namespace New_GameplayCore.Views
                 _highscores.TryReportScore(GetLevelId(), total);
             };
         }
+        
 
         private void OnDestroy()
         {
@@ -119,6 +95,31 @@ namespace New_GameplayCore.Views
             
             if (_controller != null)
                 _controller.OnLevelEnded -= HandleLevelEnded;
+        }
+        
+        private void HandleLevelEnded(EndCause cause)
+        {
+            if (cause != EndCause.TargetReached) return;
+
+            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, Progress, levelSet);
+
+            VictoryModel model = default;
+            presenter.OnModelReady += m => model = m;
+            presenter.Build();
+
+            var view = Instantiate(victoryPrefab, uiRoot);
+            view.Bind(presenter, model);
+            
+            presenter.OnReplay += () =>
+            {
+                Progress.Replay();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            };
+            presenter.OnNext += () =>
+            {
+                Progress.Advance(levelSet);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            };
         }
 
         private void HandleEnterPreRound()

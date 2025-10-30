@@ -2372,8 +2372,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.292, y: 1.431}
-  m_SizeDelta: {x: 469.137, y: 560.705}
+  m_AnchoredPosition: {x: -0.000015258789, y: 0}
+  m_SizeDelta: {x: 469.13696, y: 560.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1369335517
 GameObject:
@@ -2663,6 +2663,8 @@ MonoBehaviour:
   uiRoot: {fileID: 2082077804}
   victoryPrefab: {fileID: 3153231347081057741, guid: bde8a11508c4dd541b4f33479aaebcc5, type: 3}
   defeatPrefab: {fileID: 718658263965184358, guid: 0ddd1abc970431147b54264fa43db930, type: 3}
+  levelSet: {fileID: 11400000, guid: e2de82088fcc9144293855b79aeb9171, type: 2}
+  phaseLabel: {fileID: 2489931806995890087}
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0

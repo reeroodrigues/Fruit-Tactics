@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69aff33fcf794d92a54294792eda83c6, type: 3}
-  m_Name: Level_Fase2
+  m_Name: Level_Fase9
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.LevelConfigSO
-  levelId: fase_2
-  displayName: Fase 2
+  levelId: fase_9
+  displayName: Fase 9
   description: "Fa\xE7a 200 pontos em 60 segundos!"
   targetScore: 200
   initialTimeSeconds: 60
