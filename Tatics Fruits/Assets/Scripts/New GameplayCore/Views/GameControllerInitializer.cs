@@ -131,7 +131,7 @@ namespace New_GameplayCore.Views
 
         private void ShowVictory()
         {
-            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, Progress, levelSet);
+            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, _profileService, Progress, levelSet);
 
             VictoryModel model = default;
             presenter.OnModelReady += m => model = m;

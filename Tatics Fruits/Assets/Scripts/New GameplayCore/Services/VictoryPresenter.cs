@@ -22,6 +22,7 @@ namespace New_GameplayCore.Services
             ScoreService score,
             ITimeManager time,
             IHighScoreService hs,
+            PlayerProfileService profileService,
             ILevelProgressService progress,
             LevelSetSO levelSet)
         {
@@ -29,6 +30,7 @@ namespace New_GameplayCore.Services
             _score = score;
             _time = time;
             _hs = hs;
+            _profileService = profileService;
             _progress = progress;
             _levelSet = levelSet;
         }
