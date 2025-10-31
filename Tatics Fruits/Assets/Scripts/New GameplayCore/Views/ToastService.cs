@@ -19,7 +19,13 @@ namespace New_GameplayCore.Views
 
         private void Awake()
         {
-            Instance = this;
+            if(Instance == null)
+                Instance = this;
+            else if(Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
         }
 
         public static void Show(string msg)

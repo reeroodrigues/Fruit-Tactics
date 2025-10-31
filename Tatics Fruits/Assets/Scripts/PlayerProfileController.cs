@@ -32,7 +32,7 @@ public class PlayerProfileController : MonoBehaviour
     public bool IsLoaded { get; private set; }
     public event Action OnProfileLoaded;
     public event Action<int> OnGoldChanged;
-    public PlayerProfileData Data { get; private set; } = new PlayerProfileData();
+    public PlayerProfileData Data { get; set; } = new PlayerProfileData();
 
     private void Awake()
     {

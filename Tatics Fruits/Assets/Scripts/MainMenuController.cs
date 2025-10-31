@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using New_GameplayCore.Services;
 using UnityEngine;
@@ -45,26 +46,34 @@ public class MainMenuController : MonoBehaviour
     private Sequence _titleSeq;
     private bool _switching;
     private LevelProgressService _progress;
+    private PlayerProfileService _profile;
+    private DailyMissionsController _daily;
+
+    private System.Collections.Generic.List<DailyMissionSo> GenerateMissionsFromResources()
+    {
+        var sos = Resources.LoadAll<DailyMissionSo>(string.Empty);
+        return new System.Collections.Generic.List<DailyMissionSo>(sos);
+    }
 
     private void Start()
     {
         _progress = new LevelProgressService();
         _progress.Load();
-        
+    
+        _daily = FindObjectOfType<DailyMissionsController>();
+        if (_daily != null)
+        {
+            _daily.EnsureDayGenerated();
+        }
+    
         titleTransform.localScale = Vector3.zero;
         _titleSeq = DOTween.Sequence()
             .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));
-        
+    
         playButton.onClick.AddListener(OnClickPlay);
-        // rankingButton.onClick.AddListener(() =>
-        // {
-        //     if (!rankingPanel) return;
-        //     rankingPanel.SetActive(true);
-        // });
-
         storeButton.onClick.AddListener(OpenStorePanel);
         dailyMissionsButton.onClick.AddListener(OpenDailyPanel);
-        
+    
         if (dailyController)
         {
             dailyController.OnAttentionChanged += (has) =>
@@ -73,13 +82,13 @@ public class MainMenuController : MonoBehaviour
             };
             if (dailyBadge) dailyBadge.SetActive(dailyController.HasAnyClaimAvailable());
         }
-        
+    
         settingsButton.onClick.AddListener(() =>
         {
             if (!settingsPanel) return;
             settingsPanel.Toggle();
         });
-        
+    
         InvokeRepeating(nameof(NudgeAllOnce), initialDelay, repeatInterval);
     }
 

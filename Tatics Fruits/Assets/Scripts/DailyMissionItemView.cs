@@ -22,6 +22,7 @@ public class DailyMissionItemView : MonoBehaviour
     private DailyMissionState _state;
     private DailyMissionSo _def;
     
+    public bool Matches(string missionId) => _state != null && _state.missionId == missionId;
 
     public void Setup(DailyMissionsController ctrl, DailyMissionState state, DailyMissionSo def)
     {
@@ -73,28 +74,33 @@ public class DailyMissionItemView : MonoBehaviour
 
     public void Refresh()
     {
-        int max = Mathf.Max(1, _state.target);
-        int cur = Mathf.Clamp(_state.progress, 0, max);
+        var max = Mathf.Max(1, _state.target);
+        var cur = Mathf.Clamp(_state.progress, 0, max);
 
         if (progressBar)
         {
             progressBar.maxValue = max;
             progressBar.value = cur;
 
-            bool hide = hideProgressWhenCompleted && _state.completed;
+            var hide = hideProgressWhenCompleted && _state.completed;
             progressBar.gameObject.SetActive(!hide);
         }
 
         if (progressText)
         {
-            bool hide = hideProgressWhenCompleted && _state.completed;
+            var hide = hideProgressWhenCompleted && _state.completed;
             progressText.gameObject.SetActive(!hide);
             if (!hide) progressText.text = $"{cur}/{max}";
         }
-        
-        bool showClaim = _state.completed && !_state.claimed;
-        if (claimButton) claimButton.gameObject.SetActive(showClaim);
-        
+
+        var canClaim = _state.completed && !_state.claimed;
+
+        if (claimButton)
+        {
+            claimButton.gameObject.SetActive(true);
+            claimButton.interactable = canClaim;
+        }
+
         if (claimStamp) claimStamp.SetActive(_state.claimed);
     }
     
@@ -140,7 +146,8 @@ public class DailyMissionItemView : MonoBehaviour
 
     private void SetRewardLocalized()
     {
-        rewardText.text = $"+{_state.rewardGold}";
+        var reward = (_def != null && _def.rewardGold > 0) ? _def.rewardGold : _state.rewardGold;
+        if (rewardText) rewardText.text = $"+{reward}";
     }
     
     private void OnClickClaim()

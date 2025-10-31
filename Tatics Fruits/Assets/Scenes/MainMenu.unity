@@ -4453,6 +4453,7 @@ GameObject:
   - component: {fileID: 554180456}
   - component: {fileID: 554180455}
   - component: {fileID: 554180454}
+  - component: {fileID: 554180457}
   m_Layer: 5
   m_Name: Content - DailyBonus
   m_TagString: Untagged
@@ -4549,6 +4550,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 554180452}
   m_CullTransparentMesh: 1
+--- !u!225 &554180457
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554180452}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &554558572
 GameObject:
   m_ObjectHideFlags: 0
@@ -6162,6 +6175,7 @@ GameObject:
   - component: {fileID: 720634957}
   - component: {fileID: 720634956}
   - component: {fileID: 720634955}
+  - component: {fileID: 720634958}
   m_Layer: 5
   m_Name: Content - DailyMission
   m_TagString: Untagged
@@ -6259,6 +6273,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720634953}
   m_CullTransparentMesh: 1
+--- !u!225 &720634958
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720634953}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &727917562
 GameObject:
   m_ObjectHideFlags: 0
@@ -7585,9 +7611,9 @@ MonoBehaviour:
   bonusTabBadge: {fileID: 514818175}
   missionsTabBadge: {fileID: 2145746006}
   missionsPanelRoot: {fileID: 720634953}
-  missionsPanelCg: {fileID: 0}
+  missionsPanelCg: {fileID: 554180457}
   bonusPanelRoot: {fileID: 554180452}
-  bonusPanelCg: {fileID: 0}
+  bonusPanelCg: {fileID: 720634958}
   missionsParent: {fileID: 478034226}
   missionItemPrefab: {fileID: 325154248622583549, guid: eafc2814499a1184d94a62082a9e3e24, type: 3}
   loginGridParent: {fileID: 750413013}
@@ -11056,11 +11082,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   profile: {fileID: 1537639275}
   missionPool:
-  - {fileID: 11400000, guid: 138b6144d8c5eda45af1dd80e0e2fa7c, type: 2}
-  - {fileID: 11400000, guid: c952c66c33bf4284b81e3002fb3b86c3, type: 2}
-  - {fileID: 11400000, guid: 598f69bd401d3df4db2c649ae70d3a2f, type: 2}
-  - {fileID: 11400000, guid: 4614cb36be88a19499e0e5fdd110ac90, type: 2}
-  - {fileID: 11400000, guid: 90903da16ca19e445b2e76f09a14b897, type: 2}
+  - {fileID: 11400000, guid: 74effc0b1056d444baad3a0cf33bba5b, type: 2}
+  - {fileID: 11400000, guid: da8a902f8d422574c93808aadf3087fd, type: 2}
+  - {fileID: 11400000, guid: 24a1c3547b2187b4b8fcb8423adffe13, type: 2}
+  - {fileID: 11400000, guid: 8c8a86f06646ff04684050c3c1262e6b, type: 2}
+  - {fileID: 11400000, guid: 1fa36bd5e262e5644b8e52810f4c8f39, type: 2}
   missionsPerDay: 5
   useLocalTime: 1
 --- !u!4 &1330019149
@@ -13765,6 +13791,7 @@ MonoBehaviour:
   travelEase: 5
   targetPunchScale: 1.15
   targetPunchTime: 0.12
+  targetPadding: 8
 --- !u!1 &1713097882
 GameObject:
   m_ObjectHideFlags: 0
@@ -17927,8 +17954,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20.9925
-  m_fontSizeMax: 83.97
+  m_fontSizeMin: 19.935001
+  m_fontSizeMax: 79.740005
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18944,12 +18971,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.75
+  m_fontSize: 26.42738
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 32.9
+  m_fontSizeMin: 14.458749
+  m_fontSizeMax: 26.42738
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

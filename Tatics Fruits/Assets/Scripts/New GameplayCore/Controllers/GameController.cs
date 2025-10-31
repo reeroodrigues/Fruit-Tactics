@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DefaultNamespace.New_GameplayCore;
 using New_GameplayCore.Services;
+using New_GameplayCore.Views;
 
 namespace New_GameplayCore.Controllers
 {
@@ -132,7 +133,24 @@ namespace New_GameplayCore.Controllers
             return _hand.TryAdd(card);
         }
 
-        public void OnSwapAllRequested() { _swap.TrySwapAll(); }
-        public void OnSwapRandomRequested() { _swap.TrySwapRandom(); }
+        public void OnSwapAllRequested()
+        {
+            _swap.TrySwapAll();
+            if (DailyMissionsController.Instance != null &&
+                DailyMissionsController.Instance.ReportSwapAll(out var toast, out _))
+            {
+                ToastService.Show(toast);
+            }
+        }
+
+        public void OnSwapRandomRequested()
+        {
+            _swap.TrySwapRandom();
+            if (DailyMissionsController.Instance != null &&
+                DailyMissionsController.Instance.ReportSwapAll(out var toast, out _))
+            {
+                ToastService.Show(toast);
+            }
+        }
     }
 }

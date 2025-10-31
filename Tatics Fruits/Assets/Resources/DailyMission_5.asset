@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3753c349b78c45b392fad0e236fef698, type: 3}
-  m_Name: DailyMission_
+  m_Name: DailyMission_5
   m_EditorClassIdentifier: Assembly-CSharp::DailyMissionSo
-  id: 1
-  eventType: 2
+  id: 5
+  eventType: 9
   target: 1
-  rewardGold: 50
+  rewardGold: 250
   levelParam: 0
-  paramId: apple
+  paramId: 
   descriptionKey: 
-  descriptionTemplate: "Fa\xE7a 1 par"
+  descriptionTemplate: "Jogue qualquer n\xEDvel"

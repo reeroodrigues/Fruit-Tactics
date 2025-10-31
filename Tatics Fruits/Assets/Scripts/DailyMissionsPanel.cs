@@ -131,8 +131,36 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     private void HandleMissionsChanged()
     {
         UpdateMissionsTabBadge();
-        if (_current == Tab.Missions)
+
+        if (_current != Tab.Missions)
+            return;
+        
+        var states = controller.GetMissions();
+        var needsRebuild = (missionsParent.childCount != states.Count);
+        if (!needsRebuild)
+        {
+            for (int i = 0; i < states.Count; i++)
+            {
+                var st = states[i];
+                var def = controller.GetDefinition(st.missionId);
+                var item = missionsParent.GetChild(i).GetComponent<DailyMissionItemView>();
+                if (item == null || !item.Matches(st.missionId))
+                {
+                    needsRebuild = true;
+                    break;
+                }
+            }
+        }
+
+        if (needsRebuild)
+        {
+            _missionsBuilt = false;
+            BuildMissionsIfNeeded();
+        }
+        else
+        {
             RefreshAllMissionItems();
+        }
     }
     
 
@@ -236,25 +264,30 @@ public class DailyMissionsPanelTabs : MonoBehaviour
     
     private void BuildMissionsIfNeeded()
     {
-        if (_missionsBuilt || missionItemPrefab == null || missionsParent == null) return;
+        if (missionItemPrefab == null || missionsParent == null) return;
+
+        if (_missionsBuilt)
+            return;
 
         foreach (Transform t in missionsParent) Destroy(t.gameObject);
 
         var list = controller.GetMissions();
-        foreach (var st in list)
+        for (int i = 0; i < list.Count; i++)
         {
+            var st  = list[i];
             var def = controller.GetDefinition(st.missionId);
             var item = Instantiate(missionItemPrefab, missionsParent);
             item.Setup(controller, st, def);
         }
+
         _missionsBuilt = true;
     }
 
     private void RefreshAllMissionItems()
     {
-        foreach (Transform t in missionsParent)
+        for (int i = 0; i < missionsParent.childCount; i++)
         {
-            var item = t.GetComponent<DailyMissionItemView>();
+            var item = missionsParent.GetChild(i).GetComponent<DailyMissionItemView>();
             if (item) item.Refresh();
         }
         UpdateMissionsTabBadge();
