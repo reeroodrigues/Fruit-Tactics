@@ -50,6 +50,7 @@ namespace New_GameplayCore.Views
         private IHighScoreService _highscores;
         private PreRoundPresenter _preRoundPresenter;
         private PreRoundView _preRoundInstance;
+        private DailyMissionsController _dailyMissionsController;
 
         private void Awake()
         {
@@ -74,9 +75,9 @@ namespace New_GameplayCore.Views
             _combo = new ComboTracker(levelConfig);
             _deck  = new DeckService();
             _hand  = new HandService(levelConfig.handSize);
-            _swap  = new SwapService(_hand, _deck, _time, levelConfig);
+            _swap  = new SwapService(_hand, _deck, _time, levelConfig, _dailyMissionsController);
             _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
-            _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
+            _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score, _dailyMissionsController);
             _highscores = new JsonHighScoreService();
             
             IsReady = true;
@@ -96,6 +97,7 @@ namespace New_GameplayCore.Views
             _score.OnScoreChanged += (total, delta) =>
             {
                 _highscores.TryReportScore(GetLevelId(), total);
+                FindObjectOfType<DailyMissionsController>()?.ReportScoreDelta(delta);
             };
         }
         
@@ -121,17 +123,20 @@ namespace New_GameplayCore.Views
             {
                 case EndCause.TargetReached:
                     ShowVictory();
+                    FindObjectOfType<DailyMissionsController>()?.ReportRunFinished();
+
                     break;
 
                 case EndCause.TimeUp:
                     ShowDefeat();
+                    FindObjectOfType<DailyMissionsController>()?.ReportRunFinished();
                     break;
             }
         }
 
         private void ShowVictory()
         {
-            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, _profileService, Progress, levelSet);
+            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, _profileService, Progress, levelSet, _dailyMissionsController);
 
             VictoryModel model = default;
             presenter.OnModelReady += m => model = m;

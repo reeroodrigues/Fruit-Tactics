@@ -66,6 +66,9 @@ namespace New_GameplayCore
         
             var first = _staged[0];
             var isPair = _rules.IsValidPair(first.data, data);
+            
+            var typeId = first.data.Type.id;
+            FindObjectOfType<DailyMissionsController>()?.ReportPairMade(typeId);
 
             if (!isPair)
             {

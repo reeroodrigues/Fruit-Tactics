@@ -11,6 +11,7 @@ namespace New_GameplayCore.Services
         private readonly IHighScoreService _hs;
         private readonly ILevelProgressService _progress;
         private readonly LevelSetSO _levelSet;
+        private readonly DailyMissionsController _dailyMissions;
 
         public Action<VictoryModel> OnModelReady;
         private readonly PlayerProfileService _profileService;
@@ -24,7 +25,8 @@ namespace New_GameplayCore.Services
             IHighScoreService hs,
             PlayerProfileService profileService,
             ILevelProgressService progress,
-            LevelSetSO levelSet)
+            LevelSetSO levelSet,
+            DailyMissionsController dailyMissions)
         {
             _cfg = cfg;
             _score = score;
@@ -33,6 +35,7 @@ namespace New_GameplayCore.Services
             _profileService = profileService;
             _progress = progress;
             _levelSet = levelSet;
+            _dailyMissions = dailyMissions;
         }
 
         public void Build()
@@ -45,6 +48,9 @@ namespace New_GameplayCore.Services
             if(pct >= _cfg.star1Threshold) stars = 1;
             if(pct >= _cfg.star2Threshold) stars = 2;
             if(pct >= _cfg.star3Threshold || total >= target) stars = 3;
+            
+            _dailyMissions?.ReportWinLevel(_progress.CurrentIndex);
+
 
             var newRecord = _hs.TryReportScore(string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId, total);
             _progress.RecordResult(_cfg, total, stars);

@@ -119,6 +119,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &21411651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21411652}
+  - component: {fileID: 21411653}
+  m_Layer: 0
+  m_Name: ToastServiceController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &21411652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21411651}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 220.57257, y: 475.9081, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &21411653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21411651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cde3e98540403d90778121e1d03fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.ToastService
+  rootCanvas: {fileID: 2082077803}
+  toastPrefab: {fileID: 6478569004977256623, guid: 6a62bdbc5476d3449a4c2f62c15ba465, type: 3}
+  showTime: 1.6
+  showing: 0
 --- !u!1 &76162952
 GameObject:
   m_ObjectHideFlags: 0
@@ -5325,3 +5373,4 @@ SceneRoots:
   - {fileID: 2082077804}
   - {fileID: 1780655301}
   - {fileID: 1419642187}
+  - {fileID: 21411652}

@@ -17,14 +17,16 @@ namespace New_GameplayCore.Controllers
         private readonly IScoreService _score;
 
         private CardInstance? _selectedCard = null;
+        private readonly DailyMissionsController _dailyMissions;
 
         public event Action<EndCause> OnLevelEnded;
 
         public GameController(IGameStateMachine fsm, ITimeManager time, IDeckService deck, 
-            IHandService hand, IRuleEngine rule, ISwapService swap, LevelConfigSO cfg, ScoreService score)
+            IHandService hand, IRuleEngine rule, ISwapService swap, LevelConfigSO cfg, ScoreService score, DailyMissionsController dailyMissions)
         {
             _fsm = fsm; _time = time; _deck = deck; _hand = hand; _rule = rule; _swap = swap;
             _cfg = cfg; _score =  score ?? throw new ArgumentNullException(nameof(score));
+            _dailyMissions = dailyMissions;
 
             _time.OnTimeChanged += t =>
             {
@@ -125,7 +127,8 @@ namespace New_GameplayCore.Controllers
                     return false;
                 }
             }
-
+            
+            _dailyMissions?.ReportBuyCard();
             return _hand.TryAdd(card);
         }
 

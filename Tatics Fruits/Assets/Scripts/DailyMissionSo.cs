@@ -1,6 +1,17 @@
 using UnityEngine;
 
-public enum MissionEventType { WinLevel = 1 }
+public enum MissionEventType
+{
+    WinLevel = 1,
+    MakePair,
+    MakePairOfType,
+    SwapAll,
+    SwapRandom,
+    BuyCard,
+    ScorePoints,
+    StarsEarned,
+    PlayRun
+}
 
 [CreateAssetMenu(menuName = "Game/Daily Mission", fileName = "DailyMission_")]
 public class DailyMissionSo : ScriptableObject
@@ -14,6 +25,9 @@ public class DailyMissionSo : ScriptableObject
     public int rewardGold = 50;
     public int levelParam = 0;
 
+    [Tooltip("Paramentro opicional ex(id do CardType para MakePairOfType)")]
+    public string paramId;
+    
     [Header("Localization")]
     [Tooltip("Chave no arquivo de idiomas. Ex.: mission_win_level")]
     public string descriptionKey;

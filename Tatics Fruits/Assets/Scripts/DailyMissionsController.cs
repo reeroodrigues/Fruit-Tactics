@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using New_GameplayCore.Views;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -226,21 +227,28 @@ public class DailyMissionsController : MonoBehaviour
         if (list == null) return;
 
         bool changed = false;
-
         foreach (var st in list)
         {
             var def = FindDef(st.missionId);
-            if (def == null || def.eventType != MissionEventType.WinLevel) continue;
-            if (def.levelParam > 0 && def.levelParam != level) continue;
-            if (st.completed) continue;
+            if (def == null || def.eventType != MissionEventType.WinLevel)
+                continue;
+            
+            if (def.levelParam > 0 && def.levelParam != level) 
+                continue;
+            
+            if (st.completed) 
+                continue;
 
             int before = st.progress;
             st.progress = Mathf.Min(st.target, st.progress + 1);
-            if (st.progress != before) changed = true;
+            if (st.progress != before)
+                changed = true;
+            
             if (st.progress >= st.target && !st.completed)
             {
                 st.completed = true;
                 changed = true;
+                ToastService.Show($"Missão concluída: {st.description} + {st.rewardGold}");
             }
         }
 
@@ -252,6 +260,28 @@ public class DailyMissionsController : MonoBehaviour
         }
     }
 
+    public void ReportPairMade(string cardTypeId = null)
+    {
+        TryAddProgress(MissionEventType.MakePair, 1);
+        if(!string.IsNullOrEmpty(cardTypeId))
+            TryAddProgress(MissionEventType.MakePair, 1, cardTypeId);
+    }
+
+    public void ReportSwapAll() => TryAddProgress(MissionEventType.SwapAll, 1);
+    public void ReportSwapRandom() => TryAddProgress(MissionEventType.SwapRandom, 1);
+    public void ReportBuyCard() => TryAddProgress(MissionEventType.BuyCard, 1);
+    public void ReportRunFinished() => TryAddProgress(MissionEventType.PlayRun, 1);
+    public void ReportScoreDelta(int delta)
+    {
+        if (delta > 0)
+            TryAddProgress(MissionEventType.ScorePoints, delta);
+    }
+
+    public void ReportStars(int stars)
+    {
+        if(stars > 0)
+            TryAddProgress(MissionEventType.StarsEarned, stars);
+    }
 
     public bool HasAnyClaimAvailable()
     {
@@ -270,5 +300,49 @@ public class DailyMissionsController : MonoBehaviour
     public void FireAttention()
     {
         OnAttentionChanged?.Invoke(HasAnyClaimAvailable());
+    }
+
+    private bool TryAddProgress(MissionEventType type, int amount = 1, string param = null)
+    {
+        var list = profile.Data?.daily?.missions;
+        if(list == null)
+            return false;
+
+        var changed = false;
+        foreach (var st in list)
+        {
+            var def = FindDef(st.missionId);
+            if(def == null || def.eventType != type)
+                continue;
+            
+            if(st.completed)
+                continue;
+            
+            if(!string.IsNullOrEmpty(def.paramId) && def.paramId != param)
+                continue;
+            
+            var before = st.progress;
+            st.progress = Mathf.Min(st.target, st.progress + Mathf.Max(1, amount));
+            if(st.progress != before)
+                changed = true;
+
+            if (st.progress >= st.target && !st.completed)
+            {
+                st.completed = true;
+                changed = true;
+                
+                ToastService.Show($"Missão concluída: {def.descriptionTemplate.Replace("{0}", def.levelParam.ToString()).Replace("{target}", st.target.ToString())} +{st.rewardGold}");
+
+            }
+        }
+
+        if (changed)
+        {
+            profile.SaveProfile();
+            OnDailyMissionsChanged?.Invoke();
+            FireAttention();
+        }
+
+        return changed;
     }
 }

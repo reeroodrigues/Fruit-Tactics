@@ -8,13 +8,15 @@ namespace New_GameplayCore.Services
         private readonly IDeckService _deck;
         private readonly ITimeManager _time;
         private readonly LevelConfigSO _cfg;
+        private readonly DailyMissionsController _dailyMissions;
 
-        public SwapService(IHandService hand, IDeckService deck, ITimeManager time, LevelConfigSO cfg)
+        public SwapService(IHandService hand, IDeckService deck, ITimeManager time, LevelConfigSO cfg,  DailyMissionsController dailyMissions)
         {
             _hand = hand;
             _deck = deck;
             _time = time;
             _cfg = cfg;
+            _dailyMissions = dailyMissions;
         }
 
         public bool TrySwapAll()
@@ -34,6 +36,8 @@ namespace New_GameplayCore.Services
             
             var newCards = new List<CardInstance>(currentCount);
             DrawUpTo(currentCount, newCards);
+            
+            _dailyMissions?.ReportSwapAll();
             
             _hand.AddMany(newCards);
             
@@ -67,6 +71,8 @@ namespace New_GameplayCore.Services
             var toRemove = _hand.Cards[idx];
             _hand.TryRemove(toRemove);
             _deck.Discard(toRemove);
+            
+            _dailyMissions?.ReportSwapRandom();
 
             if (_deck.TryDraw(out var newCard))
                 _hand.TryAdd(newCard);
